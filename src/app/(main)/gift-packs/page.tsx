@@ -1,8 +1,10 @@
+
 "use client";
 
 import { CuratedCelebrationsSection } from '@/components/curated-celebrations-section';
 import { CustomGiftSection } from '@/components/custom-gift-section';
 import { GiftPacksHeroSection } from '@/components/gift-packs-hero-section';
+import { TestimonialsSection } from '@/components/testimonials-section';
 import { WhyChooseGiftPacksSection } from '@/components/why-choose-gift-packs-section';
 
 export default function GiftPacksPage() {
@@ -12,6 +14,7 @@ export default function GiftPacksPage() {
       <CuratedCelebrationsSection />
       <CustomGiftSection />
       <WhyChooseGiftPacksSection />
+      <TestimonialsSection />
     </>
   );
 }
