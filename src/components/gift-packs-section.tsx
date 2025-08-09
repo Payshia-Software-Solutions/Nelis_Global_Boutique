@@ -20,7 +20,7 @@ export function GiftPacksSection() {
                 <h2 className="text-3xl font-bold">Gift Packs – Perfect for Every Occasion</h2>
             </div>
             <div className="grid md:grid-cols-2 gap-12 items-center">
-                <div className="order-2 md:order-1">
+                <div className="order-1 md:order-2">
                     <h3 className="text-2xl font-semibold mb-4">Celebrate with Authentic Flavors</h3>
                     <p className="text-muted-foreground mb-6">
                         Our specially curated gift packs are perfect for New Year celebrations, Sinhala Tamil New Year, Christmas, and special occasions. Each pack contains a thoughtful selection of our finest products, beautifully packaged to share the taste of Sri Lanka with your loved ones.
@@ -37,7 +37,7 @@ export function GiftPacksSection() {
                         <Link href="/gift-packs">Shop Gift Packs</Link>
                     </Button>
                 </div>
-                <div className="order-1 md:order-2">
+                <div className="order-2 md:order-1">
                      <Image
                         src="https://placehold.co/600x400.png"
                         alt="A collection of beautifully packaged gift packs"
