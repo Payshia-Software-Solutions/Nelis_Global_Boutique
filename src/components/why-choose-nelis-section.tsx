@@ -43,7 +43,7 @@ export function WhyChooseNelisSection() {
                                 <reason.icon className="h-10 w-10 text-primary" />
                             </div>
                             <h3 className="text-xl font-semibold mb-2">{reason.title}</h3>
-                            <p className="text-muted-foreground">{reason.description}</p>
+                            <p className="text-muted-foreground min-h-[120px]">{reason.description}</p>
                         </div>
                     ))}
                 </div>
