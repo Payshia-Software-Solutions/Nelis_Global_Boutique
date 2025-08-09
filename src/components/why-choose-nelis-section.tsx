@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Leaf, Users, Wand2, Clock, Star } from "lucide-react";

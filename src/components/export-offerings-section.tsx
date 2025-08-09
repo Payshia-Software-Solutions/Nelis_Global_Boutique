@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Globe, Truck, Store, Wand2 } from "lucide-react";
