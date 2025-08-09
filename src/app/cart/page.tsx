@@ -27,72 +27,84 @@ export default function CartPage() {
   }
   
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">Your Cart</h1>
-      <div className="grid lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2">
-            <Card>
-                <CardContent className="p-0">
-                    <ul className="divide-y">
-                        {cart.map((item) => (
-                            <li key={item.id} className="flex items-center p-4">
-                                <Image src={item.imageUrl} alt={item.name} width={100} height={100} className="rounded-md object-cover mr-4" />
-                                <div className="flex-grow">
-                                    <h2 className="font-semibold">{item.name}</h2>
-                                    <p className="text-sm text-muted-foreground">${item.price.toFixed(2)}</p>
+    <div className="bg-background py-12">
+        <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+                <h1 className="text-4xl font-bold tracking-tight">Your Shopping Cart</h1>
+                <p className="text-muted-foreground mt-2">Review your selections before proceeding to checkout</p>
+            </div>
+            <div className="grid lg:grid-cols-3 gap-8 items-start">
+                <div className="lg:col-span-2 space-y-4">
+                    <h2 className="text-2xl font-semibold">Cart Items</h2>
+                    {cart.map((item) => (
+                        <Card key={item.id} className="overflow-hidden">
+                            <CardContent className="p-4 flex items-center gap-4">
+                                <Image 
+                                    src={item.imageUrl} 
+                                    alt={item.name} 
+                                    width={100} 
+                                    height={100} 
+                                    className="rounded-md object-cover" 
+                                    data-ai-hint="tea product"
+                                />
+                                <div className="flex-grow space-y-1">
+                                    <h3 className="font-semibold text-lg">{item.name}</h3>
+                                    <p className="text-sm text-muted-foreground">Premium organic blend</p>
+                                    <p className="text-base font-medium">${item.price.toFixed(2)}</p>
                                 </div>
                                 <div className="flex items-center gap-4">
                                     <div className="flex items-center border rounded-md">
-                                        <Button variant="ghost" size="icon" onClick={() => updateQuantity(item.id, item.quantity - 1)}>
+                                        <Button variant="ghost" size="icon" onClick={() => updateQuantity(item.id, item.quantity - 1)} disabled={item.quantity <= 1}>
                                             <Minus className="h-4 w-4" />
                                         </Button>
-                                        <span className="w-10 text-center">{item.quantity}</span>
+                                        <span className="w-10 text-center font-medium">{item.quantity}</span>
                                         <Button variant="ghost" size="icon" onClick={() => updateQuantity(item.id, item.quantity + 1)}>
                                             <Plus className="h-4 w-4" />
                                         </Button>
                                     </div>
-                                    <p className="font-semibold w-20 text-right">${(item.price * item.quantity).toFixed(2)}</p>
+                                    <p className="font-semibold w-24 text-right text-lg">${(item.price * item.quantity).toFixed(2)}</p>
                                     <Button variant="ghost" size="icon" onClick={() => removeFromCart(item.id)}>
                                         <Trash2 className="h-5 w-5 text-destructive" />
+                                        <span className="sr-only">Remove</span>
                                     </Button>
                                 </div>
-                            </li>
-                        ))}
-                    </ul>
-                </CardContent>
-            </Card>
+                            </CardContent>
+                        </Card>
+                    ))}
+                </div>
+                <div className="sticky top-24">
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Order Summary</CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-4">
+                            <div className="flex justify-between">
+                                <span>Subtotal</span>
+                                <span>${cartTotal.toFixed(2)}</span>
+                            </div>
+                            <div className="flex justify-between">
+                                <span>Shipping</span>
+                                <span className="text-primary">Free</span>
+                            </div>
+                            <Separator />
+                            <div className="flex justify-between font-bold text-lg">
+                                <span>Total</span>
+                                <span>${cartTotal.toFixed(2)}</span>
+                            </div>
+                            <Button variant="link" className="p-0 h-auto text-primary">Apply Discount Code</Button>
+                        </CardContent>
+                        <CardFooter className="flex-col space-y-2">
+                            <Button size="lg" className="w-full" asChild>
+                                <Link href="/checkout">Proceed to Checkout</Link>
+                            </Button>
+                            <Button variant="outline" className="w-full" asChild>
+                                <Link href="/products">Continue Shopping</Link>
+                            </Button>
+                        </CardFooter>
+                    </Card>
+                </div>
+            </div>
         </div>
-        <div>
-            <Card>
-                <CardHeader>
-                    <CardTitle>Order Summary</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                    <div className="flex justify-between">
-                        <span>Subtotal</span>
-                        <span>${cartTotal.toFixed(2)}</span>
-                    </div>
-                    <div className="flex justify-between">
-                        <span>Shipping</span>
-                        <span>Free</span>
-                    </div>
-                    <Separator />
-                    <div className="flex justify-between font-bold text-lg">
-                        <span>Total</span>
-                        <span>${cartTotal.toFixed(2)}</span>
-                    </div>
-                </CardContent>
-                <CardFooter className="flex-col space-y-4">
-                    <Button size="lg" className="w-full" asChild>
-                        <Link href="/checkout">Proceed to Checkout</Link>
-                    </Button>
-                    <Button variant="outline" className="w-full" asChild>
-                        <Link href="/products">Continue Shopping</Link>
-                    </Button>
-                </CardFooter>
-            </Card>
-        </div>
-      </div>
     </div>
   );
 }
