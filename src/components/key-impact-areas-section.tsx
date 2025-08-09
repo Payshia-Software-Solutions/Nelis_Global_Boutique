@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Users, Recycle, Wheat, Package } from "lucide-react";

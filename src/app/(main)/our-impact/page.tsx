@@ -1,6 +1,5 @@
 
 import { KeyImpactAreasSection } from "@/components/key-impact-areas-section";
-import MainLayout from "../(main)/layout";
 
 export const metadata = {
     title: "Our Impact | NelisGlobal Boutique",
@@ -9,8 +8,6 @@ export const metadata = {
 
 export default function OurImpactPage() {
   return (
-    <MainLayout>
-        <KeyImpactAreasSection />
-    </MainLayout>
+    <KeyImpactAreasSection />
   );
 }
