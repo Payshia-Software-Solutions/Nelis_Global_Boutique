@@ -6,7 +6,7 @@ import { Leaf } from 'lucide-react';
 export async function HerbalTeasSection() {
     const allProducts = await getProducts();
     // Assuming 'Fashion' category products are herbal teas for demonstration
-    const herbalTeas = allProducts.filter(p => p.category === 'Fashion').slice(0, 4); 
+    const herbalTeas = allProducts.filter(p => p.category === 'Fashion').slice(0, 3); 
 
     return (
         <section id="herbal-teas" className="py-16">
@@ -20,7 +20,7 @@ export async function HerbalTeasSection() {
                         Experience the essence of nature with our handcrafted herbal teas, rich in antioxidants and wellness benefits.
                     </p>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                     {herbalTeas.map(product => (
                         <CategoryProductCard key={product.id} product={product} />
                     ))}
