@@ -46,20 +46,21 @@ export function Header() {
             <Link href="/">
                 <Logo useDarkText={hasScrolled} />
             </Link>
-            <nav className="hidden md:flex items-center">
-                <div className="flex items-center space-x-6 text-sm font-medium">
-                    {navLinks.map((link) => (
-                        <Link
-                        key={link.href}
-                        href={link.href}
-                        className="transition-colors hover:text-primary"
-                        >
-                        {link.label}
-                        </Link>
-                    ))}
-                </div>
-            </nav>
         </div>
+        
+        <nav className="hidden md:flex">
+            <div className="flex items-center space-x-6 text-sm font-medium">
+                {navLinks.map((link) => (
+                    <Link
+                    key={link.href}
+                    href={link.href}
+                    className="transition-colors hover:text-primary"
+                    >
+                    {link.label}
+                    </Link>
+                ))}
+            </div>
+        </nav>
         
         <div className="flex items-center justify-end space-x-2">
           <Link href="#" className={cn(buttonVariants({ variant: 'ghost', size: 'icon' }))}>
