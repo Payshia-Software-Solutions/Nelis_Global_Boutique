@@ -1,5 +1,6 @@
 
 import { OurStorySection } from '@/components/our-story-section';
+import { MissionValuesSection } from '@/components/mission-values-section';
 
 export const metadata = {
     title: "About Us | NelisGlobal Boutique",
@@ -10,6 +11,7 @@ export default function AboutPage() {
   return (
     <div>
       <OurStorySection />
+      <MissionValuesSection />
     </div>
   );
 }
