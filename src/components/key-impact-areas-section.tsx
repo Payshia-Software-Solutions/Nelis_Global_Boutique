@@ -30,22 +30,24 @@ const impactAreas = [
 export function KeyImpactAreasSection() {
     return (
         <section className="py-24">
-            <div className="container mx-auto px-4 max-w-4xl">
+            <div className="container mx-auto px-4">
                 <div className="text-center mb-12">
                     <h2 className="text-4xl font-bold">Our Key Impact Areas</h2>
                 </div>
-                <div className="grid md:grid-cols-1 gap-8">
+                <div className="grid md:grid-cols-2 gap-8">
                     {impactAreas.map((area, index) => (
-                        <Card key={index} className="flex flex-col sm:flex-row items-center text-center sm:text-left p-4 bg-card shadow-lg hover:shadow-xl transition-shadow">
-                            <div className="flex-shrink-0 mb-4 sm:mb-0 sm:mr-6">
-                                <div className="bg-primary/10 rounded-full p-3">
-                                    <area.icon className="h-8 w-8 text-primary" />
+                        <Card key={index} className="bg-card shadow-lg hover:shadow-xl transition-shadow">
+                           <CardContent className="p-6 flex items-start space-x-6">
+                                <div className="flex-shrink-0">
+                                    <div className="bg-primary/10 rounded-full p-3">
+                                        <area.icon className="h-8 w-8 text-primary" />
+                                    </div>
                                 </div>
-                            </div>
-                            <div>
-                                <h3 className="text-xl font-bold mb-2">{area.title}</h3>
-                                <p className="text-muted-foreground">{area.description}</p>
-                            </div>
+                                <div>
+                                    <h3 className="text-xl font-bold mb-2">{area.title}</h3>
+                                    <p className="text-muted-foreground">{area.description}</p>
+                                </div>
+                           </CardContent>
                         </Card>
                     ))}
                 </div>
