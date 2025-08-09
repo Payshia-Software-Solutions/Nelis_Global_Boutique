@@ -2,7 +2,7 @@
 "use client";
 
 import { Users, Recycle, Wheat, Package } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 
 const impactAreas = [
     {
@@ -37,16 +37,14 @@ export function KeyImpactAreasSection() {
                 <div className="grid md:grid-cols-2 gap-8">
                     {impactAreas.map((area, index) => (
                         <Card key={index} className="bg-card shadow-lg hover:shadow-xl transition-shadow">
-                           <CardContent className="p-6 flex items-start space-x-6">
-                                <div className="flex-shrink-0">
-                                    <div className="bg-primary/10 rounded-full p-3">
+                           <CardContent className="p-8">
+                                <div className="flex items-center gap-4 mb-4">
+                                    <div className="flex-shrink-0 bg-primary/20 rounded-full p-3">
                                         <area.icon className="h-8 w-8 text-primary" />
                                     </div>
+                                    <h3 className="text-xl font-bold">{area.title}</h3>
                                 </div>
-                                <div>
-                                    <h3 className="text-xl font-bold mb-2">{area.title}</h3>
-                                    <p className="text-muted-foreground">{area.description}</p>
-                                </div>
+                                <p className="text-muted-foreground">{area.description}</p>
                            </CardContent>
                         </Card>
                     ))}
