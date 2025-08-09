@@ -1,4 +1,3 @@
-
 "use client";
 
 import { CuratedCelebrationsSection } from '@/components/curated-celebrations-section';
@@ -10,9 +9,9 @@ export default function GiftPacksPage() {
   return (
     <>
       <GiftPacksHeroSection />
-      <WhyChooseGiftPacksSection />
       <CuratedCelebrationsSection />
       <CustomGiftSection />
+      <WhyChooseGiftPacksSection />
     </>
   );
 }
