@@ -3,7 +3,7 @@
 
 import Link from "next/link";
 import { Search, ShoppingCart, Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Logo } from "@/components/logo";
 import { useCart } from "@/context/cart-provider";
@@ -99,23 +99,19 @@ export function Header() {
         </div>
 
         <div className="flex w-1/3 items-center justify-end space-x-4">
-          <Button variant="ghost" size="icon" asChild>
-            <Link href="#">
-              <Search />
-              <span className="sr-only">Search</span>
-            </Link>
-          </Button>
-          <Button variant="ghost" size="icon" className="relative" asChild>
-            <Link href="/cart">
-              <ShoppingCart />
-              <span className="sr-only">Cart</span>
-              {itemCount > 0 && (
-                <Badge className="absolute -right-2 -top-2 h-6 w-6 rounded-full p-0 flex items-center justify-center bg-primary text-primary-foreground">
-                  {itemCount}
-                </Badge>
-              )}
-            </Link>
-          </Button>
+          <Link href="#" className={cn(buttonVariants({ variant: 'ghost', size: 'icon' }))}>
+            <Search />
+            <span className="sr-only">Search</span>
+          </Link>
+          <Link href="/cart" className={cn(buttonVariants({ variant: 'ghost', size: 'icon' }), "relative")}>
+            <ShoppingCart />
+            <span className="sr-only">Cart</span>
+            {itemCount > 0 && (
+              <Badge className="absolute -right-2 -top-2 h-6 w-6 rounded-full p-0 flex items-center justify-center bg-primary text-primary-foreground">
+                {itemCount}
+              </Badge>
+            )}
+          </Link>
         </div>
       </div>
     </header>
