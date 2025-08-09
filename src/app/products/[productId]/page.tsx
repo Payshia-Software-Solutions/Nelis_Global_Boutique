@@ -1,3 +1,4 @@
+
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { Star } from "lucide-react";
@@ -10,6 +11,7 @@ import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ProductImages } from "@/components/product-images";
 
 type ProductPageProps = {
     params: {
@@ -35,15 +37,14 @@ const ReviewCard = ({ review }: { review: Review }) => (
             <AvatarFallback>{review.author.charAt(0)}</AvatarFallback>
         </Avatar>
         <div className="flex-1">
-            <div className="flex justify-between items-center">
-                <p className="font-semibold">{review.author}</p>
-            </div>
+            <p className="font-semibold">{review.author}</p>
             <div className="flex items-center mt-1">
                 {[...Array(5)].map((_, i) => (
                     <Star key={i} className={cn("h-4 w-4", i < review.rating ? "text-yellow-400 fill-yellow-400" : "text-muted-foreground")} />
                 ))}
             </div>
-            <p className="text-sm text-muted-foreground mt-2">{review.comment}</p>
+            <p className="font-semibold mt-2">Amazing color-changing tea!</p>
+            <p className="text-sm text-muted-foreground mt-1">{review.comment}</p>
         </div>
     </div>
 );
@@ -57,27 +58,27 @@ export default async function ProductPage({ params }: ProductPageProps) {
     notFound();
   }
   
-  const averageRating = reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length;
+  const averageRating = reviews.length > 0 ? reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length : 0;
 
   return (
     <div className="container mx-auto px-4 py-8 md:py-12">
       <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
-        <ProductDetailsClient product={product} />
-      </div>
-      
-      <Separator className="my-12" />
-
-      <div className="grid md:grid-cols-3 gap-12">
-        <div className="md:col-span-2 space-y-8">
+        <ProductImages product={product} />
+        <div className="space-y-8">
+            <ProductDetailsClient product={product} />
+            
             <div>
                 <h2 className="text-2xl font-bold mb-4">About This Product</h2>
-                <p className="text-muted-foreground">
-                    Our Butterfly Pea Tea is sourced directly from organic farms in the heart of Sri Lanka. This extraordinary herbal tea is made from the vibrant blue flowers of the Clitoria ternatea plant, known for its stunning color-changing properties and numerous health benefits.
-                </p>
-                <p className="text-muted-foreground mt-2">
-                    Rich in anthocyanins and antioxidants, this caffeine-free tea promotes wellness while providing a magical drinking experience. Simply add a few drops of lemon juice to watch the beautiful blue transform into a lovely purple hue.
-                </p>
+                <div className="space-y-4 text-muted-foreground">
+                    <p>
+                        Our Butterfly Pea Tea is sourced directly from organic farms in the heart of Sri Lanka. This extraordinary herbal tea is made from the vibrant blue flowers of the Clitoria ternatea plant, known for its stunning color-changing properties and numerous health benefits.
+                    </p>
+                    <p>
+                        Rich in anthocyanins and antioxidants, this caffeine-free tea promotes wellness while providing a magical drinking experience. Simply add a few drops of lemon juice to watch the beautiful blue transform into a lovely purple hue.
+                    </p>
+                </div>
             </div>
+
             <Tabs defaultValue="ingredients">
                 <TabsList>
                     <TabsTrigger value="ingredients">Ingredients</TabsTrigger>
@@ -94,37 +95,38 @@ export default async function ProductPage({ params }: ProductPageProps) {
                      <p className="text-muted-foreground">Store in a cool, dry place away from direct sunlight to maintain freshness and color.</p>
                 </TabsContent>
             </Tabs>
-        </div>
-        <div>
-          <Card>
-            <CardHeader>
-              <CardTitle>Customer Reviews</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-                <div className="flex items-center gap-4 p-4 rounded-lg bg-muted/50">
-                    <div className="text-center">
-                        <p className="text-4xl font-bold">{averageRating.toFixed(1)}</p>
-                        <div className="flex items-center justify-center">
-                            {[...Array(5)].map((_, i) => (
-                                <Star key={i} className={cn("h-4 w-4", i < Math.round(averageRating) ? "text-yellow-400 fill-yellow-400" : "text-muted-foreground")} />
+        
+            <div>
+                <h2 className="text-2xl font-bold mb-4">Customer Reviews</h2>
+                <Card>
+                    <CardContent className="space-y-6 p-6">
+                        <div className="flex items-center gap-4 p-4 rounded-lg bg-muted/50">
+                            <div className="text-center">
+                                <p className="text-4xl font-bold">{averageRating.toFixed(1)}</p>
+                                <div className="flex items-center justify-center">
+                                    {[...Array(5)].map((_, i) => (
+                                        <Star key={i} className={cn("h-4 w-4", i < Math.round(averageRating) ? "text-yellow-400 fill-yellow-400" : "text-muted-foreground")} />
+                                    ))}
+                                </div>
+                                <p className="text-xs text-muted-foreground mt-1">Based on {reviews.length} reviews</p>
+                            </div>
+                            <div className="flex-grow text-right">
+                               <Button variant="outline">Write a Review</Button>
+                            </div>
+                        </div>
+                        <div className="space-y-6">
+                            {reviews.map((review, index) => (
+                                <div key={review.id}>
+                                   {index > 0 && <Separator />}
+                                   <div className={cn(index > 0 && "pt-6")}>
+                                     <ReviewCard review={review} />
+                                   </div>
+                                </div>
                             ))}
                         </div>
-                        <p className="text-xs text-muted-foreground mt-1">Based on {reviews.length} reviews</p>
-                    </div>
-                    <div className="flex-grow text-right">
-                       <Button variant="outline">Write a Review</Button>
-                    </div>
-                </div>
-                <div className="space-y-6">
-                    {reviews.map((review, index) => (
-                        <>
-                           <ReviewCard key={review.id} review={review} />
-                           {index < reviews.length - 1 && <Separator />}
-                        </>
-                    ))}
-                </div>
-            </CardContent>
-          </Card>
+                    </CardContent>
+                </Card>
+            </div>
         </div>
       </div>
     </div>
