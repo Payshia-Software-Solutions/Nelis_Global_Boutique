@@ -1,5 +1,7 @@
 
 import { KeyImpactAreasSection } from "@/components/key-impact-areas-section";
+import { SustainabilityCommitmentSection } from "@/components/sustainability-commitment-section";
+import { FutureGoalsSection } from "@/components/future-goals-section";
 
 export const metadata = {
     title: "Our Impact | NelisGlobal Boutique",
@@ -8,6 +10,10 @@ export const metadata = {
 
 export default function OurImpactPage() {
   return (
-    <KeyImpactAreasSection />
+    <div>
+      <SustainabilityCommitmentSection />
+      <KeyImpactAreasSection />
+      <FutureGoalsSection />
+    </div>
   );
 }
