@@ -8,8 +8,6 @@ export const metadata = {
 
 export default function GiftPacksPage() {
   return (
-    <div>
-      <GiftPacksHeroSection />
-    </div>
+    <GiftPacksHeroSection />
   );
 }
