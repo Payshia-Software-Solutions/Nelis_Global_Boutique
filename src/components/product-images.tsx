@@ -18,6 +18,12 @@ export function ProductImages({ product }: ProductImagesProps) {
         'https://placehold.co/600x600.png?text=View+4',
     ];
     const [activeImage, setActiveImage] = useState(images[0]);
+    
+    const mainDisplayImages = [
+        'https://placehold.co/600x400.png?text=Main+1',
+        'https://placehold.co/600x400.png?text=Main+2',
+        'https://placehold.co/600x400.png?text=Main+3',
+    ]
 
     return (
         <div className="grid grid-cols-[80px_1fr] gap-4">
@@ -42,16 +48,20 @@ export function ProductImages({ product }: ProductImagesProps) {
                     </button>
                 ))}
             </div>
-            <div className="rounded-lg overflow-hidden border">
-                <Image
-                    src={activeImage}
-                    alt={`${product.name} main view`}
-                    width={600}
-                    height={600}
-                    className="w-full h-auto object-cover aspect-square"
-                    data-ai-hint="tea product"
-                    priority
-                />
+            <div className="flex flex-col gap-4">
+                {mainDisplayImages.map((img, index) => (
+                    <div key={index} className="rounded-lg overflow-hidden border">
+                         <Image
+                            src={img}
+                            alt={`${product.name} main view ${index + 1}`}
+                            width={600}
+                            height={400}
+                            className="w-full h-auto object-cover aspect-[4/3]"
+                            data-ai-hint="tea product"
+                            priority={index === 0}
+                        />
+                    </div>
+                ))}
             </div>
         </div>
     );
