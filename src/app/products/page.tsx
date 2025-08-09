@@ -3,6 +3,7 @@
 import { ProductsHeroSection } from '@/components/products-hero-section';
 import { HerbalTeasSection } from '@/components/herbal-teas-section';
 import { DriedFruitsSection } from '@/components/dried-fruits-section';
+import { SpecialBlendsSection } from '@/components/special-blends-section';
 
 export const metadata = {
     title: "All Products | NelisGlobal Marketplace",
@@ -15,6 +16,7 @@ export default async function ProductsPage() {
       <ProductsHeroSection />
       <HerbalTeasSection />
       <DriedFruitsSection />
+      <SpecialBlendsSection />
     </div>
   );
 }
