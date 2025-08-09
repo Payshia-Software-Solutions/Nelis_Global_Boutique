@@ -10,13 +10,13 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Separator } from "@/components/ui/separator";
 
 const GoogleIcon = () => (
-    <svg className="h-5 w-5" viewBox="0 0 24 24">
+    <svg className="h-5 w-5 mr-2" viewBox="0 0 24 24">
         <path fill="#4285F4" d="M21.35,11.1h-9.2v2.6h5.3c-0.2,1.7-1.3,3.2-3.2,3.2c-2.3,0-4.2-1.9-4.2-4.2s1.9-4.2,4.2-4.2c1.1,0,2.1,0.4,2.8,1.2l2.1-2.1C16.5,5.6,14.5,4.5,12.15,4.5C8.05,4.5,4.5,8.05,4.5,12.15s3.55,7.65,7.65,7.65c4.4,0,7.3-3.1,7.3-7.5C19.45,11.7,19.4,11.4,19.35,11.1z"/>
     </svg>
 )
 
 const FacebookIcon = () => (
-    <svg className="h-5 w-5" viewBox="0 0 24 24">
+    <svg className="h-5 w-5 mr-2" viewBox="0 0 24 24">
         <path fill="#1877F2" d="M22,12c0-5.52-4.48-10-10-10S2,6.48,2,12c0,4.99,3.66,9.13,8.44,9.88V15.5H8.31v-3.5h2.13V9.62c0-2.11,1.26-3.26,3.16-3.26c0.9,0,1.8,0.16,1.8,0.16v2.99h-1.5c-1.03,0-1.37,0.62-1.37,1.33v1.56h3.33l-0.53,3.5H13.6v6.38C18.34,21.13,22,16.99,22,12z"/>
     </svg>
 )
@@ -24,61 +24,57 @@ const FacebookIcon = () => (
 
 export default function LoginPage() {
   return (
-    <div className="flex w-full items-center justify-center">
-        <Card className="w-full max-w-md border-none shadow-none lg:border lg:shadow-sm">
-            <CardHeader className="text-left space-y-2">
-            <CardTitle className="text-2xl">Welcome Back!</CardTitle>
-            <CardDescription>Access your orders, wishlists, and personalized recommendations.</CardDescription>
-            </CardHeader>
-            <CardContent>
-            <div className="grid gap-4">
-                <div className="grid gap-2">
-                <Label htmlFor="email">Email Address</Label>
-                <Input id="email" type="email" placeholder="Enter your email" required />
-                </div>
-                <div className="grid gap-2">
-                <Label htmlFor="password">Password</Label>
-                <Input id="password" type="password" placeholder="Enter your password" required />
-                </div>
-                <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-2">
-                        <Checkbox id="remember-me" />
-                        <Label htmlFor="remember-me" className="text-sm font-normal">Remember me</Label>
-                    </div>
-                    <Link href="#" className="text-sm font-medium text-primary hover:underline">
-                        Forgot Password?
-                    </Link>
-                </div>
-                <Button type="submit" className="w-full">
-                Sign In
-                </Button>
-                
-                <div className="relative my-2">
-                    <Separator />
-                    <span className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 bg-background px-2 text-xs text-muted-foreground">OR LOGIN WITH</span>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    <Button variant="outline" className="w-full">
-                        <GoogleIcon />
-                        Continue with Google
-                    </Button>
-                     <Button variant="outline" className="w-full">
-                        <FacebookIcon />
-                        Continue with Facebook
-                    </Button>
-                </div>
-
+    <Card className="w-full max-w-md bg-card/80 backdrop-blur-sm border-white/20 text-white">
+        <CardHeader className="text-center space-y-2">
+        <CardTitle className="text-3xl font-bold">Welcome Back!</CardTitle>
+        <CardDescription className="text-white/80">Access your orders, wishlists, and personalized recommendations.</CardDescription>
+        </CardHeader>
+        <CardContent>
+        <div className="grid gap-4">
+            <div className="grid gap-2">
+            <Label htmlFor="email" className="text-white">Email Address</Label>
+            <Input id="email" type="email" placeholder="Enter your email" required className="bg-white/10 border-white/20 placeholder:text-white/60" />
             </div>
-            <div className="mt-6 text-center text-sm">
-                Don&apos;t have an account?{" "}
-                <Link href="/auth/register" className="font-medium text-primary hover:underline">
-                Create Account
+            <div className="grid gap-2">
+            <Label htmlFor="password" className="text-white">Password</Label>
+            <Input id="password" type="password" placeholder="Enter your password" required className="bg-white/10 border-white/20 placeholder:text-white/60" />
+            </div>
+            <div className="flex items-center justify-between text-sm">
+                <div className="flex items-center space-x-2">
+                    <Checkbox id="remember-me" className="border-white/50 data-[state=checked]:bg-primary data-[state=checked]:border-primary" />
+                    <Label htmlFor="remember-me" className="font-normal text-white/90">Remember me</Label>
+                </div>
+                <Link href="#" className="font-medium text-primary hover:underline">
+                    Forgot Password?
                 </Link>
             </div>
-            </CardContent>
-        </Card>
-    </div>
+            <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
+            Sign In
+            </Button>
+            
+            <div className="relative my-2">
+                <Separator className="bg-white/20"/>
+                <span className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 bg-card/80 px-2 text-xs text-white/80">OR LOGIN WITH</span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <Button variant="outline" className="w-full bg-transparent border-white/20 hover:bg-white/10 text-white">
+                    <GoogleIcon />
+                    Google
+                </Button>
+                    <Button variant="outline" className="w-full bg-transparent border-white/20 hover:bg-white/10 text-white">
+                    <FacebookIcon />
+                    Facebook
+                </Button>
+            </div>
+        </div>
+        <div className="mt-6 text-center text-sm text-white/80">
+            Don&apos;t have an account?{" "}
+            <Link href="/auth/register" className="font-medium text-primary hover:underline">
+            Create Account
+            </Link>
+        </div>
+        </CardContent>
+    </Card>
   );
 }
-
