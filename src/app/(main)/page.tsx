@@ -4,6 +4,7 @@ import Link from "next/link";
 import { getFeaturedProducts } from "@/lib/mock-data";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/product-card";
+import { GiftPacksSection } from "@/components/gift-packs-section";
 
 export const metadata = {
   title: "NelisGlobal Boutique | Natural Products from Sri Lanka",
@@ -62,6 +63,9 @@ export default async function HomePage() {
             </Button>
         </div>
       </section>
+
+      {/* Gift Packs Section */}
+      <GiftPacksSection />
     </div>
   );
 }
