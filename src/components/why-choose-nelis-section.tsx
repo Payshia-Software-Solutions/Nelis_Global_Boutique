@@ -38,12 +38,12 @@ export function WhyChooseNelisSection() {
                 </div>
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {reasons.map((reason, index) => (
-                        <div key={index} className="bg-card p-8 rounded-lg shadow-sm text-center flex flex-col items-center">
+                        <div key={index} className="bg-card p-8 rounded-lg shadow-sm text-center flex flex-col items-center h-full">
                             <div className="bg-primary/10 rounded-full p-4 mb-6">
                                 <reason.icon className="h-10 w-10 text-primary" />
                             </div>
                             <h3 className="text-xl font-semibold mb-2">{reason.title}</h3>
-                            <p className="text-muted-foreground flex-grow">{reason.description}</p>
+                            <p className="text-muted-foreground">{reason.description}</p>
                         </div>
                     ))}
                 </div>
