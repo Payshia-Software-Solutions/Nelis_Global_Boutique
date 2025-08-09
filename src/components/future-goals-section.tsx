@@ -1,11 +1,12 @@
+
 "use client";
 
-import { Leaf, SolarPanel, Trash2, Apple, Package } from "lucide-react";
+import { Leaf, Sun, Trash2, Apple, Package } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 
 const goals = [
     {
-        icon: SolarPanel,
+        icon: Sun,
         text: "Expand our renewable energy usage across operations",
     },
     {
