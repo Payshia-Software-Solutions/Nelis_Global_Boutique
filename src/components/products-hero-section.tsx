@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { Leaf, Minus, Utensils } from 'lucide-react';
+import { Leaf, Utensils } from 'lucide-react';
 
 export function ProductsHeroSection() {
     return (
@@ -28,12 +28,8 @@ export function ProductsHeroSection() {
                         <span>Herbal Teas</span>
                     </Link>
                     <Link href="#dried-fruits" className="flex items-center gap-2 hover:text-primary transition-colors">
-                        <Minus className="h-5 w-5" />
-                        <span>Dried Fruits</span>
-                    </Link>
-                    <Link href="#special-blends" className="flex items-center gap-2 hover:text-primary transition-colors">
                         <Utensils className="h-5 w-5" />
-                        <span>Special Blends</span>
+                        <span>Dried Fruits</span>
                     </Link>
                 </div>
             </div>
