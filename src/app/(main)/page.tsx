@@ -1,15 +1,14 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import { getCategories, getFeaturedProducts } from "@/lib/mock-data";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/product-card";
 import { Card, CardContent } from "@/components/ui/card";
 
 export const metadata = {
-  title: "NelisGlobal Marketplace | High-Quality Products, Unbeatable Prices",
-  description: "Discover a wide range of products from electronics to fashion. Shop now for the best deals on NelisGlobal Marketplace.",
+  title: "NelisGlobal Boutique | Natural Products from Sri Lanka",
+  description: "Discover the finest natural products from Sri Lanka. We bring you premium dried fruits, herbal teas, and authentic flavors crafted with sustainable practices and community care.",
 };
 
 export default async function HomePage() {
@@ -19,26 +18,32 @@ export default async function HomePage() {
   return (
     <div className="space-y-16">
       {/* Hero Section */}
-      <section className="relative h-[60vh] min-h-[400px] w-full bg-gradient-to-r from-primary/20 to-accent/20">
+      <section className="relative h-screen min-h-[600px] w-full flex items-center justify-center -mt-20">
         <Image
-          src="https://placehold.co/1600x900.png"
-          alt="Modern electronics on a clean desk"
+          src="https://placehold.co/1920x1080.png"
+          alt="A market stall with various natural products"
           layout="fill"
           objectFit="cover"
-          className="opacity-20"
-          data-ai-hint="modern electronics"
+          className="opacity-50"
+          data-ai-hint="natural products market"
           priority
         />
-        <div className="container mx-auto h-full flex flex-col items-center justify-center text-center relative z-10">
-          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-foreground">
-            Discover Your Next Favorite Thing
+        <div className="absolute inset-0 bg-black/40" />
+        <div className="container mx-auto h-full flex flex-col items-center justify-center text-center relative z-10 text-white">
+          <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
+            Welcome to Nelis Global Boutique
           </h1>
-          <p className="mt-4 max-w-2xl text-lg md:text-xl text-foreground/80">
-            Explore our curated selection of high-quality products, from cutting-edge tech to timeless fashion.
+          <p className="mt-4 max-w-2xl text-lg md:text-xl">
+            Discover the finest natural products from Sri Lanka. We bring you premium dried fruits, herbal teas, and authentic flavors crafted with sustainable practices and community care.
           </p>
-          <Button asChild size="lg" className="mt-8">
-            <Link href="/products">Shop Now <ArrowRight className="ml-2 h-5 w-5" /></Link>
-          </Button>
+          <div className="mt-8 flex gap-4">
+            <Button asChild size="lg">
+              <Link href="/products">Shop Now</Link>
+            </Button>
+            <Button asChild size="lg" variant="outline" className="bg-transparent border-white text-white hover:bg-white hover:text-primary">
+              <Link href="/contact">Contact Us</Link>
+            </Button>
+          </div>
         </div>
       </section>
       
@@ -78,7 +83,7 @@ export default async function HomePage() {
         </div>
         <div className="text-center mt-12">
             <Button asChild size="lg" variant="outline">
-                <Link href="/products">View All Products <ArrowRight className="ml-2 h-5 w-5" /></Link>
+                <Link href="/products">View All Products</Link>
             </Button>
         </div>
       </section>
