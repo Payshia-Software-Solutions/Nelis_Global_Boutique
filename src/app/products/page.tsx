@@ -1,10 +1,10 @@
 
-
 import { ProductsHeroSection } from '@/components/products-hero-section';
 import { HerbalTeasSection } from '@/components/herbal-teas-section';
 import { DriedFruitsSection } from '@/components/dried-fruits-section';
 import { SpecialBlendsSection } from '@/components/special-blends-section';
 import { BulkWholesaleSection } from '@/components/bulk-wholesale-section';
+import MainLayout from '../(main)/layout';
 
 export const metadata = {
     title: "All Products | NelisGlobal Marketplace",
@@ -13,12 +13,12 @@ export const metadata = {
 
 export default async function ProductsPage() {
   return (
-    <div>
+    <MainLayout>
       <ProductsHeroSection />
       <HerbalTeasSection />
       <DriedFruitsSection />
       <SpecialBlendsSection />
       <BulkWholesaleSection />
-    </div>
+    </MainLayout>
   );
 }
