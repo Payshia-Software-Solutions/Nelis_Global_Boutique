@@ -24,51 +24,51 @@ const FacebookIcon = () => (
 
 export default function LoginPage() {
   return (
-    <Card className="w-full max-w-md bg-card/80 backdrop-blur-sm border-white/20 text-white">
-        <CardHeader className="text-center space-y-2">
-        <CardTitle className="text-3xl font-bold">Welcome Back!</CardTitle>
-        <CardDescription className="text-white/80">Access your orders, wishlists, and personalized recommendations.</CardDescription>
+    <Card className="w-full max-w-md">
+        <CardHeader className="text-left space-y-1">
+        <CardTitle className="text-2xl font-bold">Welcome Back!</CardTitle>
+        <CardDescription>Access your orders, wishlists, and personalized recommendations.</CardDescription>
         </CardHeader>
         <CardContent>
         <div className="grid gap-4">
             <div className="grid gap-2">
-            <Label htmlFor="email" className="text-white">Email Address</Label>
-            <Input id="email" type="email" placeholder="Enter your email" required className="bg-white/10 border-white/20 placeholder:text-white/60" />
+            <Label htmlFor="email">Email Address</Label>
+            <Input id="email" type="email" placeholder="Enter your email" required />
             </div>
             <div className="grid gap-2">
-            <Label htmlFor="password" className="text-white">Password</Label>
-            <Input id="password" type="password" placeholder="Enter your password" required className="bg-white/10 border-white/20 placeholder:text-white/60" />
+            <Label htmlFor="password">Password</Label>
+            <Input id="password" type="password" placeholder="Enter your password" required />
             </div>
             <div className="flex items-center justify-between text-sm">
                 <div className="flex items-center space-x-2">
-                    <Checkbox id="remember-me" className="border-white/50 data-[state=checked]:bg-primary data-[state=checked]:border-primary" />
-                    <Label htmlFor="remember-me" className="font-normal text-white/90">Remember me</Label>
+                    <Checkbox id="remember-me" />
+                    <Label htmlFor="remember-me" className="font-normal">Remember me</Label>
                 </div>
                 <Link href="#" className="font-medium text-primary hover:underline">
                     Forgot Password?
                 </Link>
             </div>
-            <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
+            <Button type="submit" className="w-full">
             Sign In
             </Button>
             
             <div className="relative my-2">
-                <Separator className="bg-white/20"/>
-                <span className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 bg-card/80 px-2 text-xs text-white/80">OR LOGIN WITH</span>
+                <Separator />
+                <span className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 bg-card px-2 text-xs text-muted-foreground">Or login with</span>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                <Button variant="outline" className="w-full bg-transparent border-white/20 hover:bg-white/10 text-white">
+                <Button variant="outline" className="w-full">
                     <GoogleIcon />
-                    Google
+                    Continue with Google
                 </Button>
-                    <Button variant="outline" className="w-full bg-transparent border-white/20 hover:bg-white/10 text-white">
+                    <Button variant="outline" className="w-full">
                     <FacebookIcon />
-                    Facebook
+                    Continue with Facebook
                 </Button>
             </div>
         </div>
-        <div className="mt-6 text-center text-sm text-white/80">
+        <div className="mt-6 text-center text-sm">
             Don&apos;t have an account?{" "}
             <Link href="/auth/register" className="font-medium text-primary hover:underline">
             Create Account
