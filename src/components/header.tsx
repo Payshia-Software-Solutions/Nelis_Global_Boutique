@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -41,13 +42,13 @@ export function Header() {
           "container flex h-20 items-center justify-between transition-colors duration-300",
           hasScrolled ? "text-foreground" : "text-white"
       )}>
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-6 md:w-1/3">
             <Link href="/">
                 <Logo useDarkText={hasScrolled} />
             </Link>
         </div>
         
-        <nav className="hidden md:flex items-center justify-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+        <nav className="hidden md:flex items-center justify-center w-1/3">
             <div className="flex items-center space-x-6 text-sm font-medium">
                 {navLinks.map((link) => (
                     <Link
@@ -61,7 +62,7 @@ export function Header() {
             </div>
         </nav>
         
-        <div className="flex items-center justify-end space-x-4">
+        <div className="flex items-center justify-end space-x-4 md:w-1/3">
           <Link href="#" className={cn(buttonVariants({ variant: 'ghost', size: 'icon' }))}>
             <Search />
             <span className="sr-only">Search</span>
