@@ -1,6 +1,7 @@
 
 import { WholesaleHeroSection } from '@/components/wholesale-hero-section';
 import { WholesaleOpportunitiesSection } from '@/components/wholesale-opportunities-section';
+import { ExportOfferingsSection } from '@/components/export-offerings-section';
 
 export const metadata = {
     title: "Wholesale & Export | NelisGlobal Boutique",
@@ -12,6 +13,7 @@ export default function WholesalePage() {
     <div>
       <WholesaleHeroSection />
       <WholesaleOpportunitiesSection />
+      <ExportOfferingsSection />
     </div>
   );
 }
