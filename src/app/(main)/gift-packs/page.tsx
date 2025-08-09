@@ -1,4 +1,5 @@
 
+import { CuratedCelebrationsSection } from '@/components/curated-celebrations-section';
 import { GiftPacksHeroSection } from '@/components/gift-packs-hero-section';
 
 export const metadata = {
@@ -8,6 +9,9 @@ export const metadata = {
 
 export default function GiftPacksPage() {
   return (
-    <GiftPacksHeroSection />
+    <>
+      <GiftPacksHeroSection />
+      <CuratedCelebrationsSection />
+    </>
   );
 }
