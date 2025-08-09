@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from "next/link";
@@ -48,16 +47,18 @@ export function Header() {
             </Link>
         </div>
         
-        <nav className="hidden md:flex flex-grow items-center justify-center space-x-6 text-sm font-medium">
-            {navLinks.map((link) => (
-                <Link
-                key={link.href}
-                href={link.href}
-                className="transition-colors hover:text-primary"
-                >
-                {link.label}
-                </Link>
-            ))}
+        <nav className="hidden md:flex items-center justify-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+            <div className="flex items-center space-x-6 text-sm font-medium">
+                {navLinks.map((link) => (
+                    <Link
+                    key={link.href}
+                    href={link.href}
+                    className="transition-colors hover:text-primary"
+                    >
+                    {link.label}
+                    </Link>
+                ))}
+            </div>
         </nav>
         
         <div className="flex items-center justify-end space-x-4">
