@@ -35,10 +35,10 @@ export function KeyImpactAreasSection() {
                 </div>
                 <div className="grid md:grid-cols-2 gap-8">
                     {impactAreas.map((area, index) => (
-                        <Card key={index} className="flex flex-col items-center text-center p-8 bg-card shadow-lg hover:shadow-xl transition-shadow">
+                        <Card key={index} className="flex flex-col items-center text-center p-6 bg-card shadow-lg hover:shadow-xl transition-shadow">
                             <CardHeader className="items-center">
-                                <div className="bg-primary/10 rounded-full p-4 mb-4">
-                                    <area.icon className="h-10 w-10 text-primary" />
+                                <div className="bg-primary/10 rounded-full p-3 mb-4">
+                                    <area.icon className="h-8 w-8 text-primary" />
                                 </div>
                                 <CardTitle>{area.title}</CardTitle>
                             </CardHeader>
