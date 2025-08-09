@@ -7,6 +7,7 @@ import { ProductCard } from "@/components/product-card";
 import { GiftPacksSection } from "@/components/gift-packs-section";
 import { WhyChooseUs } from "@/components/why-choose-us";
 import { WholesaleExportSection } from "@/components/wholesale-export-section";
+import { ContactUsSection } from "@/components/contact-us-section";
 
 export const metadata = {
   title: "NelisGlobal Boutique | Natural Products from Sri Lanka",
@@ -74,6 +75,9 @@ export default async function HomePage() {
 
       {/* Wholesale & Export Section */}
       <WholesaleExportSection />
+
+      {/* Contact Us Section */}
+      <ContactUsSection />
     </div>
   );
 }
