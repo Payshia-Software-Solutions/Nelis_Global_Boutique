@@ -1,16 +1,12 @@
 
-import { StoreHeroSection } from '@/components/store-hero-section';
-import MainLayout from '../(main)/layout';
+"use client";
 
-export const metadata = {
-    title: "Online Store | NelisGlobal Boutique",
-    description: "Shop our collection of high-quality, natural products from Sri Lanka.",
-};
+import { StoreHeroSection } from '@/components/store-hero-section';
 
 export default function StorePage() {
   return (
-    <MainLayout>
+    <div>
       <StoreHeroSection />
-    </MainLayout>
+    </div>
   );
 }
