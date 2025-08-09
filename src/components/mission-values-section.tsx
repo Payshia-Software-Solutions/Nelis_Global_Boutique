@@ -34,7 +34,7 @@ export function MissionValuesSection() {
                 </div>
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {values.map((value, index) => (
-                        <div key={index} className="flex flex-col items-center text-center p-8 bg-card rounded-lg shadow-sm transition-shadow hover:shadow-lg">
+                        <div key={index} className="flex flex-col items-center text-center p-6 bg-card rounded-lg shadow-sm transition-shadow hover:shadow-lg">
                             <div className="bg-primary/10 rounded-full p-4 mb-6">
                                 <value.icon className="h-10 w-10 text-primary" />
                             </div>
