@@ -22,7 +22,7 @@ const CollectionSection = ({ collection, products }: { collection: Collection; p
                     <h2 className="text-4xl font-bold">{collection.title}</h2>
                     {collection.description && <p className="text-muted-foreground mt-4 text-lg">{collection.description}</p>}
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="grid grid-cols-2 gap-8">
                     {products.map(product => (
                         <CategoryProductCard key={product.id} product={product} />
                     ))}
