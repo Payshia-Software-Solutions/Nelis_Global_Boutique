@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from "next/image";
@@ -7,7 +8,7 @@ export function SustainabilityCommitmentSection() {
     return (
         <section className="py-24">
             <div className="container mx-auto px-4">
-                <div className="grid md:grid-cols-2 gap-12 items-center">
+                <div className="grid lg:grid-cols-2 gap-12 items-center">
                     <div className="rounded-lg overflow-hidden shadow-lg">
                         <Image
                             src="https://placehold.co/600x700.png"
