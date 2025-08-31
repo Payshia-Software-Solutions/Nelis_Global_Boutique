@@ -5,8 +5,8 @@ import { Leaf } from 'lucide-react';
 
 export async function HerbalTeasSection() {
     const allProducts = await getProducts();
-    // Assuming 'Fashion' category products are herbal teas for demonstration
-    const herbalTeas = allProducts.filter(p => p.category === 'Fashion').slice(0, 3); 
+    // Assuming 'herbal-tea' category products are herbal teas for demonstration
+    const herbalTeas = allProducts.filter(p => p.category === 'herbal-tea').slice(0, 3); 
 
     return (
         <section id="herbal-teas" className="py-16">

@@ -5,8 +5,8 @@ import { Coffee } from 'lucide-react';
 
 export async function SpecialBlendsSection() {
     const allProducts = await getProducts();
-    // Assuming 'Sports' category products are special blends for demonstration
-    const specialBlends = allProducts.filter(p => p.category === 'Sports').slice(0, 3); 
+    // Assuming 'special-blends' category products are special blends for demonstration
+    const specialBlends = allProducts.filter(p => p.category === 'special-blends').slice(0, 3); 
 
     return (
         <section id="special-blends" className="py-16">
