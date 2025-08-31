@@ -1,4 +1,5 @@
 
+
 export type Product = {
   id: string;
   name: string;
@@ -66,4 +67,13 @@ export type Review = {
   rating: number;
   date: string;
   comment: string;
+}
+
+export type Collection = {
+    id: string;
+    title: string;
+    description: string;
+    cover_image_url: string;
+    status: string;
+    company_id: string;
 }

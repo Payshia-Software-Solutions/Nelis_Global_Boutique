@@ -1,18 +1,31 @@
+
 "use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Search, ShoppingCart, Menu, X } from "lucide-react";
+import { Search, ShoppingCart, Menu, X, ChevronDown } from "lucide-react";
 import { Logo } from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/cart-provider";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import type { Collection } from "@/lib/types";
+import { getCollections } from "@/lib/mock-data";
+
+import {
+    NavigationMenu,
+    NavigationMenuContent,
+    NavigationMenuItem,
+    NavigationMenuLink,
+    NavigationMenuList,
+    NavigationMenuTrigger,
+    navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu";
 
 const navLinks = [
     { href: "/", label: "Home" },
     { href: "/about", label: "About Us" },
-    { href: "/products", label: "Our Products" },
+    // Our Products will be handled by the NavigationMenu
     { href: "/our-impact", label: "Impact & Sustainability" },
     { href: "/wholesale", label: "Wholesale & Export" },
     { href: "/contact", label: "Contact Us" },
@@ -22,33 +35,96 @@ export function Header() {
     const pathname = usePathname();
     const { itemCount } = useCart();
     const [isMenuOpen, setMenuOpen] = useState(false);
+    const [collections, setCollections] = useState<Collection[]>([]);
+
+    useEffect(() => {
+        const fetchCollections = async () => {
+            const data = await getCollections();
+            setCollections(data);
+        };
+        fetchCollections();
+    }, []);
+
+    const ListItem = ({ href, title }: { href: string; title: string }) => (
+        <li>
+            <NavigationMenuLink asChild>
+                <Link
+                    href={href}
+                    className={cn(
+                        "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                    )}
+                >
+                    <div className="text-sm font-medium leading-none">{title}</div>
+                </Link>
+            </NavigationMenuLink>
+        </li>
+    );
 
     return (
         <header className="bg-card text-card-foreground border-b sticky top-0 z-50">
             <div className="container mx-auto px-4">
                 <div className="flex items-center justify-between h-20">
-                    <div className="flex items-center gap-8">
-                        <Link href="/">
-                            <Logo useDarkText={true} />
-                        </Link>
+                    <Link href="/">
+                        <Logo useDarkText={true} />
+                    </Link>
+
+                    <div className="hidden md:flex flex-1 items-center justify-center">
+                        <NavigationMenu>
+                            <NavigationMenuList>
+                                {navLinks.slice(0, 2).map((link) => (
+                                     <NavigationMenuItem key={link.href}>
+                                         <Link href={link.href} legacyBehavior passHref>
+                                             <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), pathname === link.href ? "text-primary" : "text-muted-foreground")}>
+                                                 {link.label}
+                                             </NavigationMenuLink>
+                                         </Link>
+                                     </NavigationMenuItem>
+                                ))}
+
+                                <NavigationMenuItem>
+                                    <NavigationMenuTrigger className={cn(pathname.startsWith('/products') && "text-primary")}>Our Products</NavigationMenuTrigger>
+                                    <NavigationMenuContent>
+                                        <div className="grid w-[600px] grid-cols-3 gap-x-8 p-4">
+                                            <div>
+                                                <h3 className="font-semibold text-sm mb-2 px-3">SHOP TEA</h3>
+                                                <ul className="space-y-1">
+                                                    <ListItem href="/products" title="Shop All Teas" />
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <h3 className="font-semibold text-sm mb-2 px-3">SHOP BY COLLECTION</h3>
+                                                 <ul className="space-y-1">
+                                                    {collections.map((collection) => (
+                                                        <ListItem key={collection.id} href={`/products?collection=${collection.id}`} title={collection.title} />
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <h3 className="font-semibold text-sm mb-2 px-3">SHOP BY BRAND</h3>
+                                                 <ul className="space-y-1">
+                                                    {/* Add brand links here when available */}
+                                                    <ListItem href="#" title="Brand A" />
+                                                    <ListItem href="#" title="Brand B" />
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </NavigationMenuContent>
+                                </NavigationMenuItem>
+
+                                {navLinks.slice(2).map((link) => (
+                                     <NavigationMenuItem key={link.href}>
+                                         <Link href={link.href} legacyBehavior passHref>
+                                             <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), pathname === link.href ? "text-primary" : "text-muted-foreground")}>
+                                                 {link.label}
+                                             </NavigationMenuLink>
+                                         </Link>
+                                     </NavigationMenuItem>
+                                ))}
+                            </NavigationMenuList>
+                        </NavigationMenu>
                     </div>
 
-                    <nav className="hidden md:flex items-center justify-center flex-1 space-x-6">
-                        {navLinks.map((link) => (
-                            <Link 
-                                key={link.href} 
-                                href={link.href}
-                                className={cn(
-                                    "text-sm font-medium transition-colors hover:text-primary",
-                                    pathname === link.href ? "text-primary" : "text-muted-foreground"
-                                )}
-                            >
-                                {link.label}
-                            </Link>
-                        ))}
-                    </nav>
-
-                    <div className="hidden md:flex items-center space-x-4">
+                    <div className="hidden md:flex items-center space-x-2">
                         <Button variant="ghost" size="icon">
                             <Search className="h-5 w-5" />
                         </Button>

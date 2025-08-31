@@ -1,5 +1,6 @@
 
-import type { Product, Category, Review, ApiResponse, ApiProductData } from './types';
+
+import type { Product, Category, Review, ApiResponse, ApiProductData, Collection } from './types';
 
 const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGE_URL_BASE;
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -56,6 +57,20 @@ export const getFeaturedProducts = async (): Promise<Product[]> => {
         return [];
     }
 };
+
+export const getCollections = async (): Promise<Collection[]> => {
+    try {
+        const response = await fetch(`${apiBaseUrl}/collections/company?company_id=${companyId}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data: Collection[] = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Failed to fetch collections:", error);
+        return [];
+    }
+}
 
 export const categories: Category[] = [
   { id: 'electronics', name: 'Electronics', imageUrl: 'https://placehold.co/600x400.png' },
