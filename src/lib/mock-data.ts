@@ -1,6 +1,6 @@
 
 
-import type { Product, Category, Review, ApiResponse, ApiProductData, Collection } from './types';
+import type { Product, Category, Review, ApiResponse, ApiProductData, Collection, CollectionProduct } from './types';
 
 const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGE_URL_BASE;
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -68,6 +68,20 @@ export const getCollections = async (): Promise<Collection[]> => {
         return data;
     } catch (error) {
         console.error("Failed to fetch collections:", error);
+        return [];
+    }
+}
+
+export const getCollectionProducts = async (): Promise<CollectionProduct[]> => {
+    try {
+        const response = await fetch(`${apiBaseUrl}/collection-products/company?company_id=${companyId}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data: CollectionProduct[] = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Failed to fetch collection products:", error);
         return [];
     }
 }

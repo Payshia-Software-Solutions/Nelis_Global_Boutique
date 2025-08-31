@@ -77,3 +77,10 @@ export type Collection = {
     status: string;
     company_id: string;
 }
+
+export type CollectionProduct = {
+  id: string;
+  collection_id: string;
+  product_id: string;
+  company_id: string;
+};
