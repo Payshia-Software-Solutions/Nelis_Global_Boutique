@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
 import type { Collection } from "@/lib/types";
 import { getCollections } from "@/lib/mock-data";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 import {
     NavigationMenu,
@@ -25,7 +26,7 @@ import {
 const navLinks = [
     { href: "/", label: "Home" },
     { href: "/about", label: "About Us" },
-    // Our Products will be handled by the NavigationMenu
+    { href: "/products", label: "Our Products"},
     { href: "/our-impact", label: "Impact & Sustainability" },
     { href: "/wholesale", label: "Wholesale & Export" },
     { href: "/contact", label: "Contact Us" },
@@ -60,6 +61,8 @@ export function Header() {
         </li>
     );
 
+    const desktopNavLinks = navLinks.filter(link => link.label !== "Our Products");
+
     return (
         <header className="bg-card text-card-foreground border-b sticky top-0 z-50">
             <div className="container mx-auto px-4">
@@ -71,7 +74,7 @@ export function Header() {
                     <div className="hidden md:flex flex-1 items-center justify-center">
                         <NavigationMenu>
                             <NavigationMenuList>
-                                {navLinks.slice(0, 2).map((link) => (
+                                {desktopNavLinks.slice(0, 2).map((link) => (
                                      <NavigationMenuItem key={link.href}>
                                          <Link href={link.href} legacyBehavior passHref>
                                              <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), pathname === link.href ? "text-primary" : "text-muted-foreground")}>
@@ -95,7 +98,7 @@ export function Header() {
                                                 <h3 className="font-semibold text-sm mb-2 px-3">SHOP BY COLLECTION</h3>
                                                  <ul className="space-y-1">
                                                     {collections.map((collection) => (
-                                                        <ListItem key={collection.id} href={`/products?collection=${collection.id}`} title={collection.title} />
+                                                        <ListItem key={collection.id} href={`/products#${collection.id}`} title={collection.title} />
                                                     ))}
                                                 </ul>
                                             </div>
@@ -111,7 +114,7 @@ export function Header() {
                                     </NavigationMenuContent>
                                 </NavigationMenuItem>
 
-                                {navLinks.slice(2).map((link) => (
+                                {desktopNavLinks.slice(2).map((link) => (
                                      <NavigationMenuItem key={link.href}>
                                          <Link href={link.href} legacyBehavior passHref>
                                              <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), pathname === link.href ? "text-primary" : "text-muted-foreground")}>
@@ -141,47 +144,48 @@ export function Header() {
                     </div>
                     
                     <div className="md:hidden">
-                        <Button onClick={() => setMenuOpen(!isMenuOpen)} variant="ghost" size="icon">
-                            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-                        </Button>
+                        <Sheet open={isMenuOpen} onOpenChange={setMenuOpen}>
+                            <SheetTrigger asChild>
+                                <Button variant="ghost" size="icon">
+                                    <Menu className="h-6 w-6" />
+                                </Button>
+                            </SheetTrigger>
+                            <SheetContent side="left">
+                                <nav className="flex flex-col items-start space-y-4 py-4">
+                                    {navLinks.map((link) => (
+                                        <Link 
+                                            key={link.href} 
+                                            href={link.href}
+                                            className={cn(
+                                                "text-lg font-medium transition-colors hover:text-primary w-full text-left p-2 rounded-md",
+                                                pathname === link.href ? "text-primary bg-muted" : "text-muted-foreground"
+                                            )}
+                                            onClick={() => setMenuOpen(false)}
+                                        >
+                                            {link.label}
+                                        </Link>
+                                    ))}
+                                    <div className="flex items-center space-x-2 pt-4">
+                                        <Button variant="ghost" size="icon">
+                                            <Search className="h-6 w-6" />
+                                        </Button>
+                                        <Link href="/cart">
+                                            <Button variant="ghost" size="icon" className="relative">
+                                                <ShoppingCart className="h-6 w-6" />
+                                                {itemCount > 0 && (
+                                                    <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs rounded-full h-4 w-4 flex items-center justify-center">
+                                                        {itemCount}
+                                                    </span>
+                                                )}
+                                            </Button>
+                                        </Link>
+                                    </div>
+                                </nav>
+                            </SheetContent>
+                        </Sheet>
                     </div>
                 </div>
             </div>
-            
-            {isMenuOpen && (
-                 <div className="md:hidden bg-card border-t">
-                    <nav className="flex flex-col items-center space-y-4 py-4">
-                        {navLinks.map((link) => (
-                            <Link 
-                                key={link.href} 
-                                href={link.href}
-                                className={cn(
-                                    "text-base font-medium transition-colors hover:text-primary",
-                                    pathname === link.href ? "text-primary" : "text-muted-foreground"
-                                )}
-                                onClick={() => setMenuOpen(false)}
-                            >
-                                {link.label}
-                            </Link>
-                        ))}
-                         <div className="flex items-center space-x-4 pt-4">
-                            <Button variant="ghost" size="icon">
-                                <Search className="h-6 w-6" />
-                            </Button>
-                            <Link href="/cart">
-                                <Button variant="ghost" size="icon" className="relative">
-                                    <ShoppingCart className="h-6 w-6" />
-                                    {itemCount > 0 && (
-                                        <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs rounded-full h-4 w-4 flex items-center justify-center">
-                                            {itemCount}
-                                        </span>
-                                    )}
-                                </Button>
-                            </Link>
-                        </div>
-                    </nav>
-                </div>
-            )}
         </header>
     );
 }
