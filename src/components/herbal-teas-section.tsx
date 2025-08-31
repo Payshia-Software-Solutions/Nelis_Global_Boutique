@@ -1,4 +1,5 @@
 
+"use client"
 import { Leaf } from 'lucide-react';
 
 export function HerbalTeasSection() {
@@ -18,4 +19,3 @@ export function HerbalTeasSection() {
         </section>
     );
 }
-

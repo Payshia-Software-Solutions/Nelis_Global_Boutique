@@ -1,4 +1,5 @@
 
+"use client"
 import { Coffee } from 'lucide-react';
 
 export function SpecialBlendsSection() {
@@ -18,4 +19,3 @@ export function SpecialBlendsSection() {
         </section>
     );
 }
-

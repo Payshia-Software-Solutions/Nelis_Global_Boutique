@@ -1,4 +1,6 @@
 
+"use client"
+
 export function DriedFruitsSection() {
     return (
         <section id="dried-fruits" className="py-16 bg-muted/50">
@@ -17,4 +19,3 @@ export function DriedFruitsSection() {
         </section>
     );
 }
-

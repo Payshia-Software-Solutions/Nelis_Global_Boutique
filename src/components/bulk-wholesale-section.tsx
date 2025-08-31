@@ -17,7 +17,7 @@ export function BulkWholesaleSection() {
                     Looking to stock our products in your store, hotel, or wellness center? We offer bulk purchasing options with customized packaging solutions for retailers, boutique hotels, and international distributors.
                 </p>
                 <div className="mt-8">
-                    <Button asChild variant="secondary" size="lg">
+                    <Button asChild variant="default" size="lg">
                         <Link href="/contact">
                             Contact us today for wholesale pricing and partnership opportunities!
                         </Link>

@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from "next/image";
@@ -30,7 +31,7 @@ export function CategoryProductCard({ product }: CategoryProductCardProps) {
   };
 
   return (
-    <Card className="flex flex-col h-full overflow-hidden">
+    <Card className="flex flex-col h-full overflow-hidden transition-shadow duration-300 hover:shadow-xl">
       <Link href={`/products/${product.id}`}>
         <Image
           src={product.imageUrl}
@@ -49,7 +50,7 @@ export function CategoryProductCard({ product }: CategoryProductCardProps) {
             <p className="text-lg font-bold text-primary/80">${product.price.toFixed(2)}</p>
         </div>
         <p className="text-sm text-muted-foreground line-clamp-3 min-h-[3.75rem]">
-            A vibrant blue tea that changes color when lemon is added. Packed with powerful antioxidants, this tea enhances brain function, reduces stress, and supports eye health.
+            {product.description}
         </p>
       </CardContent>
       <CardFooter className="p-2">
