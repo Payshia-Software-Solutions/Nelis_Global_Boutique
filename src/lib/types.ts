@@ -10,7 +10,40 @@ export type Product = {
   reviewCount: number;
   featured?: boolean;
   details: string[];
+  images: string[];
 };
+
+export type ApiProductData = {
+  product: {
+    id: string;
+    name: string;
+    description: string;
+    category: string;
+    price: string;
+    company_id: string;
+  };
+  product_images: {
+    id: string;
+    img_url: string;
+  }[];
+  variants: {
+    variant: {
+      id: string;
+      sku: string;
+    };
+    images: {
+      id: string;
+      img_url: string;
+    }[];
+  }[];
+};
+
+export type ApiResponse = {
+  company_id: string;
+  total_products: number;
+  products: ApiProductData[];
+};
+
 
 export type Category = {
   id: string;
