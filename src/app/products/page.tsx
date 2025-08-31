@@ -4,6 +4,7 @@ import { HerbalTeasSection } from '@/components/herbal-teas-section';
 import { DriedFruitsSection } from '@/components/dried-fruits-section';
 import { SpecialBlendsSection } from '@/components/special-blends-section';
 import { BulkWholesaleSection } from '@/components/bulk-wholesale-section';
+import { CollectionsSection } from '@/components/collections-section';
 import MainLayout from '../(main)/layout';
 
 export const metadata = {
@@ -15,6 +16,7 @@ export default async function ProductsPage() {
   return (
     <MainLayout>
       <ProductsHeroSection />
+      <CollectionsSection />
       <HerbalTeasSection />
       <DriedFruitsSection />
       <SpecialBlendsSection />
