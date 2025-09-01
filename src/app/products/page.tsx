@@ -1,15 +1,20 @@
 
 import { ProductsHeroSection } from '@/components/products-hero-section';
-import { getCollections } from '@/lib/mock-data';
+import { HerbalTeasSection } from '@/components/herbal-teas-section';
+import { getCollections, getProducts } from '@/lib/mock-data';
 import type { Collection } from '@/lib/types';
 import MainLayout from '../(main)/layout';
+import { CategoryProductCard } from '@/components/category-product-card';
 
 export const metadata = {
     title: "All Products | NelisGlobal Marketplace",
     description: "Browse our full collection of high-quality products. Find what you're looking for at NelisGlobal.",
 };
 
-const CollectionSection = ({ collection }: { collection: Collection }) => {
+const CollectionSection = async ({ collection }: { collection: Collection }) => {
+    const allProducts = await getProducts();
+    const collectionProducts = allProducts.filter(p => p.category === collection.title);
+
     return (
         <section id={collection.id} className="py-16">
             <div className="container mx-auto px-4">
@@ -17,7 +22,11 @@ const CollectionSection = ({ collection }: { collection: Collection }) => {
                     <h2 className="text-4xl font-bold">{collection.title}</h2>
                     {collection.description && <p className="text-muted-foreground mt-4 text-lg">{collection.description}</p>}
                 </div>
-                {/* Product grid will be added here later */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    {collectionProducts.map((product) => (
+                        <CategoryProductCard key={product.id} product={product} />
+                    ))}
+                </div>
             </div>
         </section>
     );
@@ -25,11 +34,13 @@ const CollectionSection = ({ collection }: { collection: Collection }) => {
 
 export default async function ProductsPage() {
   const collections = await getCollections();
+  const filteredCollections = collections.filter(c => c.title !== "Herbal Teas");
   
   return (
     <MainLayout>
       <ProductsHeroSection />
-      {collections.map((collection) => (
+      <HerbalTeasSection />
+      {filteredCollections.map((collection) => (
         <CollectionSection key={collection.id} collection={collection} />
       ))}
     </MainLayout>
