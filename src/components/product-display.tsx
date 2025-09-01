@@ -3,44 +3,17 @@
 
 import Image from "next/image";
 import { Star } from "lucide-react";
-import type { Product, Review } from "@/lib/types";
+import type { Product } from "@/lib/types";
 import { ProductDetailsClient } from "@/components/product-details-client";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ProductImages } from "@/components/product-images";
 import { YouMightAlsoLikeSection } from "@/components/you-might-also-like-section";
 
-const ReviewCard = ({ review }: { review: Review }) => (
-    <div className="flex space-x-4">
-        <Avatar>
-            <AvatarImage src={review.avatarUrl} alt={review.author} />
-            <AvatarFallback>{review.author.charAt(0)}</AvatarFallback>
-        </Avatar>
-        <div className="flex-1">
-            <p className="font-semibold">{review.author}</p>
-            <div className="flex items-center mt-1">
-                {[...Array(5)].map((_, i) => (
-                    <Star key={i} className={cn("h-4 w-4", i < review.rating ? "text-yellow-400 fill-yellow-400" : "text-muted-foreground")} />
-                ))}
-            </div>
-            <p className="font-semibold mt-2">Amazing color-changing tea!</p>
-            <p className="text-sm text-muted-foreground mt-1">{review.comment}</p>
-        </div>
-    </div>
-);
-
 interface ProductDisplayProps {
     product: Product;
-    reviews: Review[];
 }
 
-export function ProductDisplay({ product, reviews }: ProductDisplayProps) {
-    const averageRating = reviews.length > 0 ? reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length : 0;
-
+export function ProductDisplay({ product }: ProductDisplayProps) {
     return (
         <div className="container mx-auto px-4 py-8 md:py-12">
             <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
@@ -76,38 +49,6 @@ export function ProductDisplay({ product, reviews }: ProductDisplayProps) {
                             <p className="text-muted-foreground">Store in a cool, dry place away from direct sunlight to maintain freshness and color.</p>
                         </TabsContent>
                     </Tabs>
-                
-                    <div>
-                        <h2 className="text-2xl font-bold mb-4">Customer Reviews</h2>
-                        <Card>
-                            <CardContent className="space-y-6 p-6">
-                                <div className="flex items-center gap-4 p-4 rounded-lg bg-muted/50">
-                                    <div className="text-center">
-                                        <p className="text-4xl font-bold">{averageRating.toFixed(1)}</p>
-                                        <div className="flex items-center justify-center">
-                                            {[...Array(5)].map((_, i) => (
-                                                <Star key={i} className={cn("h-4 w-4", i < Math.round(averageRating) ? "text-yellow-400 fill-yellow-400" : "text-muted-foreground")} />
-                                            ))}
-                                        </div>
-                                        <p className="text-xs text-muted-foreground mt-1">Based on {reviews.length} reviews</p>
-                                    </div>
-                                    <div className="flex-grow text-right">
-                                    <Button variant="outline">Write a Review</Button>
-                                    </div>
-                                </div>
-                                <div className="space-y-6">
-                                    {reviews.map((review, index) => (
-                                        <div key={review.id}>
-                                        {index > 0 && <Separator />}
-                                        <div className={cn(index > 0 && "pt-6")}>
-                                            <ReviewCard review={review} />
-                                        </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </CardContent>
-                        </Card>
-                    </div>
                 </div>
             </div>
             <YouMightAlsoLikeSection />

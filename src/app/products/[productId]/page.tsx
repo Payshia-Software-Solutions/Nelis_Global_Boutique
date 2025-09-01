@@ -1,7 +1,6 @@
 
 import { notFound } from "next/navigation";
-import { getProductBySlug, getReviewsByProductId } from "@/lib/mock-data";
-import type { Review } from "@/lib/types";
+import { getProductBySlug } from "@/lib/mock-data";
 import { ProductDisplay } from "@/components/product-display";
 
 type ProductPageProps = {
@@ -27,8 +26,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
   if (!product) {
     notFound();
   }
-  
-  const reviews = await getReviewsByProductId(product.id);
 
-  return <ProductDisplay product={product} reviews={reviews} />;
+  return <ProductDisplay product={product} />;
 }
