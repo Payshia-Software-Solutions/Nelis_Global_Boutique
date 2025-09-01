@@ -1,6 +1,4 @@
 
-"use client";
-
 import { StoreHeroSection } from '@/components/store-hero-section';
 import { FeaturedProductsSection } from '@/components/featured-products-section';
 import { StoreHerbalTeasSection } from '@/components/store-herbal-teas-section';
