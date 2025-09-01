@@ -23,6 +23,7 @@ export function CategoryProductCard({ product }: CategoryProductCardProps) {
       name: product.name,
       price: product.price,
       imageUrl: product.imageUrl,
+      quantity: 1,
     });
     toast({
       title: "Added to cart",
