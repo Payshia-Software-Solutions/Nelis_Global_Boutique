@@ -62,12 +62,6 @@ export type ApiResponse = {
 };
 
 
-export type Category = {
-  id: string;
-  name: string;
-  imageUrl: string;
-};
-
 export type CartItem = {
   id: string;
   name: string;
@@ -75,15 +69,6 @@ export type CartItem = {
   imageUrl: string;
   quantity: number;
 };
-
-export type Review = {
-  id: string;
-  author: string;
-  avatarUrl: string;
-  rating: number;
-  date: string;
-  comment: string;
-}
 
 export type Collection = {
     id: string;
