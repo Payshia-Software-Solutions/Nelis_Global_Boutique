@@ -20,31 +20,33 @@ export default async function HomePage() {
   return (
     <div className="space-y-16">
       {/* Hero Section */}
-      <section className="relative h-screen min-h-[600px] w-full flex items-center justify-center -mt-20">
+      <section className="relative h-screen min-h-[600px] w-full flex items-center justify-start -mt-20">
         <Image
           src="https://placehold.co/1920x1080.png"
           alt="A market stall with various natural products"
-          layout="fill"
+          fill
           objectFit="cover"
           className="opacity-50"
           data-ai-hint="natural products market"
           priority
         />
         <div className="absolute inset-0 bg-black/40" />
-        <div className="container mx-auto h-full flex flex-col items-center justify-center text-center relative z-10 text-white">
-          <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
-            Welcome to Nelis Global Boutique
-          </h1>
-          <p className="mt-4 max-w-2xl text-lg md:text-xl">
-            Discover the finest natural products from Sri Lanka. We bring you premium dried fruits, herbal teas, and authentic flavors crafted with sustainable practices and community care.
-          </p>
-          <div className="mt-8 flex gap-4">
-            <Button asChild size="lg">
-              <Link href="/products">Shop Now</Link>
-            </Button>
-            <Button asChild size="lg" variant="outline" className="bg-transparent border-white text-white hover:bg-white hover:text-primary">
-              <Link href="/contact">Contact Us</Link>
-            </Button>
+        <div className="container mx-auto h-full flex flex-col items-start justify-center text-left relative z-10 text-white">
+          <div className="max-w-2xl">
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
+              Welcome to Nelis Global Boutique
+            </h1>
+            <p className="mt-4 text-lg md:text-xl">
+              Discover the finest natural products from Sri Lanka. We bring you premium dried fruits, herbal teas, and authentic flavors crafted with sustainable practices and community care.
+            </p>
+            <div className="mt-8 flex gap-4">
+              <Button asChild size="lg">
+                <Link href="/products">Shop Now</Link>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="bg-transparent border-white text-white hover:bg-white hover:text-primary">
+                <Link href="/contact">Contact Us</Link>
+              </Button>
+            </div>
           </div>
         </div>
       </section>
