@@ -20,8 +20,8 @@ export async function generateMetadata({ params }: ProductPageProps) {
     };
 }
 
-export default async function ProductPage({ params }: ProductPageProps) {
-  const product = await getProductBySlug(params.productSlug);
+export default async function ProductPage({ params }: { params: { productId: string } }) {
+  const product = await getProductBySlug(params.productId);
   
   if (!product) {
     notFound();

@@ -2,7 +2,7 @@
 
 import type { Product, ApiResponse, ApiProductData, Collection, CollectionProduct, SingleProductApiResponse } from './types';
 
-const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGE_URL_BASE;
+const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGE_URL_BASE || '';
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 const companyId = process.env.NEXT_PUBLIC_COMPANY_ID;
 
@@ -14,14 +14,14 @@ const mapApiProductToProduct = (apiProduct: ApiProductData): Product => {
     name: apiProduct.product.name,
     description: apiProduct.product.description,
     price: parseFloat(apiProduct.product.price) || 0,
-    imageUrl: `${imageBaseUrl}${firstImage}`,
+    imageUrl: firstImage.startsWith('http') ? firstImage : `${imageBaseUrl}${firstImage}`,
     category: apiProduct.product.category,
     slug: apiProduct.product.slug,
     rating: 5, // Static value as it's not in the API response
     reviewCount: 0, // Static value as it's not in the API response
     featured: true, // Static value as it's not in the API response
     details: [], // Static value as it's not in the API response
-    images: apiProduct.product_images.map(img => `${imageBaseUrl}${img.img_url}`)
+    images: apiProduct.product_images.map(img => img.img_url.startsWith('http') ? img.img_url : `${imageBaseUrl}${img.img_url}`)
   };
 };
 
@@ -63,14 +63,14 @@ export const getProductBySlug = async (slug: string): Promise<Product | undefine
       name: data.product.name,
       description: data.product.description,
       price: parseFloat(data.product.price) || 0,
-      imageUrl: `${imageBaseUrl}${firstImage}`,
+      imageUrl: firstImage.startsWith('http') ? firstImage : `${imageBaseUrl}${firstImage}`,
       category: data.product.category,
       slug: data.product.slug,
       rating: 5,
       reviewCount: 0,
       featured: true,
       details: [],
-      images: data.product_images?.map(img => `${imageBaseUrl}${img.img_url}`) ?? [firstImage]
+      images: data.product_images?.map(img => img.img_url.startsWith('http') ? img.img_url : `${imageBaseUrl}${img.img_url}`) ?? [firstImage]
     };
   } catch (error) {
     console.error(`Failed to fetch product by slug ${slug}:`, error);
@@ -115,3 +115,4 @@ export const getCollectionProducts = async (): Promise<CollectionProduct[]> => {
         return [];
     }
 }
+
