@@ -1,6 +1,9 @@
 
 import { ProductsHeroSection } from '@/components/products-hero-section';
 import { HerbalTeasSection } from '@/components/herbal-teas-section';
+import { DriedFruitsSection } from '@/components/dried-fruits-section';
+import { SpecialBlendsSection } from '@/components/special-blends-section';
+import { BulkWholesaleSection } from '@/components/bulk-wholesale-section';
 import { getCollections, getProducts } from '@/lib/mock-data';
 import type { Collection } from '@/lib/types';
 import MainLayout from '../(main)/layout';
@@ -34,15 +37,18 @@ const CollectionSection = async ({ collection }: { collection: Collection }) => 
 
 export default async function ProductsPage() {
   const collections = await getCollections();
-  const filteredCollections = collections.filter(c => c.title !== "Herbal Teas");
+  const filteredCollections = collections.filter(c => c.title !== "Herbal Teas" && c.title !== "Dried Fruits" && c.title !== "Special Blends");
   
   return (
     <MainLayout>
       <ProductsHeroSection />
       <HerbalTeasSection />
+      <DriedFruitsSection />
+      <SpecialBlendsSection />
       {filteredCollections.map((collection) => (
         <CollectionSection key={collection.id} collection={collection} />
       ))}
+      <BulkWholesaleSection />
     </MainLayout>
   );
 }

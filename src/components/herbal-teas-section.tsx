@@ -19,31 +19,12 @@ export function HerbalTeasSection() {
     useEffect(() => {
         const fetchProducts = async () => {
             const allProducts = await getProducts();
-            const teaProducts = allProducts.filter(p => p.category === 'Herbal Teas' || p.category === 'herbal-tea');
+            const teaNames = ['Butterfly Pea Tea', 'Lotus Tea', 'Hibiscus Tea'];
+            const teaProducts = allProducts.filter(p => teaNames.includes(p.name));
             
             const enrichedProducts = teaProducts.map(apiProduct => {
                 const content = teaProductsContent.find(p => p.name.toLowerCase() === apiProduct.name.toLowerCase());
                 return content ? { ...apiProduct, description: content.description } : apiProduct;
-            });
-
-            // Make sure we have at least the products from the content, with placeholders if not from API
-            teaProductsContent.forEach(contentProduct => {
-                if (!enrichedProducts.some(p => p.name.toLowerCase() === contentProduct.name.toLowerCase())) {
-                    enrichedProducts.push({
-                        id: contentProduct.name.toLowerCase().replace(/\s+/g, '-'),
-                        name: contentProduct.name,
-                        description: contentProduct.description,
-                        price: 24.99,
-                        imageUrl: 'https://placehold.co/600x400',
-                        category: 'Herbal Teas',
-                        slug: contentProduct.name.toLowerCase().replace(/\s+/g, '-'),
-                        rating: 5,
-                        reviewCount: 0,
-                        featured: true,
-                        details: [],
-                        images: []
-                    });
-                }
             });
 
             setProducts(enrichedProducts);
