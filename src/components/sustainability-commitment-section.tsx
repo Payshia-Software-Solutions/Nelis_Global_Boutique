@@ -23,7 +23,7 @@ export function SustainabilityCommitmentSection() {
                         <div>
                             <div className="flex items-center gap-3 mb-4">
                                 <Leaf className="h-10 w-10 text-primary" />
-                                <h2 className="text-4xl font-bold">Our Commitment to Sustainability</h2>
+                                <h2 className="text-4xl">Our Commitment to Sustainability</h2>
                             </div>
                             <p className="text-muted-foreground">
                                 At Nelis Pvt Ltd, sustainability is at the core of everything we do. From the way we source raw materials to our production processes, we strive to create a business model that benefits people and the planet.

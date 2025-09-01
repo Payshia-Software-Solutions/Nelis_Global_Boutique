@@ -8,8 +8,8 @@ import { FutureGoalsSection } from "@/components/future-goals-section";
 export default function OurImpactPage() {
   return (
     <div>
-      <SustainabilityCommitmentSection />
       <KeyImpactAreasSection />
+      <SustainabilityCommitmentSection />
       <FutureGoalsSection />
     </div>
   );

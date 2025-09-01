@@ -12,7 +12,7 @@ export async function FeaturedProductsSection() {
                 <div className="text-center mb-12">
                     <div className="flex justify-center items-center gap-3">
                         <ShoppingBag className="h-8 w-8 text-primary" />
-                        <h2 className="text-4xl font-bold">Featured Products</h2>
+                        <h2 className="text-4xl">Featured Products</h2>
                     </div>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">

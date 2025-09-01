@@ -60,7 +60,7 @@ export default function CheckoutPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-center mb-8">Checkout</h1>
+      <h1 className="text-3xl text-center mb-8">Checkout</h1>
       <div className="grid lg:grid-cols-2 gap-12">
         <div>
           <Form {...form}>
@@ -174,7 +174,7 @@ export default function CheckoutPage() {
                             <span>Free</span>
                         </div>
                          <Separator className="my-2" />
-                        <div className="flex justify-between font-bold text-lg">
+                        <div className="flex justify-between font-semibold text-lg">
                             <span>Total</span>
                             <span>LKR {cartTotal.toFixed(2)}</span>
                         </div>

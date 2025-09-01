@@ -19,7 +19,7 @@ export default function AuthLayout({
       <div className="absolute inset-0 bg-black/50" />
       <div className="relative z-10 grid md:grid-cols-2 min-h-screen">
         <div className="hidden md:flex flex-col justify-center items-start p-16 text-white">
-            <h1 className="text-4xl font-bold mb-4">Nelis Global Boutique</h1>
+            <h1 className="text-4xl mb-4">Nelis Global Boutique</h1>
             <h2 className="text-2xl mb-4">Welcome to Nelis Global Boutique</h2>
             <p className="max-w-md">
                 Discover the finest natural products from Sri Lanka. We bring you premium dried fruits, herbal teas, and authentic flavors crafted with sustainable practices and community care.

@@ -22,7 +22,7 @@ export function ProductDisplay({ product }: ProductDisplayProps) {
                     <ProductDetailsClient product={product} />
                     
                     <div>
-                        <h2 className="text-2xl font-bold mb-4">About This Product</h2>
+                        <h2 className="text-2xl mb-4">About This Product</h2>
                         <div className="space-y-4 text-muted-foreground">
                             <p>
                                 Our Butterfly Pea Tea is sourced directly from organic farms in the heart of Sri Lanka. This extraordinary herbal tea is made from the vibrant blue flowers of the Clitoria ternatea plant, known for its stunning color-changing properties and numerous health benefits.

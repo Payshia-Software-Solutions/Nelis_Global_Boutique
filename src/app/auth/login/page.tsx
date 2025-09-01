@@ -26,7 +26,7 @@ export default function LoginPage() {
   return (
     <Card className="w-full max-w-md">
         <CardHeader className="text-left space-y-1">
-        <CardTitle className="text-2xl font-bold">Welcome Back!</CardTitle>
+        <CardTitle className="text-2xl">Welcome Back!</CardTitle>
         <CardDescription>Access your orders, wishlists, and personalized recommendations.</CardDescription>
         </CardHeader>
         <CardContent>

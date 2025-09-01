@@ -44,7 +44,7 @@ export function GetInTouchSection() {
                 <div className="text-center mb-12">
                     <div className="flex justify-center items-center gap-3">
                         <Phone className="h-6 w-6 text-muted-foreground" />
-                        <h2 className="text-3xl font-bold">Get in Touch</h2>
+                        <h2 className="text-3xl">Get in Touch</h2>
                     </div>
                 </div>
 
@@ -61,7 +61,7 @@ export function GetInTouchSection() {
                 </div>
 
                 <div className="text-center">
-                     <h2 className="text-3xl font-bold mb-8">Business Hours</h2>
+                     <h2 className="text-3xl mb-8">Business Hours</h2>
                     <Card className="max-w-4xl mx-auto p-8 bg-card shadow-sm">
                         <div className="grid sm:grid-cols-3 gap-8 text-center">
                            {businessHours.map((item, index) => (

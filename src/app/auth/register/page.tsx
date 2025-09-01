@@ -25,7 +25,7 @@ export default function RegisterPage() {
   return (
     <Card className="w-full max-w-md">
       <CardHeader className="text-left space-y-2">
-        <CardTitle className="text-2xl font-bold">Create Your Account</CardTitle>
+        <CardTitle className="text-2xl">Create Your Account</CardTitle>
         <CardDescription>
           Unlock exclusive benefits, track your orders, and enjoy a personalized shopping experience.
         </CardDescription>

@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Leaf, Users, Wand2, Clock, Star } from "lucide-react";
@@ -32,7 +33,7 @@ export function WhyChooseNelisSection() {
                 <div className="text-center mb-12">
                     <div className="flex justify-center items-center gap-2">
                         <Star className="h-7 w-7 text-yellow-500" />
-                        <h2 className="text-3xl font-bold">Why Choose Nelis Pvt Ltd for Wholesale & Export?</h2>
+                        <h2 className="text-3xl">Why Choose Nelis Pvt Ltd for Wholesale & Export?</h2>
                     </div>
                 </div>
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">

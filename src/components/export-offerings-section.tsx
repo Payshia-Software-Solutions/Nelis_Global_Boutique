@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Globe, Truck, Store, Wand2 } from "lucide-react";
@@ -27,7 +28,7 @@ export function ExportOfferingsSection() {
                 <div className="text-center max-w-4xl mx-auto">
                     <div className="flex justify-center items-center gap-3">
                         <Globe className="h-8 w-8 text-primary" />
-                        <h2 className="text-4xl font-bold">Exporting Sri Lanka's Rich Flavors</h2>
+                        <h2 className="text-4xl">Exporting Sri Lanka's Rich Flavors</h2>
                     </div>
                     <p className="mt-4 text-muted-foreground text-lg">
                         As part of our global expansion, Nelis Pvt Ltd proudly exports products to various countries, offering international buyers the opportunity to experience the natural goodness of Sri Lankan products. We are committed to ensuring that our export process is smooth and efficient, with attention to packaging, quality, and compliance with international standards.

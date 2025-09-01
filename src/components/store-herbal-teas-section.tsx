@@ -14,7 +14,7 @@ export async function StoreHerbalTeasSection() {
                 <div className="text-center mb-12">
                     <div className="flex justify-center items-center gap-3">
                         <Leaf className="h-8 w-8 text-primary" />
-                        <h2 className="text-4xl font-bold">Herbal Teas</h2>
+                        <h2 className="text-4xl">Herbal Teas</h2>
                     </div>
                     <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
                         Experience the essence of nature with our handcrafted herbal teas, rich in antioxidants and wellness benefits.

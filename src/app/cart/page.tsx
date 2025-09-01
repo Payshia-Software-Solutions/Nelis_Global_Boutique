@@ -21,7 +21,7 @@ export default function CartPage() {
               {itemCount === 0 ? (
                   <div className="text-center py-16">
                       <ShoppingCart className="mx-auto h-24 w-24 text-muted-foreground" />
-                      <h1 className="mt-4 text-3xl font-bold">Your cart is empty</h1>
+                      <h1 className="mt-4 text-3xl">Your cart is empty</h1>
                       <p className="mt-2 text-muted-foreground">Looks like you haven't added anything to your cart yet.</p>
                       <Button asChild className="mt-6">
                           <Link href="/products">Start Shopping</Link>
@@ -30,7 +30,7 @@ export default function CartPage() {
               ) : (
                   <>
                       <div className="text-center mb-12">
-                          <h1 className="text-4xl font-bold tracking-tight">Your Shopping Cart</h1>
+                          <h1 className="text-4xl tracking-tight">Your Shopping Cart</h1>
                           <p className="text-muted-foreground mt-2">Review your selections before proceeding to checkout</p>
                       </div>
                       <div className="grid lg:grid-cols-3 gap-8 items-start">
@@ -87,7 +87,7 @@ export default function CartPage() {
                                           <span className="text-primary">Free</span>
                                       </div>
                                       <Separator />
-                                      <div className="flex justify-between font-bold text-lg">
+                                      <div className="flex justify-between font-semibold text-lg">
                                           <span>Total</span>
                                           <span>LKR {cartTotal.toFixed(2)}</span>
                                       </div>

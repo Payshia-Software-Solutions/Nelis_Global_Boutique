@@ -41,7 +41,7 @@ export function DriedFruitsSection() {
                 <div className="text-center max-w-3xl mx-auto">
                     <div className="flex justify-center items-center gap-3">
                         <span className="text-4xl">🍍</span>
-                        <h2 className="text-4xl font-bold">Dried Fruits</h2>
+                        <h2 className="text-4xl">Dried Fruits</h2>
                     </div>
                     <h3 className="text-xl text-primary/90 mt-4 font-semibold">Sri Lankan Dried Fruits – A Taste of Nature’s Perfection</h3>
                     <p className="text-muted-foreground mt-4 text-lg">

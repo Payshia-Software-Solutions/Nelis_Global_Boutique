@@ -22,7 +22,7 @@ const CollectionSection = async ({ collection }: { collection: Collection }) => 
         <section id={collection.id} className="py-16">
             <div className="container mx-auto px-4">
                 <div className="text-center mb-12">
-                    <h2 className="text-4xl font-bold">{collection.title}</h2>
+                    <h2 className="text-4xl">{collection.title}</h2>
                     {collection.description && <p className="text-muted-foreground mt-4 text-lg">{collection.description}</p>}
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">

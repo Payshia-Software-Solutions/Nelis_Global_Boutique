@@ -14,7 +14,7 @@ export function StoreHeroSection() {
             />
             <div className="absolute inset-0 bg-black/50" />
             <div className="container mx-auto px-4 text-center relative z-10">
-                <h1 className="text-5xl md:text-7xl font-bold tracking-tight">Online Store</h1>
+                <h1 className="text-5xl md:text-7xl tracking-tight">Online Store</h1>
                 <p className="mt-4 text-xl md:text-2xl text-primary/90">Nelis Global Boutique (Pvt) Ltd</p>
             </div>
         </section>

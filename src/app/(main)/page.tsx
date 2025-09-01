@@ -33,7 +33,7 @@ export default async function HomePage() {
         <div className="absolute inset-0 bg-black/40" />
         <div className="container mx-auto h-full flex flex-col items-start justify-center text-left relative z-10 text-white">
           <div className="max-w-2xl">
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
+            <h1 className="text-4xl md:text-6xl tracking-tight">
               Welcome to Nelis Global Boutique
             </h1>
             <p className="mt-4 text-lg md:text-xl">
@@ -54,7 +54,7 @@ export default async function HomePage() {
       {/* Our Products Section */}
       <section className="container mx-auto px-4 pb-16">
         <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold">Our Products</h2>
+            <h2 className="text-3xl">Our Products</h2>
             <p className="text-muted-foreground mt-2 max-w-2xl mx-auto">Explore our carefully curated selection of premium natural products sourced directly from Sri Lankan farms.</p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">

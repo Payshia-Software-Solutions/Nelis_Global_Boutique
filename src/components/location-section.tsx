@@ -11,7 +11,7 @@ export function LocationSection() {
                 <div className="text-center mb-12">
                     <div className="flex justify-center items-center gap-3">
                         <MapPin className="h-8 w-8 text-primary" />
-                        <h2 className="text-4xl font-bold">Our Location</h2>
+                        <h2 className="text-4xl">Our Location</h2>
                     </div>
                 </div>
                 <div className="grid md:grid-cols-2 gap-12 items-center">

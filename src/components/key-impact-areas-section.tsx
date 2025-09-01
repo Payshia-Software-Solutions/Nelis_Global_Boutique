@@ -32,7 +32,7 @@ export function KeyImpactAreasSection() {
         <section className="py-24">
             <div className="container mx-auto px-4">
                 <div className="text-center mb-12">
-                    <h2 className="text-4xl font-bold">Our Key Impact Areas</h2>
+                    <h2 className="text-5xl ">Our Key Impact Areas</h2>
                 </div>
                 <div className="grid md:grid-cols-2 gap-8">
                     {impactAreas.map((area, index) => (
@@ -42,7 +42,7 @@ export function KeyImpactAreasSection() {
                                     <div className="flex-shrink-0 bg-primary/20 rounded-full p-3">
                                         <area.icon className="h-8 w-8 text-primary" />
                                     </div>
-                                    <h3 className="text-xl font-bold">{area.title}</h3>
+                                    <h3 className="text-xl">{area.title}</h3>
                                 </div>
                                 <p className="text-muted-foreground">{area.description}</p>
                            </CardContent>
