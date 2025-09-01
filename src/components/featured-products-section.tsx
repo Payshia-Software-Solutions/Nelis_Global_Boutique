@@ -1,10 +1,17 @@
 
-import { getFeaturedProducts } from "@/lib/mock-data";
+import { getProducts } from "@/lib/mock-data";
 import { ProductCard } from "./product-card";
 import { ShoppingBag } from "lucide-react";
 
 export async function FeaturedProductsSection() {
-    const products = await getFeaturedProducts();
+    const allProducts = await getProducts();
+    const featuredProductNames = [
+        "Butterfly Pea Tea",
+        "Hibiscus Tea",
+        "Dehydrated Rambutan",
+        "Chai Latte Blend"
+    ];
+    const products = allProducts.filter(p => featuredProductNames.includes(p.name));
 
     return (
         <section className="py-20">

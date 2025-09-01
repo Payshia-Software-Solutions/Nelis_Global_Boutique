@@ -1,37 +1,17 @@
 
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import { Star } from "lucide-react";
 
 import type { Product } from "@/lib/types";
-import { Button } from "@/components/ui/button";
-import { useCart } from "@/context/cart-provider";
-import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
+import { ProductCardClient } from "./product-card-client";
 
 interface ProductCardProps {
   product: Product;
 }
 
 export function ProductCard({ product }: ProductCardProps) {
-  const { addToCart } = useCart();
-  const { toast } = useToast();
-
-  const handleAddToCart = () => {
-    addToCart({
-      id: product.id,
-      name: product.name,
-      price: product.price,
-      imageUrl: product.imageUrl,
-    });
-    toast({
-      title: "Added to cart",
-      description: `${product.name} has been added to your cart.`,
-    });
-  };
-
   return (
     <div className="text-center group flex flex-col h-full">
         <div className="relative overflow-hidden mb-4">
@@ -61,9 +41,7 @@ export function ProductCard({ product }: ProductCardProps) {
             <p className="text-lg">LKR {product.price.toFixed(2)}</p>
         </div>
         <div className="mt-4">
-            <Button className="w-full" onClick={handleAddToCart}>
-                ADD TO CART
-            </Button>
+            <ProductCardClient product={product} />
         </div>
     </div>
   );

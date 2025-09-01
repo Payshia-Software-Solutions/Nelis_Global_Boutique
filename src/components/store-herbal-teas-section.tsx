@@ -5,11 +5,15 @@ import { Leaf } from 'lucide-react';
 
 export async function StoreHerbalTeasSection() {
     const allProducts = await getProducts();
-    // Assuming 'herbal-tea' category products are herbal teas for demonstration
-    const herbalTeas = allProducts.filter(p => p.category === 'herbal-tea'); 
+    const herbalTeaNames = [
+        "Butterfly Pea Tea",
+        "Hibiscus Tea",
+        "Lotus Tea"
+    ];
+    const herbalTeas = allProducts.filter(p => herbalTeaNames.includes(p.name)); 
 
     return (
-        <section id="herbal-teas" className="py-16">
+        <section id="herbal-teas" className="py-16 bg-muted/50">
             <div className="container mx-auto px-4">
                 <div className="text-center mb-12">
                     <div className="flex justify-center items-center gap-3">

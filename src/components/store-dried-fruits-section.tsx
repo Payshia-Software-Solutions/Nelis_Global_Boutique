@@ -4,8 +4,16 @@ import { ProductCard } from './product-card';
 
 export async function StoreDriedFruitsSection() {
     const allProducts = await getProducts();
-    // Assuming 'dried-fruits' category products are dried fruits for demonstration
-    const driedFruits = allProducts.filter(p => p.category === 'dried-fruits'); 
+    const driedFruitNames = [
+        "Dehydrated Mango",
+        "Dehydrated Rambutan",
+        "Dehydrated Pineapple",
+        "Dehydrated Banana",
+        "Dehydrated Papaya",
+        "Dehydrated Lime Slices",
+        "Candied Ginger"
+    ];
+    const driedFruits = allProducts.filter(p => driedFruitNames.includes(p.name)); 
 
     return (
         <section id="dried-fruits" className="py-16">
