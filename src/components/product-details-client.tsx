@@ -61,7 +61,7 @@ export function ProductDetailsClient({ product }: ProductDetailsClientProps) {
                 </div>
             </div>
 
-            <p className="text-3xl font-bold">${product.price.toFixed(2)}</p>
+            <p className="text-3xl font-bold">LKR {product.price.toFixed(2)}</p>
 
             <p className="text-base text-foreground/80">{product.description}</p>
             

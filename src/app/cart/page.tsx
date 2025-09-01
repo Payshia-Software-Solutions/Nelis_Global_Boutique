@@ -50,7 +50,7 @@ export default function CartPage() {
                                           <div className="flex-grow space-y-1">
                                               <h3 className="font-semibold text-lg">{item.name}</h3>
                                               <p className="text-sm text-muted-foreground">Premium organic blend</p>
-                                              <p className="text-base font-medium">${item.price.toFixed(2)}</p>
+                                              <p className="text-base font-medium">LKR {item.price.toFixed(2)}</p>
                                           </div>
                                           <div className="flex items-center gap-4">
                                               <div className="flex items-center border rounded-md">
@@ -62,7 +62,7 @@ export default function CartPage() {
                                                       <Plus className="h-4 w-4" />
                                                   </Button>
                                               </div>
-                                              <p className="font-semibold w-24 text-right text-lg">${(item.price * item.quantity).toFixed(2)}</p>
+                                              <p className="font-semibold w-24 text-right text-lg">LKR {(item.price * item.quantity).toFixed(2)}</p>
                                               <Button variant="ghost" size="icon" onClick={() => removeFromCart(item.id)}>
                                                   <Trash2 className="h-5 w-5 text-destructive" />
                                                   <span className="sr-only">Remove</span>
@@ -80,7 +80,7 @@ export default function CartPage() {
                                   <CardContent className="space-y-4">
                                       <div className="flex justify-between">
                                           <span>Subtotal</span>
-                                          <span>${cartTotal.toFixed(2)}</span>
+                                          <span>LKR {cartTotal.toFixed(2)}</span>
                                       </div>
                                       <div className="flex justify-between">
                                           <span>Shipping</span>
@@ -89,7 +89,7 @@ export default function CartPage() {
                                       <Separator />
                                       <div className="flex justify-between font-bold text-lg">
                                           <span>Total</span>
-                                          <span>${cartTotal.toFixed(2)}</span>
+                                          <span>LKR {cartTotal.toFixed(2)}</span>
                                       </div>
                                       <Button variant="link" className="p-0 h-auto text-primary">Apply Discount Code</Button>
                                   </CardContent>

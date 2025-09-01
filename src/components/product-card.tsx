@@ -58,7 +58,7 @@ export function ProductCard({ product }: ProductCardProps) {
                 </div>
                 <span className="text-xs text-muted-foreground">({product.reviewCount} Reviews)</span>
             </div>
-            <p className="text-lg font-bold">${product.price.toFixed(2)}</p>
+            <p className="text-lg font-bold">LKR {product.price.toFixed(2)}</p>
         </div>
         <div className="mt-4">
             <Button className="w-full" onClick={handleAddToCart}>

@@ -138,7 +138,7 @@ export default function CheckoutPage() {
                 </CardContent>
               </Card>
               <Button type="submit" size="lg" className="w-full">
-                Place Order - ${cartTotal.toFixed(2)}
+                Place Order - LKR {cartTotal.toFixed(2)}
               </Button>
             </form>
           </Form>
@@ -159,7 +159,7 @@ export default function CheckoutPage() {
                                 <div className="flex-grow">
                                     <p className="font-medium">{item.name}</p>
                                 </div>
-                                <p className="font-medium">${(item.price * item.quantity).toFixed(2)}</p>
+                                <p className="font-medium">LKR {(item.price * item.quantity).toFixed(2)}</p>
                             </li>
                         ))}
                     </ul>
@@ -167,7 +167,7 @@ export default function CheckoutPage() {
                     <div className="space-y-2">
                          <div className="flex justify-between">
                             <span>Subtotal</span>
-                            <span>${cartTotal.toFixed(2)}</span>
+                            <span>LKR {cartTotal.toFixed(2)}</span>
                         </div>
                         <div className="flex justify-between">
                             <span>Shipping</span>
@@ -176,7 +176,7 @@ export default function CheckoutPage() {
                          <Separator className="my-2" />
                         <div className="flex justify-between font-bold text-lg">
                             <span>Total</span>
-                            <span>${cartTotal.toFixed(2)}</span>
+                            <span>LKR {cartTotal.toFixed(2)}</span>
                         </div>
                     </div>
                 </CardContent>

@@ -47,7 +47,7 @@ export function CategoryProductCard({ product }: CategoryProductCardProps) {
             <Link href={`/products/${product.slug}`} className="hover:text-primary transition-colors">
                 <h3 className="font-semibold text-lg leading-tight">{product.name}</h3>
             </Link>
-            <p className="text-lg font-bold text-primary/80">${product.price.toFixed(2)}</p>
+            <p className="text-lg font-bold text-primary/80">LKR {product.price.toFixed(2)}</p>
         </div>
         <p className="text-sm text-muted-foreground line-clamp-3 min-h-[3.75rem]">
             {product.description}
