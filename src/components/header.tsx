@@ -76,7 +76,7 @@ export function Header() {
                             <NavigationMenuList>
                                 {desktopNavLinks.slice(0, 2).map((link) => (
                                      <NavigationMenuItem key={link.href}>
-                                         <Link href={link.href} legacyBehavior passHref>
+                                         <Link href={link.href} passHref>
                                             <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), pathname === link.href ? "text-primary" : "text-muted-foreground")}>
                                                  {link.label}
                                              </NavigationMenuLink>
@@ -116,7 +116,7 @@ export function Header() {
 
                                 {desktopNavLinks.slice(2).map((link) => (
                                      <NavigationMenuItem key={link.href}>
-                                         <Link href={link.href} legacyBehavior passHref>
+                                         <Link href={link.href} passHref>
                                             <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), pathname === link.href ? "text-primary" : "text-muted-foreground")}>
                                                  {link.label}
                                              </NavigationMenuLink>
