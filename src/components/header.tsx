@@ -42,8 +42,12 @@ export function Header() {
 
     useEffect(() => {
         const fetchCollections = async () => {
-            const data = await getCollections();
-            setCollections(data);
+            try {
+                const data = await getCollections();
+                setCollections(data);
+            } catch (error) {
+                console.error("Failed to fetch collections in Header:", error);
+            }
         };
         fetchCollections();
     }, []);
