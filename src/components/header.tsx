@@ -27,6 +27,7 @@ const navLinks = [
     { href: "/", label: "Home" },
     { href: "/about", label: "About Us" },
     { href: "/products", label: "Our Products"},
+    { href: "/store", label: "Online Store" },
     { href: "/our-impact", label: "Impact & Sustainability" },
     { href: "/wholesale", label: "Wholesale & Export" },
     { href: "/contact", label: "Contact Us" },
