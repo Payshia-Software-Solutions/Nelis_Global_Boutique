@@ -12,17 +12,21 @@ export type Product = {
   featured?: boolean;
   details: string[];
   images: string[];
+  slug: string;
 };
 
+export type ApiProduct = {
+  id: string;
+  name: string;
+  description: string;
+  category: string;
+  price: string;
+  company_id: string;
+  slug: string;
+}
+
 export type ApiProductData = {
-  product: {
-    id: string;
-    name: string;
-    description: string;
-    category: string;
-    price: string;
-    company_id: string;
-  };
+  product: ApiProduct;
   product_images: {
     id: string;
     img_url: string;
@@ -38,6 +42,18 @@ export type ApiProductData = {
     }[];
   }[];
 };
+
+export type SingleProductApiResponse = {
+  product: ApiProduct;
+  variants: {
+      id: string;
+      sku: string;
+  }[];
+  product_images?: {
+      id: string;
+      img_url: string;
+  }[];
+}
 
 export type ApiResponse = {
   company_id: string;

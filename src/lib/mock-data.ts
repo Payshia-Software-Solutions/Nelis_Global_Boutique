@@ -1,6 +1,6 @@
 
 
-import type { Product, Category, Review, ApiResponse, ApiProductData, Collection, CollectionProduct } from './types';
+import type { Product, Category, Review, ApiResponse, ApiProductData, Collection, CollectionProduct, SingleProductApiResponse } from './types';
 
 const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGE_URL_BASE;
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -16,6 +16,7 @@ const mapApiProductToProduct = (apiProduct: ApiProductData): Product => {
     price: parseFloat(apiProduct.product.price) || 0,
     imageUrl: `${imageBaseUrl}${firstImage}`,
     category: apiProduct.product.category,
+    slug: apiProduct.product.slug,
     rating: 5, // Static value as it's not in the API response
     reviewCount: 0, // Static value as it's not in the API response
     featured: true, // Static value as it's not in the API response
@@ -46,6 +47,35 @@ export const getProductById = async (id: string): Promise<Product | undefined> =
         console.error("Failed to fetch product by id:", error);
         return undefined;
     }
+};
+
+export const getProductBySlug = async (slug: string): Promise<Product | undefined> => {
+  try {
+    const response = await fetch(`${apiBaseUrl}/products/details/slug/${slug}`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data: SingleProductApiResponse = await response.json();
+    const firstImage = data.product_images?.[0]?.img_url ?? 'https://placehold.co/600x400.png';
+
+    return {
+      id: data.product.id,
+      name: data.product.name,
+      description: data.product.description,
+      price: parseFloat(data.product.price) || 0,
+      imageUrl: `${imageBaseUrl}${firstImage}`,
+      category: data.product.category,
+      slug: data.product.slug,
+      rating: 5,
+      reviewCount: 0,
+      featured: true,
+      details: [],
+      images: data.product_images?.map(img => `${imageBaseUrl}${img.img_url}`) ?? [firstImage]
+    };
+  } catch (error) {
+    console.error(`Failed to fetch product by slug ${slug}:`, error);
+    return undefined;
+  }
 };
 
 export const getFeaturedProducts = async (): Promise<Product[]> => {

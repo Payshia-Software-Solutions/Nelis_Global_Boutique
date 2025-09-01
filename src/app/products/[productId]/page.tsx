@@ -1,6 +1,6 @@
 
 import { notFound } from "next/navigation";
-import { getProductById, getReviewsByProductId } from "@/lib/mock-data";
+import { getProductBySlug, getReviewsByProductId } from "@/lib/mock-data";
 import type { Review } from "@/lib/types";
 import { ProductDisplay } from "@/components/product-display";
 
@@ -11,7 +11,7 @@ type ProductPageProps = {
 }
 
 export async function generateMetadata({ params }: ProductPageProps) {
-    const product = await getProductById(params.productId);
+    const product = await getProductBySlug(params.productId); // productId is the slug
     if (!product) {
         return { title: "Product Not Found" };
     }
@@ -22,12 +22,13 @@ export async function generateMetadata({ params }: ProductPageProps) {
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
-  const product = await getProductById(params.productId);
-  const reviews = await getReviewsByProductId(params.productId);
-
+  const product = await getProductBySlug(params.productId); // productId is the slug
+  
   if (!product) {
     notFound();
   }
+  
+  const reviews = await getReviewsByProductId(product.id);
 
   return <ProductDisplay product={product} reviews={reviews} />;
 }

@@ -32,7 +32,7 @@ export function CategoryProductCard({ product }: CategoryProductCardProps) {
 
   return (
     <Card className="flex flex-col h-full overflow-hidden transition-shadow duration-300 hover:shadow-xl">
-      <Link href={`/products/${product.id}`}>
+      <Link href={`/products/${product.slug}`}>
         <Image
           src={product.imageUrl}
           alt={product.name}
@@ -44,7 +44,7 @@ export function CategoryProductCard({ product }: CategoryProductCardProps) {
       </Link>
       <CardContent className="p-4 flex-grow space-y-2">
         <div className="flex justify-between items-start">
-            <Link href={`/products/${product.id}`} className="hover:text-primary transition-colors">
+            <Link href={`/products/${product.slug}`} className="hover:text-primary transition-colors">
                 <h3 className="font-semibold text-lg leading-tight">{product.name}</h3>
             </Link>
             <p className="text-lg font-bold text-primary/80">${product.price.toFixed(2)}</p>

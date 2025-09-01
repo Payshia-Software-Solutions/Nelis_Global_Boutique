@@ -35,7 +35,7 @@ export function ProductCard({ product }: ProductCardProps) {
   return (
     <div className="text-center group flex flex-col h-full">
         <div className="relative overflow-hidden mb-4">
-            <Link href={`/products/${product.id}`}>
+            <Link href={`/products/${product.slug}`}>
                 <Image
                     src={product.imageUrl}
                     alt={product.name}
@@ -47,7 +47,7 @@ export function ProductCard({ product }: ProductCardProps) {
             </Link>
         </div>
         <div className="space-y-2 flex-grow">
-            <Link href={`/products/${product.id}`}>
+            <Link href={`/products/${product.slug}`}>
                 <h3 className="font-semibold text-lg hover:text-primary transition-colors min-h-[3rem]">{product.name}</h3>
             </Link>
             <div className="flex items-center justify-center gap-1">
