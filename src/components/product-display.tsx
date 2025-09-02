@@ -8,15 +8,25 @@ import { ProductDetailsClient } from "@/components/product-details-client";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ProductImages } from "@/components/product-images";
 import { YouMightAlsoLikeSection } from "@/components/you-might-also-like-section";
+import { Breadcrumbs } from "./breadcrumbs";
 
 interface ProductDisplayProps {
     product: Product;
 }
 
 export function ProductDisplay({ product }: ProductDisplayProps) {
+    const breadcrumbItems = [
+      { label: "Home", href: "/" },
+      { label: "Store", href: "/store" },
+      { label: product.category, href: `/store?category=${product.category}` },
+      { label: product.name },
+    ];
+
     return (
+      <>
         <div className="container mx-auto px-4 py-8 md:py-12">
-            <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
+            <Breadcrumbs items={breadcrumbItems} />
+            <div className="grid md:grid-cols-2 gap-8 lg:gap-12 mt-6">
                 <ProductImages product={product} />
                 <div className="space-y-8">
                     <ProductDetailsClient product={product} />
@@ -51,7 +61,8 @@ export function ProductDisplay({ product }: ProductDisplayProps) {
                     </Tabs>
                 </div>
             </div>
-            <YouMightAlsoLikeSection />
         </div>
+        <YouMightAlsoLikeSection />
+      </>
     );
 }
