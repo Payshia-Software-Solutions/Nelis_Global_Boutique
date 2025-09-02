@@ -26,7 +26,6 @@ import {
 const navLinks = [
     { href: "/", label: "Home" },
     { href: "/about", label: "About Us" },
-    { href: "/products", label: "Our Products"},
     { href: "/store", label: "Online Store" },
     { href: "/our-impact", label: "Impact & Sustainability" },
     { href: "/wholesale", label: "Wholesale & Export" },
@@ -67,7 +66,7 @@ export function Header() {
         </li>
     );
 
-    const desktopNavLinks = navLinks.filter(link => link.label !== "Our Products");
+    const desktopNavLinks = navLinks.filter(link => link.label !== "Online Store");
 
     return (
         <header className="bg-card text-card-foreground border-b sticky top-0 z-50">
@@ -91,13 +90,13 @@ export function Header() {
                                 ))}
 
                                 <NavigationMenuItem>
-                                    <NavigationMenuTrigger className={cn(pathname.startsWith('/products') && "text-primary")}>Our Products</NavigationMenuTrigger>
+                                    <NavigationMenuTrigger className={cn((pathname.startsWith('/store') || pathname.startsWith('/products')) && "text-primary")}>Online Store</NavigationMenuTrigger>
                                     <NavigationMenuContent>
                                         <div className="grid w-[600px] grid-cols-3 gap-x-8 p-4">
                                             <div>
                                                 <h3 className="font-semibold text-sm mb-2 px-3">SHOP TEA</h3>
                                                 <ul className="space-y-1">
-                                                    <ListItem href="/products" title="Shop All Teas" />
+                                                    <ListItem href="/products" title="Shop All Products" />
                                                 </ul>
                                             </div>
                                             <div>
