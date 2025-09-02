@@ -68,11 +68,11 @@ export function ProductListing({ products, categories, collections, collectionPr
     let filtered = products;
 
     if (filters.collection.length > 0) {
-      const productIdsInCollection = collectionProducts
-        .filter(cp => filters.collection.includes(cp.collection_id))
-        .map(cp => cp.product_id);
-      const uniqueProductIds = [...new Set(productIdsInCollection)];
-      filtered = filtered.filter(product => uniqueProductIds.includes(product.id));
+        const productIdsInCollection = collectionProducts
+            .filter(cp => filters.collection.includes(cp.collection_id))
+            .map(cp => cp.product_id);
+        const uniqueProductIds = [...new Set(productIdsInCollection)];
+        filtered = filtered.filter(product => uniqueProductIds.includes(product.id));
     }
 
     filtered = filtered.filter((product) => {
@@ -100,6 +100,80 @@ export function ProductListing({ products, categories, collections, collectionPr
 
     return filtered;
   }, [products, filters, collectionProducts]);
+
+  const groupedProducts = useMemo(() => {
+    const group: Record<string, Product[]> = {};
+
+    const collectionsToDisplay = filters.collection.length > 0
+        ? collections.filter(c => filters.collection.includes(c.id))
+        : collections;
+
+    collectionsToDisplay.forEach(collection => {
+        const productIdsForCollection = new Set(
+            collectionProducts
+                .filter(cp => cp.collection_id === collection.id)
+                .map(cp => cp.product_id)
+        );
+
+        const productsInCollection = filteredAndSortedProducts.filter(p => productIdsForCollection.has(p.id));
+
+        if (productsInCollection.length > 0) {
+            if (!group[collection.title]) {
+                group[collection.title] = [];
+            }
+            group[collection.title].push(...productsInCollection);
+        }
+    });
+
+    // If no collection filter is active, group all filtered products
+    if(filters.collection.length === 0) {
+        filteredAndSortedProducts.forEach(product => {
+            const productCollections = collectionProducts.filter(cp => cp.product_id === product.id);
+            if (productCollections.length > 0) {
+                productCollections.forEach(pc => {
+                    const collection = collections.find(c => c.id === pc.collection_id);
+                    if (collection) {
+                        if (!group[collection.title]) {
+                            group[collection.title] = [];
+                        }
+                        if (!group[collection.title].some(p => p.id === product.id)) {
+                             group[collection.title].push(product);
+                        }
+                    }
+                });
+            } else {
+                if (!group['Uncategorized']) {
+                    group['Uncategorized'] = [];
+                }
+                if (!group['Uncategorized'].some(p => p.id === product.id)) {
+                    group['Uncategorized'].push(product);
+                }
+            }
+        });
+    }
+
+    // Sort products within each group
+    for (const collectionTitle in group) {
+        let groupProducts = group[collectionTitle];
+        switch (filters.sortBy) {
+            case "price-asc":
+                groupProducts.sort((a, b) => a.price - b.price);
+                break;
+            case "price-desc":
+                groupProducts.sort((a, b) => b.price - a.price);
+                break;
+            case "rating-desc":
+                groupProducts.sort((a, b) => b.rating - a.rating);
+                break;
+            case "featured":
+            default:
+                // Keep original order or implement featured logic
+                break;
+        }
+    }
+
+    return group;
+  }, [filteredAndSortedProducts, collections, collectionProducts, filters.collection, filters.sortBy]);
 
   const FilterControls = () => (
     <div className="space-y-6">
@@ -212,12 +286,26 @@ export function ProductListing({ products, categories, collections, collectionPr
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>
-
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {filteredAndSortedProducts.map((product) => (
-                    <ProductCard key={product.id} product={product} />
-                ))}
+            
+            <div className="space-y-12">
+              {Object.entries(groupedProducts).length > 0 ? (
+                Object.entries(groupedProducts).map(([collectionTitle, products]) => (
+                  <div key={collectionTitle}>
+                    <h2 className="text-3xl text-center mb-8">{collectionTitle} ({products.length})</h2>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                      {products.map((product) => (
+                        <ProductCard key={product.id} product={product} />
+                      ))}
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="text-center py-16">
+                  <p className="text-muted-foreground">No products found matching your criteria.</p>
+                </div>
+              )}
             </div>
+
         </div>
     </div>
   );
