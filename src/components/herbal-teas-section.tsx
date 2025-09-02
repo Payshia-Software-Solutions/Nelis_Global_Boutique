@@ -3,7 +3,6 @@
 
 import { Leaf } from 'lucide-react';
 import { CategoryProductCard } from './category-product-card';
-import { getProducts } from '@/lib/mock-data';
 import type { Product } from '@/lib/types';
 import { useEffect, useState } from 'react';
 
@@ -13,24 +12,24 @@ const teaProductsContent: Omit<Product, 'id' | 'price' | 'imageUrl' | 'category'
     { name: 'Hibiscus Tea', description: 'A vibrant and tangy tea made from dried hibiscus flowers. Packed with vitamin C, hibiscus tea is known for its ability to lower blood pressure, improve heart health, and boost the immune system. It’s a refreshing and antioxidant-rich beverage that helps with digestion, hydration, and promoting glowing skin. Enjoy it hot or cold for a rejuvenating experience.' }
 ];
 
-export function HerbalTeasSection() {
-    const [products, setProducts] = useState<Product[]>([]);
+interface HerbalTeasSectionProps {
+    products: Product[];
+}
+
+export function HerbalTeasSection({ products }: HerbalTeasSectionProps) {
+    const [enrichedProducts, setEnrichedProducts] = useState<Product[]>([]);
 
     useEffect(() => {
-        const fetchProducts = async () => {
-            const allProducts = await getProducts();
-            const teaNames = ['Butterfly Pea Tea', 'Lotus Tea', 'Hibiscus Tea'];
-            const teaProducts = allProducts.filter(p => teaNames.includes(p.name));
-            
-            const enrichedProducts = teaProducts.map(apiProduct => {
-                const content = teaProductsContent.find(p => p.name.toLowerCase() === apiProduct.name.toLowerCase());
-                return content ? { ...apiProduct, description: content.description } : apiProduct;
-            });
+        const teaNames = ['Butterfly Pea Tea', 'Lotus Tea', 'Hibiscus Tea'];
+        const teaProducts = products.filter(p => teaNames.includes(p.name));
+        
+        const newEnrichedProducts = teaProducts.map(apiProduct => {
+            const content = teaProductsContent.find(p => p.name.toLowerCase() === apiProduct.name.toLowerCase());
+            return content ? { ...apiProduct, description: content.description } : apiProduct;
+        });
 
-            setProducts(enrichedProducts);
-        }
-        fetchProducts();
-    }, []);
+        setEnrichedProducts(newEnrichedProducts);
+    }, [products]);
 
     return (
         <section id="herbal-teas" className="py-16">
@@ -46,7 +45,7 @@ export function HerbalTeasSection() {
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
-                    {products.map((product) => (
+                    {enrichedProducts.map((product) => (
                         <CategoryProductCard key={product.id} product={product} />
                     ))}
                 </div>

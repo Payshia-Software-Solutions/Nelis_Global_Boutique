@@ -2,7 +2,6 @@
 "use client"
 
 import { useEffect, useState } from 'react';
-import { getProducts } from '@/lib/mock-data';
 import type { Product } from '@/lib/types';
 import { CategoryProductCard } from './category-product-card';
 
@@ -16,24 +15,24 @@ const driedFruitsContent: { name: string; description: string }[] = [
     { name: 'Candied Ginger', description: 'Our candied ginger offers a perfect balance of sweetness and spice, with each piece of ginger carefully coated to enhance its natural flavor.' },
 ];
 
-export function DriedFruitsSection() {
-    const [products, setProducts] = useState<Product[]>([]);
+interface DriedFruitsSectionProps {
+    products: Product[];
+}
+
+export function DriedFruitsSection({ products }: DriedFruitsSectionProps) {
+    const [enrichedProducts, setEnrichedProducts] = useState<Product[]>([]);
 
     useEffect(() => {
-        const fetchProducts = async () => {
-            const allProducts = await getProducts();
-            const fruitNames = driedFruitsContent.map(f => f.name);
-            const fruitProducts = allProducts.filter(p => fruitNames.includes(p.name));
-            
-            const enrichedProducts = fruitProducts.map(apiProduct => {
-                const content = driedFruitsContent.find(p => p.name.toLowerCase() === apiProduct.name.toLowerCase());
-                return content ? { ...apiProduct, description: content.description } : apiProduct;
-            });
+        const fruitNames = driedFruitsContent.map(f => f.name);
+        const fruitProducts = products.filter(p => fruitNames.includes(p.name));
+        
+        const newEnrichedProducts = fruitProducts.map(apiProduct => {
+            const content = driedFruitsContent.find(p => p.name.toLowerCase() === apiProduct.name.toLowerCase());
+            return content ? { ...apiProduct, description: content.description } : apiProduct;
+        });
 
-            setProducts(enrichedProducts);
-        }
-        fetchProducts();
-    }, []);
+        setEnrichedProducts(newEnrichedProducts);
+    }, [products]);
 
     return (
         <section id="dried-fruits" className="py-16 bg-muted/50">
@@ -49,7 +48,7 @@ export function DriedFruitsSection() {
                     </p>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
-                    {products.map((product) => (
+                    {enrichedProducts.map((product) => (
                         <CategoryProductCard key={product.id} product={product} />
                     ))}
                 </div>
