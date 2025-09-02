@@ -96,7 +96,7 @@ export function Header() {
                                             <div>
                                                 <h3 className="font-semibold text-sm mb-2 px-3">SHOP TEA</h3>
                                                 <ul className="space-y-1">
-                                                    <ListItem href="/products" title="Shop All Products" />
+                                                    <ListItem href="/store" title="Shop All Products" />
                                                 </ul>
                                             </div>
                                             <div>
