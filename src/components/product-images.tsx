@@ -1,7 +1,6 @@
-
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import type { Product } from "@/lib/types";
 import { cn } from "@/lib/utils";
@@ -11,29 +10,17 @@ interface ProductImagesProps {
 }
 
 export function ProductImages({ product }: ProductImagesProps) {
-    const [mainImages, setMainImages] = useState<string[]>([]);
-    const [thumbnailImages, setThumbnailImages] = useState<string[]>([]);
-    const [activeImage, setActiveImage] = useState<string>('');
+    const allImages = product.images?.length > 0 ? product.images : [
+        product.imageUrl,
+        'https://placehold.co/600x600.png?text=View+2',
+        'https://placehold.co/600x600.png?text=View+3',
+        'https://placehold.co/600x600.png?text=View+4',
+    ];
 
-    useEffect(() => {
-        if (product && product.images && product.images.length > 0) {
-            const allImages = product.images;
-            setMainImages(allImages);
-            setThumbnailImages(allImages.slice(0, 4));
-            setActiveImage(allImages[0]);
-        } else {
-            // Fallback images if product has no images
-            const fallbackImages = [
-                product.imageUrl,
-                'https://placehold.co/600x600.png?text=View+2',
-                'https://placehold.co/600x600.png?text=View+3',
-                'https://placehold.co/600x600.png?text=View+4',
-            ];
-            setMainImages([fallbackImages[0]]);
-            setThumbnailImages(fallbackImages);
-            setActiveImage(fallbackImages[0]);
-        }
-    }, [product]);
+    const mainImage = allImages[0];
+    const thumbnailImages = allImages.slice(0, 4);
+
+    const [activeImage, setActiveImage] = useState<string>(mainImage);
 
     return (
         <div className="grid grid-cols-[80px_1fr] gap-4">
