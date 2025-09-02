@@ -3,11 +3,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { getFeaturedProducts } from "@/lib/mock-data";
 import { Button } from "@/components/ui/button";
-import { ProductCard } from "@/components/product-card";
 import { GiftPacksSection } from "@/components/gift-packs-section";
 import { WhyChooseUs } from "@/components/why-choose-us";
 import { WholesaleExportSection } from "@/components/wholesale-export-section";
 import { ContactUsSection } from "@/components/contact-us-section";
+import { ProductSwiper } from "@/components/product-swiper";
 
 export const metadata = {
   title: "NelisGlobal Boutique | Natural Products from Sri Lanka",
@@ -52,22 +52,7 @@ export default async function HomePage() {
       </section>
       
       {/* Our Products Section */}
-      <section className="container mx-auto px-4 pb-16">
-        <div className="text-center mb-8">
-            <h2 className="text-3xl">Our Products</h2>
-            <p className="text-muted-foreground mt-2 max-w-2xl mx-auto">Explore our carefully curated selection of premium natural products sourced directly from Sri Lankan farms.</p>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
-        <div className="text-center mt-12">
-            <Button asChild size="lg" variant="outline">
-                <Link href="/store">View All Products</Link>
-            </Button>
-        </div>
-      </section>
+      <ProductSwiper products={products} />
 
       {/* Gift Packs Section */}
       <GiftPacksSection />
