@@ -65,8 +65,19 @@ export function Footer() {
 
         <hr className="my-8 border-gray-300" />
 
-        <div className="text-center text-sm text-gray-700">
-          &copy; {new Date().getFullYear()} Nelis Global Boutique. All rights reserved.
+        <div className="text-center text-sm text-gray-700 space-y-2">
+          <p>&copy; {new Date().getFullYear()} Nelis Global Boutique. All rights reserved.</p>
+          <p>
+            Powered by{' '}
+            <a 
+              href="https://payshia.com" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="font-medium text-primary hover:underline"
+            >
+              Payshia Software Solutions
+            </a>
+          </p>
         </div>
       </div>
     </footer>
