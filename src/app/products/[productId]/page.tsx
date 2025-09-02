@@ -1,8 +1,6 @@
 import { notFound } from "next/navigation";
 import { getProductBySlug } from "@/lib/mock-data";
 import { ProductDisplay } from "@/components/product-display";
-import { Header } from "@/components/header";
-import { Footer } from "@/components/footer";
 
 type ProductPageProps = {
     params: {
@@ -29,12 +27,6 @@ export default async function ProductPage({ params }: { params: { productId: str
   }
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <Header />
-      <main className="flex-grow">
-        <ProductDisplay product={product} />
-      </main>
-      <Footer />
-    </div>
+    <ProductDisplay product={product} />
   );
 }

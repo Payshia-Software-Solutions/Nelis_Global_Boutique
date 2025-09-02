@@ -15,9 +15,9 @@ export function ProductCard({ product }: ProductCardProps) {
         <Image
           src={product.imageUrl}
           alt={product.name}
-          width={600}
+          width={400}
           height={400}
-          className="w-full h-auto object-cover aspect-[4/3] transition-transform duration-300 hover:scale-105"
+          className="w-full h-auto object-cover aspect-square transition-transform duration-300 hover:scale-105"
           data-ai-hint={`${product.category} product`}
         />
       </Link>
@@ -25,7 +25,7 @@ export function ProductCard({ product }: ProductCardProps) {
         <Link href={`/products/${product.slug}`} className="hover:text-primary transition-colors">
           <h3 className="font-semibold text-lg leading-tight min-h-[2.5rem] line-clamp-2">{product.name}</h3>
         </Link>
-        <p className="text-lg font-bold text-primary/80">LKR {product.price.toFixed(2)}</p>
+        <p className="text-lg font-bold text-primary">LKR {product.price.toFixed(2)}</p>
       </CardContent>
       <CardFooter className="p-2">
         <ProductCardClient product={product} />
