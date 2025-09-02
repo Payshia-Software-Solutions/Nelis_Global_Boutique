@@ -49,9 +49,9 @@ export default async function HomePage() {
               </Button>
             </div>
           </div>
-          <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
+          <Link href="#our-products" className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
             <ArrowDown className="h-8 w-8 text-white" />
-          </div>
+          </Link>
         </div>
       </section>
       
