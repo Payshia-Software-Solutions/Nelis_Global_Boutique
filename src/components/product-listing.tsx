@@ -33,7 +33,7 @@ export function ProductListing({ products, categories }: ProductListingProps) {
   
   const [filters, setFilters] = useState({
     category: searchParams.get("category") || "all",
-    priceRange: [0, 1000],
+    priceRange: [0, 5000],
     rating: 0,
     sortBy: "featured",
   });
@@ -93,16 +93,16 @@ export function ProductListing({ products, categories }: ProductListingProps) {
         </div>
 
         <div>
-            <h3 className="text-lg font-medium mb-2">Price Range</h3>
+            <h3 className="text-lg font-medium mb-2">Price Range (LKR)</h3>
             <Slider
-                defaultValue={[0, 1000]}
-                max={1000}
-                step={10}
+                defaultValue={[0, 5000]}
+                max={5000}
+                step={100}
                 onValueChange={(value) => handleFilterChange("priceRange", value)}
             />
             <div className="flex justify-between text-sm text-muted-foreground mt-2">
-                <span>${filters.priceRange[0]}</span>
-                <span>${filters.priceRange[1]}</span>
+                <span>{filters.priceRange[0]}</span>
+                <span>{filters.priceRange[1]}</span>
             </div>
         </div>
         
