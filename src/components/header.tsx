@@ -81,9 +81,11 @@ export function Header() {
                             <NavigationMenuList>
                                 {desktopNavLinks.slice(0, 2).map((link) => (
                                      <NavigationMenuItem key={link.href}>
-                                         <Link href={link.href} legacyBehavior passHref>
-                                            <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), pathname === link.href ? "text-primary" : "text-muted-foreground")}>
-                                                 {link.label}
+                                         <Link href={link.href} passHref>
+                                            <NavigationMenuLink asChild>
+                                                <div className={cn(navigationMenuTriggerStyle(), pathname === link.href ? "text-primary" : "text-muted-foreground", "cursor-pointer")}>
+                                                    {link.label}
+                                                </div>
                                              </NavigationMenuLink>
                                          </Link>
                                      </NavigationMenuItem>
@@ -113,9 +115,11 @@ export function Header() {
 
                                 {desktopNavLinks.slice(2).map((link) => (
                                      <NavigationMenuItem key={link.href}>
-                                         <Link href={link.href} legacyBehavior passHref>
-                                            <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), pathname === link.href ? "text-primary" : "text-muted-foreground")}>
-                                                 {link.label}
+                                         <Link href={link.href} passHref>
+                                            <NavigationMenuLink asChild>
+                                                 <div className={cn(navigationMenuTriggerStyle(), pathname === link.href ? "text-primary" : "text-muted-foreground", "cursor-pointer")}>
+                                                     {link.label}
+                                                 </div>
                                              </NavigationMenuLink>
                                          </Link>
                                      </NavigationMenuItem>
