@@ -1,11 +1,8 @@
-
 import Image from "next/image";
 import Link from "next/link";
-import { Star } from "lucide-react";
-
 import type { Product } from "@/lib/types";
-import { cn } from "@/lib/utils";
 import { ProductCardClient } from "./product-card-client";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 
 interface ProductCardProps {
   product: Product;
@@ -13,29 +10,26 @@ interface ProductCardProps {
 
 export function ProductCard({ product }: ProductCardProps) {
   return (
-    <div className="text-center group flex flex-col h-full">
-        <div className="relative overflow-hidden mb-4">
-            <Link href={`/products/${product.slug}`}>
-                <Image
-                    src={product.imageUrl}
-                    alt={product.name}
-                    width={600}
-                    height={400}
-                    className="w-full h-auto object-cover aspect-[4/3] transition-transform duration-300 group-hover:scale-105"
-                    data-ai-hint={`${product.category} product`}
-                />
-            </Link>
-        </div>
-        <div className="space-y-2 flex-grow">
-            <Link href={`/products/${product.slug}`}>
-                <h3 className="font-semibold text-lg hover:text-primary transition-colors min-h-[3rem]">{product.name}</h3>
-            </Link>
-            
-            <p className="text-lg">LKR {product.price.toFixed(2)}</p>
-        </div>
-        <div className="mt-4">
-            <ProductCardClient product={product} />
-        </div>
-    </div>
+    <Card className="flex flex-col h-full overflow-hidden transition-shadow duration-300 hover:shadow-xl">
+      <Link href={`/products/${product.slug}`} className="block overflow-hidden">
+        <Image
+          src={product.imageUrl}
+          alt={product.name}
+          width={600}
+          height={400}
+          className="w-full h-auto object-cover aspect-[4/3] transition-transform duration-300 hover:scale-105"
+          data-ai-hint={`${product.category} product`}
+        />
+      </Link>
+      <CardContent className="p-4 flex-grow space-y-2">
+        <Link href={`/products/${product.slug}`} className="hover:text-primary transition-colors">
+          <h3 className="font-semibold text-lg leading-tight min-h-[2.5rem] line-clamp-2">{product.name}</h3>
+        </Link>
+        <p className="text-lg font-bold text-primary/80">LKR {product.price.toFixed(2)}</p>
+      </CardContent>
+      <CardFooter className="p-2">
+        <ProductCardClient product={product} />
+      </CardFooter>
+    </Card>
   );
 }

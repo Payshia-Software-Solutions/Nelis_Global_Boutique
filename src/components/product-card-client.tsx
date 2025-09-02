@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/cart-provider";
 import { useToast } from "@/hooks/use-toast";
 import type { Product } from "@/lib/types";
+import { ShoppingCart } from "lucide-react";
 
 interface ProductCardClientProps {
   product: Product;
@@ -28,8 +29,9 @@ export function ProductCardClient({ product }: ProductCardClientProps) {
   };
 
   return (
-    <Button className="w-full" onClick={handleAddToCart}>
-      ADD TO CART
+    <Button className="w-full" variant="secondary" onClick={handleAddToCart}>
+      <ShoppingCart className="mr-2 h-4 w-4" />
+      Add to Cart
     </Button>
   );
 }
