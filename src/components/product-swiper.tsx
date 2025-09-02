@@ -33,11 +33,11 @@ export function ProductSwiper({ products }: ProductSwiperProps) {
           }}
           className="w-full"
         >
-          <CarouselContent>
+          <CarouselContent className="-ml-2">
             {products.map((product) => (
               <CarouselItem 
                 key={product.id} 
-                className="basis-[calc(100%/1.5)] sm:basis-[calc(100%/2.5)] md:basis-[calc(100%/3.5)] lg:basis-[calc(100%/4.5)]"
+                className="basis-[calc(100%/1.5)] sm:basis-[calc(100%/2.5)] md:basis-[calc(100%/3.5)] lg:basis-[calc(100%/4.5)] pl-2"
               >
                 <div className="p-1">
                   <ProductCard product={product} />
