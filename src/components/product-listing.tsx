@@ -1,10 +1,9 @@
-
 "use client";
 
 import { useState, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import { ProductCard } from "./product-card";
-import type { Product } from "@/lib/types";
+import type { Product, Collection, CollectionProduct } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -26,13 +25,16 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "./ui
 interface ProductListingProps {
   products: Product[];
   categories: string[];
+  collections: Collection[];
+  collectionProducts: CollectionProduct[];
 }
 
-export function ProductListing({ products, categories }: ProductListingProps) {
+export function ProductListing({ products, categories, collections, collectionProducts }: ProductListingProps) {
   const searchParams = useSearchParams();
   
   const [filters, setFilters] = useState({
     category: searchParams.get("category") || "all",
+    collection: "all",
     priceRange: [0, 5000],
     rating: 0,
     sortBy: "featured",
@@ -44,7 +46,16 @@ export function ProductListing({ products, categories }: ProductListingProps) {
   };
 
   const filteredAndSortedProducts = useMemo(() => {
-    let filtered = products.filter((product) => {
+    let filtered = products;
+
+    if (filters.collection !== "all") {
+      const productIdsInCollection = collectionProducts
+        .filter(cp => cp.collection_id === filters.collection)
+        .map(cp => cp.product_id);
+      filtered = filtered.filter(product => productIdsInCollection.includes(product.id));
+    }
+
+    filtered = filtered.filter((product) => {
       const categoryMatch = filters.category === "all" || product.category === filters.category;
       const priceMatch = product.price >= filters.priceRange[0] && product.price <= filters.priceRange[1];
       const ratingMatch = product.rating >= filters.rating;
@@ -68,10 +79,29 @@ export function ProductListing({ products, categories }: ProductListingProps) {
     }
 
     return filtered;
-  }, [products, filters]);
+  }, [products, filters, collectionProducts]);
 
   const FilterControls = () => (
     <div className="space-y-6">
+        <div>
+          <h3 className="text-lg font-medium mb-2">Collection</h3>
+          <Select
+            value={filters.collection}
+            onValueChange={(value) => handleFilterChange("collection", value)}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Select a collection" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Collections</SelectItem>
+              {collections.map((col) => (
+                <SelectItem key={col.id} value={col.id}>
+                  {col.title}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
         <div>
           <h3 className="text-lg font-medium mb-2">Category</h3>
           <Select

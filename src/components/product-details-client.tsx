@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -78,7 +77,7 @@ export function ProductDetailsClient({ product }: ProductDetailsClientProps) {
                 <label htmlFor="quantity" className="text-sm font-medium">Quantity:</label>
                 <Select value={String(quantity)} onValueChange={(val) => setQuantity(Number(val))}>
                     <SelectTrigger id="quantity" className="w-24">
-                        <SelectValue placeholder={quantity} />
+                        <SelectValue placeholder={String(quantity)} />
                     </SelectTrigger>
                     <SelectContent>
                         {[...Array(10)].map((_, i) => (
