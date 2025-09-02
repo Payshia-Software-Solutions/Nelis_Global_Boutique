@@ -21,6 +21,8 @@ import {
 import { Slider } from "@/components/ui/slider";
 import { ChevronDown, ListFilter } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
+import { Checkbox } from "./ui/checkbox";
+import { Label } from "./ui/label";
 
 interface ProductListingProps {
   products: Product[];
@@ -34,7 +36,7 @@ export function ProductListing({ products, categories, collections, collectionPr
   
   const [filters, setFilters] = useState({
     category: searchParams.get("category") || "all",
-    collection: "all",
+    collection: [] as string[],
     priceRange: [0, 5000],
     rating: 0,
     sortBy: "featured",
@@ -44,15 +46,25 @@ export function ProductListing({ products, categories, collections, collectionPr
   const handleFilterChange = (key: keyof typeof filters, value: any) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
   };
+  
+  const handleCollectionChange = (collectionId: string) => {
+    setFilters(prev => {
+        const newCollections = prev.collection.includes(collectionId)
+            ? prev.collection.filter(id => id !== collectionId)
+            : [...prev.collection, collectionId];
+        return { ...prev, collection: newCollections };
+    });
+  };
 
   const filteredAndSortedProducts = useMemo(() => {
     let filtered = products;
 
-    if (filters.collection !== "all") {
+    if (filters.collection.length > 0) {
       const productIdsInCollection = collectionProducts
-        .filter(cp => cp.collection_id === filters.collection)
+        .filter(cp => filters.collection.includes(cp.collection_id))
         .map(cp => cp.product_id);
-      filtered = filtered.filter(product => productIdsInCollection.includes(product.id));
+      const uniqueProductIds = [...new Set(productIdsInCollection)];
+      filtered = filtered.filter(product => uniqueProductIds.includes(product.id));
     }
 
     filtered = filtered.filter((product) => {
@@ -84,23 +96,19 @@ export function ProductListing({ products, categories, collections, collectionPr
   const FilterControls = () => (
     <div className="space-y-6">
         <div>
-          <h3 className="text-lg font-medium mb-2">Collection</h3>
-          <Select
-            value={filters.collection}
-            onValueChange={(value) => handleFilterChange("collection", value)}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Select a collection" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Collections</SelectItem>
-              {collections.map((col) => (
-                <SelectItem key={col.id} value={col.id}>
-                  {col.title}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+            <h3 className="text-lg font-medium mb-2">Collection</h3>
+            <div className="space-y-2">
+            {collections.map((col) => (
+                <div key={col.id} className="flex items-center space-x-2">
+                    <Checkbox 
+                        id={`collection-${col.id}`}
+                        checked={filters.collection.includes(col.id)}
+                        onCheckedChange={() => handleCollectionChange(col.id)}
+                    />
+                    <Label htmlFor={`collection-${col.id}`} className="font-normal">{col.title}</Label>
+                </div>
+            ))}
+            </div>
         </div>
         <div>
           <h3 className="text-lg font-medium mb-2">Category</h3>
