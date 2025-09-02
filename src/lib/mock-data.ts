@@ -6,6 +6,8 @@ const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGE_URL_BASE || '';
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 const companyId = process.env.NEXT_PUBLIC_COMPANY_ID;
 
+let productsCache: Product[] | null = null;
+
 const mapApiProductToProduct = (apiProduct: ApiProductData): Product => {
   const firstImage = apiProduct.product_images?.[0]?.img_url ?? 'https://placehold.co/600x400.png';
   
@@ -26,13 +28,17 @@ const mapApiProductToProduct = (apiProduct: ApiProductData): Product => {
 };
 
 export const getProducts = async (): Promise<Product[]> => {
+  if (productsCache) {
+    return productsCache;
+  }
   try {
     const response = await fetch(`${apiBaseUrl}/products/with-variants/by-company?company_id=${companyId}`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data: ApiResponse = await response.json();
-    return data.products.map(mapApiProductToProduct);
+    productsCache = data.products.map(mapApiProductToProduct);
+    return productsCache;
   } catch (error) {
     console.error("Failed to fetch products:", error);
     return [];
@@ -115,4 +121,5 @@ export const getCollectionProducts = async (): Promise<CollectionProduct[]> => {
         return [];
     }
 }
+
 
