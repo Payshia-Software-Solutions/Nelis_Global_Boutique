@@ -103,7 +103,7 @@ export function Header() {
                                                 <h3 className="font-semibold text-sm mb-2 px-3">SHOP BY COLLECTION</h3>
                                                  <ul className="space-y-1">
                                                     {collections.map((collection) => (
-                                                        <ListItem key={collection.id} href={`/products#${collection.id}`} title={collection.title} />
+                                                        <ListItem key={collection.id} href={`/store?collection=${collection.id}`} title={collection.title} />
                                                     ))}
                                                 </ul>
                                             </div>

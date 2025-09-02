@@ -1,6 +1,7 @@
+
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { ProductCard } from "./product-card";
 import type { Product, Collection, CollectionProduct } from "@/lib/types";
@@ -36,12 +37,19 @@ export function ProductListing({ products, categories, collections, collectionPr
   
   const [filters, setFilters] = useState({
     category: searchParams.get("category") || "all",
-    collection: [] as string[],
+    collection: (searchParams.get("collection") ? [searchParams.get("collection")!] : []) as string[],
     priceRange: [0, 5000],
     rating: 0,
     sortBy: "featured",
   });
   const [isFiltersOpen, setFiltersOpen] = useState(false);
+
+  useEffect(() => {
+    const collectionFromUrl = searchParams.get("collection");
+    if (collectionFromUrl && !filters.collection.includes(collectionFromUrl)) {
+      setFilters(prev => ({ ...prev, collection: [collectionFromUrl] }));
+    }
+  }, [searchParams, filters.collection]);
 
   const handleFilterChange = (key: keyof typeof filters, value: any) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
