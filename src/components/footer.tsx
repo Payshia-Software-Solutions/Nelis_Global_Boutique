@@ -22,7 +22,7 @@ export function Footer() {
             <ul className="space-y-2 text-sm">
               <li><Link href="/" className="text-gray-700 hover:text-primary">Home</Link></li>
               <li><Link href="/about" className="text-gray-700 hover:text-primary">About</Link></li>
-              <li><Link href="/products" className="text-gray-700 hover:text-primary">Products</Link></li>
+              <li><Link href="/store" className="text-gray-700 hover:text-primary">Online Store</Link></li>
               <li><Link href="/contact" className="text-gray-700 hover:text-primary">Contact</Link></li>
             </ul>
           </div>
@@ -33,11 +33,11 @@ export function Footer() {
             <ul className="space-y-3 text-sm">
               <li className="flex items-center gap-3">
                 <Mail className="h-4 w-4 text-primary" />
-                <span className="text-gray-700">info@nelisglobal.com</span>
+                <span className="text-gray-700">nelisglobalboutique@gmail.com</span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="h-4 w-4 text-primary" />
-                <span className="text-gray-700">+94 XXX XXX XXX</span>
+                <span className="text-gray-700">+94 775 430 700</span>
               </li>
               <li className="flex items-center gap-3">
                 <MapPin className="h-4 w-4 text-primary" />
