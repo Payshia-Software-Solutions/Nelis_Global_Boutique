@@ -71,7 +71,7 @@ export function Header() {
     return (
         <header className="bg-card text-card-foreground border-b sticky top-0 z-50">
             <div className="container mx-auto px-4">
-                <div className="flex items-center justify-between h-20">
+                <div className="flex items-center justify-between h-16">
                     <Link href="/">
                         <Logo useDarkText={true} />
                     </Link>

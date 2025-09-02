@@ -8,6 +8,7 @@ import { WhyChooseUs } from "@/components/why-choose-us";
 import { WholesaleExportSection } from "@/components/wholesale-export-section";
 import { ContactUsSection } from "@/components/contact-us-section";
 import { ProductSwiper } from "@/components/product-swiper";
+import { ArrowDown } from "lucide-react";
 
 export const metadata = {
   title: "NelisGlobal Boutique | Natural Products from Sri Lanka",
@@ -20,7 +21,7 @@ export default async function HomePage() {
   return (
     <div className="space-y-16">
       {/* Hero Section */}
-      <section className="relative h-screen min-h-[600px] w-full flex items-center justify-center -mt-20">
+      <section className="relative h-screen min-h-[600px] w-full flex items-center justify-center -mt-16">
         <Image
           src="https://placehold.co/1920x1080.png"
           alt="A market stall with various natural products"
@@ -47,6 +48,9 @@ export default async function HomePage() {
                 <Link href="/contact">Contact Us</Link>
               </Button>
             </div>
+          </div>
+          <div className="absolute bottom-10 animate-bounce">
+            <ArrowDown className="h-8 w-8 text-white" />
           </div>
         </div>
       </section>
