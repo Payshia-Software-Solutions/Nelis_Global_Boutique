@@ -11,7 +11,7 @@ export default function AuthLayout({
       <Image
         src="https://placehold.co/1920x1080.png"
         alt="A market stall with various natural products"
-        layout="fill"
+        fill
         objectFit="cover"
         data-ai-hint="natural products market"
         priority

@@ -4,6 +4,7 @@ import { getProductBySlug } from "@/lib/mock-data";
 import { ProductDisplay } from "@/components/product-display";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import { YouMightAlsoLikeSection } from "@/components/you-might-also-like-section";
 
 type ProductPageProps = {
     params: {
@@ -34,6 +35,7 @@ export default async function ProductPage({ params }: { params: { productId: str
       <Header />
       <main className="flex-grow">
         <ProductDisplay product={product} />
+        <YouMightAlsoLikeSection />
       </main>
       <Footer />
     </div>
