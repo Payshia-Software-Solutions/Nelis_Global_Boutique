@@ -92,7 +92,7 @@ export function Header() {
                                 <NavigationMenuItem>
                                     <NavigationMenuTrigger className={cn((pathname.startsWith('/store') || pathname.startsWith('/products')) && "text-primary")}>Online Store</NavigationMenuTrigger>
                                     <NavigationMenuContent>
-                                        <div className="grid w-[600px] grid-cols-3 gap-x-8 p-4">
+                                        <div className="grid w-[400px] grid-cols-2 gap-x-8 p-4">
                                             <div>
                                                 <h3 className="font-semibold text-sm mb-2 px-3">SHOP TEA</h3>
                                                 <ul className="space-y-1">
@@ -105,14 +105,6 @@ export function Header() {
                                                     {collections.map((collection) => (
                                                         <ListItem key={collection.id} href={`/products#${collection.id}`} title={collection.title} />
                                                     ))}
-                                                </ul>
-                                            </div>
-                                            <div>
-                                                <h3 className="font-semibold text-sm mb-2 px-3">SHOP BY BRAND</h3>
-                                                 <ul className="space-y-1">
-                                                    {/* Add brand links here when available */}
-                                                    <ListItem href="#" title="Brand A" />
-                                                    <ListItem href="#" title="Brand B" />
                                                 </ul>
                                             </div>
                                         </div>
