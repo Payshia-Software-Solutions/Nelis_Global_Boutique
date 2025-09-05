@@ -73,7 +73,7 @@ export function Header() {
             <div className="container mx-auto px-4">
                 <div className="flex items-center justify-between h-16">
                     <Link href="/">
-                        <Logo useDarkText={true} />
+                        <Logo />
                     </Link>
 
                     <div className="hidden md:flex flex-1 items-center justify-center">

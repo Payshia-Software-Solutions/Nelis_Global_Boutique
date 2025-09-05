@@ -10,7 +10,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Nelis Global Boutique */}
           <div className="space-y-4">
-            <Logo useDarkText={true} />
+            <Logo />
             <p className="text-sm text-gray-700">
               Premium natural herbal teas and dried fruits from Sri Lanka, crafted with care for your wellness.
             </p>
