@@ -32,7 +32,7 @@ export default async function HomePage() {
           priority
         />
         <div className="absolute inset-0 bg-black/40" />
-        <div className="container mx-auto h-full flex flex-col items-center md:items-start justify-center text-center md:text-left relative z-10 text-white">
+        <div className="container mx-auto h-full flex flex-col items-center md:items-start justify-center text-center md:text-left relative z-10 text-white px-4">
           <div className="max-w-2xl">
             <h1 className="text-4xl md:text-6xl tracking-tight">
               Welcome to Nelis Global Boutique
