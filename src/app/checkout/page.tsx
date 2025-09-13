@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useForm } from "react-hook-form";
@@ -22,6 +23,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { CreditCard, TriangleAlert } from "lucide-react";
 import Link from "next/link";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -190,11 +192,11 @@ export default function CheckoutPage() {
                     <FormItem>
                       <FormControl>
                         <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="space-y-2">
-                           <Label className={`flex items-center space-x-3 p-4 border rounded-md cursor-pointer ${field.value === 'same' ? 'border-red-500 ring-2 ring-red-200' : 'border-input'}`}>
+                           <Label className={`flex items-center space-x-3 p-4 border rounded-md cursor-pointer ${field.value === 'same' ? 'border-primary ring-2 ring-primary/20' : 'border-input'}`}>
                             <RadioGroupItem value="same" id="same" />
                             <span>Same as shipping address</span>
                           </Label>
-                           <Label className={`flex items-center space-x-3 p-4 border rounded-md cursor-pointer ${field.value === 'different' ? 'border-red-500 ring-2 ring-red-200' : 'border-input'}`}>
+                           <Label className={`flex items-center space-x-3 p-4 border rounded-md cursor-pointer ${field.value === 'different' ? 'border-primary ring-2 ring-primary/20' : 'border-input'}`}>
                             <RadioGroupItem value="different" id="different" />
                             <span>Use a different billing address</span>
                           </Label>
@@ -215,7 +217,7 @@ export default function CheckoutPage() {
                     <FormItem>
                       <FormControl>
                         <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="space-y-2">
-                          <Label className={`p-4 border rounded-md cursor-pointer ${field.value === 'payhere' ? 'border-red-500 ring-2 ring-red-200' : 'border-input'}`}>
+                          <Label className={`p-4 border rounded-md cursor-pointer ${field.value === 'payhere' ? 'border-primary ring-2 ring-primary/20' : 'border-input'}`}>
                             <div className="flex items-center space-x-3 mb-2">
                                 <RadioGroupItem value="payhere" id="payhere" />
                                 <span className="font-semibold">Bank Card / Bank Account - PayHere</span>
@@ -225,7 +227,7 @@ export default function CheckoutPage() {
                                 <p>After clicking "Pay now", you will be redirected to Bank Card / Bank Account - PayHere to complete your purchase securely.</p>
                             </div>
                           </Label>
-                          <Label className={`flex items-center space-x-3 p-4 border rounded-md cursor-pointer ${field.value === 'cod' ? 'border-red-500 ring-2 ring-red-200' : 'border-input'}`}>
+                          <Label className={`flex items-center space-x-3 p-4 border rounded-md cursor-pointer ${field.value === 'cod' ? 'border-primary ring-2 ring-primary/20' : 'border-input'}`}>
                             <RadioGroupItem value="cod" id="cod" />
                             <span>Cash On Delivery</span>
                           </Label>
