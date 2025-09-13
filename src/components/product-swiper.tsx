@@ -22,9 +22,9 @@ export function ProductSwiper({ products }: ProductSwiperProps) {
   return (
     <section id="our-products" className="w-full py-24">
       <div className="container mx-auto">
-        <div className="text-center mb-8">
-            <h2 className="text-3xl">Our Products</h2>
-            <p className="text-muted-foreground mt-2 max-w-2xl mx-auto">Explore our carefully curated selection of premium natural products sourced directly from Sri Lankan farms.</p>
+        <div className="text-center mb-8 px-4">
+            <h2 className="text-3xl md:text-3xl">Our Products</h2>
+            <p className="text-muted-foreground mt-2 max-w-2xl mx-auto text-sm md:text-base">Explore our carefully curated selection of premium natural products sourced directly from Sri Lankan farms.</p>
         </div>
         <Carousel
           opts={{
