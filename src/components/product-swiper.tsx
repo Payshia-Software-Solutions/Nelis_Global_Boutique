@@ -20,7 +20,7 @@ interface ProductSwiperProps {
 
 export function ProductSwiper({ products }: ProductSwiperProps) {
   return (
-    <section id="our-products" className="w-full py-12">
+    <section id="our-products" className="w-full py-24">
       <div className="container mx-auto">
         <div className="text-center mb-8">
             <h2 className="text-3xl">Our Products</h2>

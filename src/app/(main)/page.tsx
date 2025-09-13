@@ -19,7 +19,7 @@ export default async function HomePage() {
   const products = await getFeaturedProducts();
 
   return (
-    <div className="space-y-16">
+    <div>
       {/* Hero Section */}
       <section className="relative h-screen min-h-[600px] w-full flex items-center justify-start -mt-20">
         <Image
@@ -59,13 +59,17 @@ export default async function HomePage() {
       <ProductSwiper products={products} />
 
       {/* Gift Packs Section */}
-      <GiftPacksSection />
+      <section className="py-16">
+        <GiftPacksSection />
+      </section>
 
       {/* Why Choose Us Section */}
       <WhyChooseUs />
 
       {/* Wholesale & Export Section */}
-      <WholesaleExportSection />
+      <section className="py-16">
+        <WholesaleExportSection />
+      </section>
 
       {/* Contact Us Section */}
       <ContactUsSection />
