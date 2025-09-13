@@ -32,6 +32,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -52,6 +53,11 @@ const formSchema = z.object({
 export default function CheckoutPage() {
   const { cart, cartTotal, itemCount } = useCart();
   const router = useRouter();
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -75,6 +81,10 @@ export default function CheckoutPage() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
     router.push('/confirmation');
+  }
+
+  if (!isClient) {
+    return null;
   }
 
   return (
