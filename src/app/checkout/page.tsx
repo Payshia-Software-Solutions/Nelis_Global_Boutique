@@ -218,12 +218,14 @@ export default function CheckoutPage() {
                       <FormControl>
                         <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="space-y-2">
                           <Label className={`p-4 border rounded-md cursor-pointer ${field.value === 'payhere' ? 'border-primary ring-2 ring-primary/20' : 'border-input'}`}>
-                            <div className="flex items-center space-x-3 mb-2">
-                                <RadioGroupItem value="payhere" id="payhere" />
-                                <span className="font-semibold">Bank Card / Bank Account - PayHere</span>
+                            <div className="flex justify-between items-center">
+                                <div className="flex items-center space-x-3">
+                                    <RadioGroupItem value="payhere" id="payhere" />
+                                    <span className="font-semibold">Bank Card / Bank Account - PayHere</span>
+                                </div>
+                                <CreditCard className="h-6 w-6" />
                             </div>
-                            <div className="pl-8 pt-2 space-y-2 text-sm text-muted-foreground">
-                                <CreditCard className="h-6 w-6 mb-2" />
+                            <div className="pl-8 pt-4 text-sm text-muted-foreground">
                                 <p>After clicking "Pay now", you will be redirected to Bank Card / Bank Account - PayHere to complete your purchase securely.</p>
                             </div>
                           </Label>
@@ -295,5 +297,3 @@ export default function CheckoutPage() {
     </div>
   );
 }
-
-    
