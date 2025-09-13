@@ -31,6 +31,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -50,6 +51,7 @@ const formSchema = z.object({
 
 export default function CheckoutPage() {
   const { cart, cartTotal, itemCount } = useCart();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -72,7 +74,7 @@ export default function CheckoutPage() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
-    alert("Order placed successfully!");
+    router.push('/confirmation');
   }
 
   return (
@@ -249,7 +251,7 @@ export default function CheckoutPage() {
               </Alert>
 
               <Button type="submit" size="lg" className="w-full text-lg h-12 bg-black text-white hover:bg-gray-800">
-                Pay now
+                Place the order
               </Button>
             </form>
           </Form>
