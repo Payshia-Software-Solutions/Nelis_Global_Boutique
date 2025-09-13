@@ -13,12 +13,16 @@ interface CartContextType {
   clearCart: () => void;
   cartTotal: number;
   itemCount: number;
+  isCartOpen: boolean;
+  openCart: () => void;
+  closeCart: () => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   useEffect(() => {
     const storedCart = localStorage.getItem("nelisglobal-cart");
@@ -28,12 +32,11 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   useEffect(() => {
-    if (cart.length > 0) {
-      localStorage.setItem("nelisglobal-cart", JSON.stringify(cart));
-    } else {
-      localStorage.removeItem("nelisglobal-cart");
-    }
+    localStorage.setItem("nelisglobal-cart", JSON.stringify(cart));
   }, [cart]);
+
+  const openCart = () => setIsCartOpen(true);
+  const closeCart = () => setIsCartOpen(false);
 
   const addToCart = (item: Omit<CartItem, "quantity">) => {
     setCart((prevCart) => {
@@ -47,6 +50,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       }
       return [...prevCart, { ...item, quantity: 1 }];
     });
+    openCart();
   };
 
   const removeFromCart = (itemId: string) => {
@@ -82,6 +86,9 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         clearCart,
         cartTotal,
         itemCount,
+        isCartOpen,
+        openCart,
+        closeCart,
       }}
     >
       {children}
