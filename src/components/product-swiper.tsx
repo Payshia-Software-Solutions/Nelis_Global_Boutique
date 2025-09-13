@@ -6,8 +6,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
 import { ProductCard } from "./product-card";
 import type { Product } from "@/lib/types";
@@ -45,8 +43,6 @@ export function ProductSwiper({ products }: ProductSwiperProps) {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="hidden md:flex" />
-          <CarouselNext className="hidden md:flex" />
         </Carousel>
         <div className="text-center mt-12">
             <Button asChild size="lg" variant="outline">
