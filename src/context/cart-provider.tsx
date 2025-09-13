@@ -5,6 +5,13 @@ import type { CartItem } from "@/lib/types";
 import type { ReactNode } from "react";
 import { createContext, useContext, useEffect, useState } from "react";
 
+type OrderData = {
+  formValues: any;
+  cart: CartItem[];
+  cartTotal: number;
+  itemCount: number;
+} | null;
+
 interface CartContextType {
   cart: CartItem[];
   addToCart: (item: Omit<CartItem, "quantity">) => void;
@@ -16,6 +23,8 @@ interface CartContextType {
   isCartOpen: boolean;
   openCart: () => void;
   closeCart: () => void;
+  orderData: OrderData;
+  setOrderData: (data: OrderData) => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -23,17 +32,32 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [orderData, setOrderData] = useState<OrderData>(null);
 
   useEffect(() => {
     const storedCart = localStorage.getItem("nelisglobal-cart");
     if (storedCart) {
       setCart(JSON.parse(storedCart));
     }
+    const storedOrderData = sessionStorage.getItem("nelisglobal-order");
+    if (storedOrderData) {
+      setOrderData(JSON.parse(storedOrderData));
+    }
   }, []);
 
   useEffect(() => {
     localStorage.setItem("nelisglobal-cart", JSON.stringify(cart));
   }, [cart]);
+
+  const handleSetOrderData = (data: OrderData) => {
+    setOrderData(data);
+    if (data) {
+      sessionStorage.setItem("nelisglobal-order", JSON.stringify(data));
+    } else {
+      sessionStorage.removeItem("nelisglobal-order");
+    }
+  };
+
 
   const openCart = () => setIsCartOpen(true);
   const closeCart = () => setIsCartOpen(false);
@@ -89,6 +113,8 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         isCartOpen,
         openCart,
         closeCart,
+        orderData,
+        setOrderData: handleSetOrderData,
       }}
     >
       {children}

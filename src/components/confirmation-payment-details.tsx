@@ -13,7 +13,10 @@ const VisaIcon = () => (
 );
 
 
-export function ConfirmationPaymentDetails() {
+export function ConfirmationPaymentDetails({ orderData }: { orderData: any }) {
+    const { formValues } = orderData;
+    const { paymentMethod, billingAddress, firstName, lastName, address, city, postalCode, country } = formValues;
+
     return (
         <Card>
             <CardHeader className="flex flex-row items-center justify-between">
@@ -24,17 +27,23 @@ export function ConfirmationPaymentDetails() {
                 <div>
                     <p className="text-sm font-medium text-muted-foreground mb-1">Payment Method</p>
                     <div className="flex items-center gap-3">
-                        <VisaIcon />
-                        <span className="font-semibold">Visa ending in 1234</span>
+                        {paymentMethod === 'payhere' && <VisaIcon />}
+                        <span className="font-semibold">{paymentMethod === 'payhere' ? 'Bank Card / Bank Account' : 'Cash On Delivery'}</span>
                     </div>
                 </div>
                 <div>
                     <p className="text-sm font-medium text-muted-foreground mb-1">Billing Address</p>
                     <div className="text-sm">
-                        <p>John Doe</p>
-                        <p>123 Main Street</p>
-                        <p>Colombo 07, Western Province</p>
-                        <p>Sri Lanka 00700</p>
+                        {billingAddress === 'same' ? (
+                            <p>Same as shipping address</p>
+                        ) : (
+                            <>
+                                <p>{firstName} {lastName}</p>
+                                <p>{address}</p>
+                                <p>{city}, {postalCode}</p>
+                                <p>{country}</p>
+                            </>
+                        )}
                     </div>
                 </div>
             </CardContent>

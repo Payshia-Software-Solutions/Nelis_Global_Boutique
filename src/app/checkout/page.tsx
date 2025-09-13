@@ -51,7 +51,7 @@ const formSchema = z.object({
 });
 
 export default function CheckoutPage() {
-  const { cart, cartTotal, itemCount } = useCart();
+  const { cart, cartTotal, itemCount, setOrderData } = useCart();
   const router = useRouter();
   const [isClient, setIsClient] = useState(false);
 
@@ -79,7 +79,12 @@ export default function CheckoutPage() {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    setOrderData({
+        formValues: values,
+        cart: cart,
+        cartTotal: cartTotal,
+        itemCount: itemCount,
+    });
     router.push('/confirmation');
   }
 

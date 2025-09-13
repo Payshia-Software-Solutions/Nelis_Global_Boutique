@@ -5,11 +5,11 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
-export function ConfirmationOrderTotal() {
-    const subtotal = 35500.00;
-    const shipping = 500.00;
-    const tax = 1800.00;
-    const total = subtotal + shipping + tax;
+export function ConfirmationOrderTotal({ orderData }: { orderData: any }) {
+    const { cartTotal } = orderData;
+    const shipping = 0.00;
+    const tax = 0.00;
+    const total = cartTotal + shipping + tax;
 
     return (
         <Card>
@@ -18,7 +18,7 @@ export function ConfirmationOrderTotal() {
                 <div className="space-y-2 mb-6">
                     <div className="flex justify-between">
                         <span className="text-muted-foreground">Subtotal</span>
-                        <span>LKR {subtotal.toFixed(2)}</span>
+                        <span>LKR {cartTotal.toFixed(2)}</span>
                     </div>
                     <div className="flex justify-between">
                         <span className="text-muted-foreground">Shipping</span>
