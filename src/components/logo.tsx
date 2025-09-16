@@ -5,7 +5,7 @@ export function Logo({ useDarkText = false }: { useDarkText?: boolean }) {
     return (
       <div className="flex items-center gap-2">
         <Image 
-          src="https://content-provider.payshia.com/nelis-global/logo.webp" 
+          src="https://content-provider.payshia.com/nelis-global/nelis-logo-optimized.webp" 
           alt="Nelis Global Boutique Logo"
           width={150}
           height={40}
