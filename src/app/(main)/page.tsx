@@ -23,7 +23,7 @@ export default async function HomePage() {
       {/* Hero Section */}
       <section className="relative h-screen min-h-[600px] w-full flex items-center justify-center md:justify-start -mt-20">
         <Image
-          src="https://placehold.co/1920x1080.png"
+          src="https://content-provider.payshia.com/nelis-global/hero.webp"
           alt="A market stall with various natural products"
           fill
           objectFit="cover"
