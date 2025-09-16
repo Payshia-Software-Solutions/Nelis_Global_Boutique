@@ -36,23 +36,29 @@ function ProductListingSkeleton() {
   )
 }
 
-export default async function StorePage() {
+async function ProductListingData() {
   const products = await getProducts();
   const categories = [...new Set(products.map(p => p.category))];
   const collections = await getCollections();
   const collectionProducts = await getCollectionProducts();
+  
+  return (
+    <ProductListing 
+      products={products} 
+      categories={categories} 
+      collections={collections}
+      collectionProducts={collectionProducts}
+    />
+  );
+}
 
+export default function StorePage() {
   return (
     <>
       <StoreHeroSection />
       <div className="container mx-auto px-4 py-12">
         <Suspense fallback={<ProductListingSkeleton />}>
-          <ProductListing 
-            products={products} 
-            categories={categories} 
-            collections={collections}
-            collectionProducts={collectionProducts}
-          />
+          <ProductListingData />
         </Suspense>
       </div>
       <ShoppingFeaturesSection />

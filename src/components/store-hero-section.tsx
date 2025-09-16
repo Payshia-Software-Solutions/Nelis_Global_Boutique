@@ -7,12 +7,12 @@ export function StoreHeroSection() {
     return (
         <section className="relative h-[60vh] min-h-[500px] w-full flex items-center justify-center text-white">
             <Image
-                src="https://placehold.co/1920x700.png"
-                alt="Nelis Global Boutique Online Store"
+                src="https://content-provider.payshia.com/nelis-global/hero.webp"
+                alt="A market stall with various natural products"
                 layout="fill"
                 objectFit="cover"
                 className="opacity-100"
-                data-ai-hint="tea products market"
+                data-ai-hint="natural products market"
             />
             <div className="absolute inset-0 bg-black/10" />
             <div className="container mx-auto px-4 text-center relative z-10">

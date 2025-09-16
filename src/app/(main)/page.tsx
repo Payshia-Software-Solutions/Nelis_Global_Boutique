@@ -1,7 +1,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { getFeaturedProducts } from "@/lib/mock-data";
 import { Button } from "@/components/ui/button";
 import { GiftPacksSection } from "@/components/gift-packs-section";
 import { WhyChooseUs } from "@/components/why-choose-us";
@@ -16,8 +15,6 @@ export const metadata = {
 };
 
 export default async function HomePage() {
-  const products = await getFeaturedProducts();
-
   return (
     <div>
       {/* Hero Section */}
@@ -56,7 +53,7 @@ export default async function HomePage() {
       </section>
       
       {/* Our Products Section */}
-      <ProductSwiper products={products} />
+      <ProductSwiper />
 
       {/* Gift Packs Section */}
       <section className="py-16">
