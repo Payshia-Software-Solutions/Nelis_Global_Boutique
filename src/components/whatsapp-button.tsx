@@ -18,7 +18,7 @@ export function WhatsAppButton() {
             aria-label="Chat on WhatsApp"
         >
             <Image 
-                src="https://content-provider.payshia.com/nelis-global/icons8-whatsapp.gif"
+                src="https://content-provider.payshia.com/nelis-global/social.png"
                 alt="WhatsApp chat"
                 width={64}
                 height={64}
