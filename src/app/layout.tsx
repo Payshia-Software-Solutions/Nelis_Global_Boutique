@@ -4,6 +4,8 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
 import { CartProvider } from '@/context/cart-provider';
 import { WhatsAppButton } from '@/components/whatsapp-button';
+import { ProgressBar } from '@/components/progress-bar';
+import { Suspense } from 'react';
 
 export const metadata: Metadata = {
   title: {
@@ -27,6 +29,9 @@ export default function RootLayout({
       </head>
       <body className="font-body antialiased">
         <CartProvider>
+          <Suspense>
+            <ProgressBar />
+          </Suspense>
           {children}
           <Toaster />
           <WhatsAppButton />
