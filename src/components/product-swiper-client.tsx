@@ -18,8 +18,8 @@ interface ProductSwiperClientProps {
 export function ProductSwiperClient({ products }: ProductSwiperClientProps) {
   return (
     <section id="our-products" className="w-full py-24">
-      <div className="container mx-auto">
-        <div className="text-center mb-8 px-4">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-8">
           <h2 className="text-3xl md:text-3xl">Our Products</h2>
           <p className="text-muted-foreground mt-2 max-w-2xl mx-auto text-sm md:text-base">
             Explore our carefully curated selection of premium natural products
@@ -33,11 +33,11 @@ export function ProductSwiperClient({ products }: ProductSwiperClientProps) {
           }}
           className="w-full"
         >
-          <CarouselContent>
+          <CarouselContent className="-ml-2 pl-4">
             {products.map((product) => (
               <CarouselItem
                 key={product.id}
-                className="basis-4/5 sm:basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5"
+                className="basis-4/5 sm:basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5 pl-2"
               >
                 <div className="p-1">
                   <ProductCard product={product} />
