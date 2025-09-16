@@ -22,7 +22,7 @@ export function WhatsAppButton() {
                 alt="WhatsApp chat"
                 width={100}
                 height={100}
-                className="rounded-full h-16 w-auto"
+                className="rounded-full h-16 w-16"
             />
         </Link>
     );
