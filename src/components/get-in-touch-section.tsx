@@ -13,7 +13,7 @@ const contactMethods = [
     {
         icon: Headset,
         title: "Hotline",
-        detail: "+94 718 88 5 777",
+        detail: "+94 775 430 700",
     },
     {
         icon: Mail,
