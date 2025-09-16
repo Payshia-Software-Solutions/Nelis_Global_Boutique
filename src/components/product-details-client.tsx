@@ -16,6 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { ToastAction } from "@/components/ui/toast";
 
 interface ProductDetailsClientProps {
     product: Product;
@@ -23,7 +24,7 @@ interface ProductDetailsClientProps {
 
 export function ProductDetailsClient({ product }: ProductDetailsClientProps) {
     const [quantity, setQuantity] = useState(1);
-    const { addToCart } = useCart();
+    const { addToCart, openCart } = useCart();
     const { toast } = useToast();
 
     const handleAddToCart = () => {
@@ -37,6 +38,9 @@ export function ProductDetailsClient({ product }: ProductDetailsClientProps) {
         toast({
           title: "Added to cart",
           description: `${quantity} x ${product.name} has been added to your cart.`,
+          action: (
+            <ToastAction altText="View cart" onClick={openCart}>View cart</ToastAction>
+          ),
         });
     };
     

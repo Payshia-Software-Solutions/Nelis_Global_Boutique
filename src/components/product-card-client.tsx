@@ -6,13 +6,14 @@ import { useCart } from "@/context/cart-provider";
 import { useToast } from "@/hooks/use-toast";
 import type { Product } from "@/lib/types";
 import { ShoppingCart } from "lucide-react";
+import { ToastAction } from "@/components/ui/toast";
 
 interface ProductCardClientProps {
   product: Product;
 }
 
 export function ProductCardClient({ product }: ProductCardClientProps) {
-  const { addToCart } = useCart();
+  const { addToCart, openCart } = useCart();
   const { toast } = useToast();
 
   const handleAddToCart = () => {
@@ -26,6 +27,9 @@ export function ProductCardClient({ product }: ProductCardClientProps) {
     toast({
       title: "Added to cart",
       description: `${product.name} has been added to your cart.`,
+      action: (
+        <ToastAction altText="View cart" onClick={openCart}>View cart</ToastAction>
+      ),
     });
   };
 
