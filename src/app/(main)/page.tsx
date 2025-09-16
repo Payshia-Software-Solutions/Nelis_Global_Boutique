@@ -13,6 +13,18 @@ import { MotionSection } from "@/components/motion-section";
 export const metadata = {
   title: "NelisGlobal Boutique | Natural Products from Sri Lanka",
   description: "Discover the finest natural products from Sri Lanka. We bring you premium dried fruits, herbal teas, and authentic flavors crafted with sustainable practices and community care.",
+  openGraph: {
+    title: "NelisGlobal Boutique | Natural Products from Sri Lanka",
+    description: "Discover the finest natural products from Sri Lanka, from herbal teas to dried fruits.",
+    images: [
+      {
+        url: "https://content-provider.payshia.com/nelis-global/hero.webp",
+        width: 1920,
+        height: 1080,
+        alt: "A market stall with various natural products",
+      },
+    ],
+  },
 };
 
 export default async function HomePage() {

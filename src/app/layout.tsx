@@ -6,8 +6,11 @@ import { CartProvider } from '@/context/cart-provider';
 import { WhatsAppButton } from '@/components/whatsapp-button';
 
 export const metadata: Metadata = {
-  title: 'NelisGlobal Marketplace',
-  description: 'Your one-stop shop for everything.',
+  title: {
+    template: '%s | NelisGlobal Boutique',
+    default: 'NelisGlobal Boutique | Natural Products from Sri Lanka'
+  },
+  description: 'Discover the finest natural products from Sri Lanka. We bring you premium dried fruits, herbal teas, and authentic flavors crafted with sustainable practices and community care.',
 };
 
 export default function RootLayout({

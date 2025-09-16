@@ -5,7 +5,7 @@ import { CertificationsSection } from '@/components/certifications-section';
 import { JoinOurJourneySection } from '@/components/join-our-journey-section';
 
 export const metadata = {
-    title: "About Us | NelisGlobal Boutique",
+    title: "About Us",
     description: "Learn about the story behind NelisGlobal Boutique and our commitment to natural, sustainable products from Sri Lanka.",
 };
 

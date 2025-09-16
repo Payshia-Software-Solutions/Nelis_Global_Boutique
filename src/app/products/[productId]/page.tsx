@@ -18,8 +18,20 @@ export async function generateMetadata({ params }: ProductPageProps) {
         return { title: "Product Not Found" };
     }
     return {
-        title: `${product.name} | NelisGlobal Marketplace`,
+        title: product.name,
         description: product.description,
+        openGraph: {
+            title: product.name,
+            description: product.description,
+            images: [
+              {
+                url: product.imageUrl,
+                width: 600,
+                height: 400,
+                alt: product.name,
+              },
+            ],
+        },
     };
 }
 
