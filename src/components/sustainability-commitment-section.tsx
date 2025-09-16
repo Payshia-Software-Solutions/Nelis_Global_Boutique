@@ -11,7 +11,7 @@ export function SustainabilityCommitmentSection() {
                 <div className="grid lg:grid-cols-2 gap-12 items-center">
                     <div className="rounded-lg overflow-hidden shadow-lg">
                         <Image
-                            src="https://placehold.co/600x700.png"
+                            src="https://content-provider.payshia.com/nelis-global/our-commitment-600x700.webp"
                             alt="Two women working in a sustainable workshop"
                             width={600}
                             height={700}
