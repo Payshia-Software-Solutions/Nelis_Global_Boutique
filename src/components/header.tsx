@@ -142,7 +142,15 @@ export function Header() {
                         </Button>
                     </div>
                     
-                    <div className="md:hidden">
+                    <div className="md:hidden flex items-center gap-2">
+                        <Button variant="ghost" size="icon" className="relative" onClick={openCart}>
+                            <ShoppingCart className="h-6 w-6" />
+                            {itemCount > 0 && (
+                                <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs rounded-full h-4 w-4 flex items-center justify-center">
+                                    {itemCount}
+                                </span>
+                            )}
+                        </Button>
                         <Sheet open={isMenuOpen} onOpenChange={setMenuOpen}>
                             <SheetTrigger asChild>
                                 <Button variant="ghost" size="icon">
@@ -150,7 +158,10 @@ export function Header() {
                                 </Button>
                             </SheetTrigger>
                             <SheetContent side="left">
-                                <nav className="flex flex-col items-start space-y-4 py-4">
+                                <div className="p-4">
+                                  <Logo />
+                                </div>
+                                <nav className="flex flex-col items-start space-y-2 p-4">
                                     {navLinks.map((link) => (
                                         <Link 
                                             key={link.href} 
@@ -167,14 +178,6 @@ export function Header() {
                                     <div className="flex items-center space-x-2 pt-4">
                                         <Button variant="ghost" size="icon">
                                             <Search className="h-6 w-6" />
-                                        </Button>
-                                        <Button variant="ghost" size="icon" className="relative" onClick={() => { openCart(); setMenuOpen(false); }}>
-                                            <ShoppingCart className="h-6 w-6" />
-                                            {itemCount > 0 && (
-                                                <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs rounded-full h-4 w-4 flex items-center justify-center">
-                                                    {itemCount}
-                                                </span>
-                                            )}
                                         </Button>
                                     </div>
                                 </nav>
