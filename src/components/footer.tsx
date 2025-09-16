@@ -32,15 +32,15 @@ export function Footer() {
             <h3 className="font-semibold mb-4 text-gray-900">Contact Info</h3>
             <ul className="space-y-3 text-sm">
               <li className="flex items-center gap-3">
-                <Mail className="h-4 w-4 text-primary" />
+                <Mail className="h-4 w-4 text-white" />
                 <span className="text-gray-700">nelisglobalboutique@gmail.com</span>
               </li>
               <li className="flex items-center gap-3">
-                <Phone className="h-4 w-4 text-primary" />
+                <Phone className="h-4 w-4 text-white" />
                 <span className="text-gray-700">+94 775 430 700</span>
               </li>
               <li className="flex items-center gap-3">
-                <MapPin className="h-4 w-4 text-primary" />
+                <MapPin className="h-4 w-4 text-white" />
                 <span className="text-gray-700">Colombo, Sri Lanka</span>
               </li>
             </ul>
@@ -50,13 +50,13 @@ export function Footer() {
           <div>
             <h3 className="font-semibold mb-4 text-gray-900">Follow Us</h3>
             <div className="flex space-x-4">
-              <Link href="#" className="text-gray-700 hover:text-primary">
+              <Link href="#" className="text-white hover:text-gray-200">
                 <Facebook className="h-5 w-5" />
               </Link>
-              <Link href="#" className="text-gray-700 hover:text-primary">
+              <Link href="#" className="text-white hover:text-gray-200">
                 <Instagram className="h-5 w-5" />
               </Link>
-              <Link href="#" className="text-gray-700 hover:text-primary">
+              <Link href="#" className="text-white hover:text-gray-200">
                 <Linkedin className="h-5 w-5" />
               </Link>
             </div>
@@ -73,7 +73,7 @@ export function Footer() {
               href="https://payshia.com" 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="font-medium text-primary hover:underline"
+              className="font-medium text-white hover:underline"
             >
               Payshia Software Solutions
             </a>
