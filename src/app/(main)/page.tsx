@@ -54,27 +54,27 @@ export default async function HomePage() {
       </section>
       
       {/* Our Products Section */}
-      <MotionSection>
+      <MotionSection className="bg-background">
         <ProductSwiper />
       </MotionSection>
 
       {/* Gift Packs Section */}
-      <MotionSection className="py-16">
+      <MotionSection className="py-16 bg-muted">
         <GiftPacksSection />
       </MotionSection>
 
       {/* Why Choose Us Section */}
-      <MotionSection>
+      <MotionSection className="bg-background">
         <WhyChooseUs />
       </MotionSection>
 
       {/* Wholesale & Export Section */}
-      <MotionSection className="py-16">
+      <MotionSection className="py-16 bg-muted">
         <WholesaleExportSection />
       </MotionSection>
 
       {/* Contact Us Section */}
-      <MotionSection>
+      <MotionSection className="bg-background">
         <ContactUsSection />
       </MotionSection>
     </div>

@@ -22,7 +22,7 @@ const contactDetails = [
 
 export function ContactUsSection() {
     return (
-        <section className="bg-muted py-24">
+        <section className="py-24">
             <div className="container mx-auto px-4">
                 <div className="text-center max-w-3xl mx-auto">
                     <h2 className="text-3xl mb-4">Contact Us</h2>
