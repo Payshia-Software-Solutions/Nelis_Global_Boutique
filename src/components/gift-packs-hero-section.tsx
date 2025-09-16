@@ -11,10 +11,10 @@ export function GiftPacksHeroSection() {
                 alt="A collection of beautifully wrapped gift packs with festive decorations"
                 layout="fill"
                 objectFit="cover"
-                className="opacity-40"
+                className="opacity-100"
                 data-ai-hint="gift packs festive"
             />
-            <div className="absolute inset-0 bg-black/50" />
+            <div className="absolute inset-0 bg-black/10" />
             <div className="container mx-auto px-4 text-center relative z-10">
                 <h1 className="text-5xl md:text-7xl tracking-tight">Gift Packs – Perfect for Every Occasion</h1>
             </div>

@@ -16,7 +16,7 @@ export default function AuthLayout({
         data-ai-hint="natural products market"
         priority
       />
-      <div className="absolute inset-0 bg-black/50" />
+      <div className="absolute inset-0 bg-black/10" />
       <div className="relative z-10 grid md:grid-cols-2 min-h-screen">
         <div className="hidden md:flex flex-col justify-center items-start p-16 text-white">
             <h1 className="text-4xl mb-4">Nelis Global Boutique</h1>
