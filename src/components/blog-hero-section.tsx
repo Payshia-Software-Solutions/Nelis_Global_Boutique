@@ -7,7 +7,7 @@ export function BlogHeroSection() {
     return (
         <section className="relative h-[60vh] min-h-[500px] w-full flex items-center justify-start text-white">
             <Image
-                src="https://placehold.co/1920x700.png"
+                src="https://content-provider.payshia.com/nelis-global/1920x700-blog-nelis-global-boutique-optimized.webp"
                 alt="A cozy scene with a cup of tea and a notebook"
                 layout="fill"
                 objectFit="cover"
