@@ -8,6 +8,7 @@ import { WholesaleExportSection } from "@/components/wholesale-export-section";
 import { ContactUsSection } from "@/components/contact-us-section";
 import { ProductSwiper } from "@/components/product-swiper";
 import { ArrowDown } from "lucide-react";
+import { MotionSection } from "@/components/motion-section";
 
 export const metadata = {
   title: "NelisGlobal Boutique | Natural Products from Sri Lanka",
@@ -53,23 +54,29 @@ export default async function HomePage() {
       </section>
       
       {/* Our Products Section */}
-      <ProductSwiper />
+      <MotionSection>
+        <ProductSwiper />
+      </MotionSection>
 
       {/* Gift Packs Section */}
-      <section className="py-16">
+      <MotionSection className="py-16">
         <GiftPacksSection />
-      </section>
+      </MotionSection>
 
       {/* Why Choose Us Section */}
-      <WhyChooseUs />
+      <MotionSection>
+        <WhyChooseUs />
+      </MotionSection>
 
       {/* Wholesale & Export Section */}
-      <section className="py-16">
+      <MotionSection className="py-16">
         <WholesaleExportSection />
-      </section>
+      </MotionSection>
 
       {/* Contact Us Section */}
-      <ContactUsSection />
+      <MotionSection>
+        <ContactUsSection />
+      </MotionSection>
     </div>
   );
 }
