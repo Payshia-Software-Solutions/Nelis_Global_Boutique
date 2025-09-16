@@ -23,7 +23,7 @@ export function OurStorySection() {
           </div>
           <div>
             <Image
-              src="https://placehold.co/600x500.png"
+              src="https://content-provider.payshia.com/nelis-global/600x500-our-story.webp"
               alt="A collection of Nelis Global Boutique products"
               width={600}
               height={500}
