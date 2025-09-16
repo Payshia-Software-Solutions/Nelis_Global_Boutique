@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -39,7 +38,7 @@ export function GiftPacksSection() {
                 </div>
                 <div className="order-2 md:order-1">
                      <Image
-                        src="https://placehold.co/600x400.png"
+                        src="https://content-provider.payshia.com/nelis-global/1920x700-contact-us-optimized.webp"
                         alt="A collection of beautifully packaged gift packs"
                         width={600}
                         height={400}
