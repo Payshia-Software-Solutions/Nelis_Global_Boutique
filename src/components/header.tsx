@@ -25,7 +25,7 @@ import {
     NavigationMenuTrigger,
     navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { Popover, PopoverContent, PopoverTrigger, PopoverAnchor } from "@/components/ui/popover";
 
 const navLinks = [
     { href: "/", label: "Home" },
@@ -48,10 +48,7 @@ export function Header() {
     const [collections, setCollections] = useState<Collection[]>([]);
     const [allProducts, setAllProducts] = useState<Product[]>([]);
     const [searchResults, setSearchResults] = useState<Product[]>([]);
-    const [isSearchFocused, setIsSearchFocused] = useState(false);
-
-    const searchInputRef = useRef<HTMLInputElement>(null);
-
+    
     useEffect(() => {
         const fetchCollectionsAndProducts = async () => {
             try {
@@ -70,11 +67,10 @@ export function Header() {
 
     useEffect(() => {
         const queryFromUrl = searchParams.get("q") || "";
-        if(!isSearchOpen) {
+        if (!isSearchOpen) {
             setSearchQuery(queryFromUrl);
         }
     }, [searchParams, isSearchOpen]);
-
 
     useEffect(() => {
         if (searchQuery.trim() === "") {
@@ -95,6 +91,7 @@ export function Header() {
         if (!searchQuery.trim()) return;
         router.push(`/store?q=${encodeURIComponent(searchQuery)}`);
         setIsSearchOpen(false);
+        setSearchQuery("");
     };
 
     const handleResultClick = () => {
@@ -119,53 +116,46 @@ export function Header() {
 
     const desktopNavLinks = navLinks.filter(link => link.label !== "Online Store");
 
-    const searchPopoverContent = (
-        <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0" onOpenAutoFocus={(e) => e.preventDefault()}>
-            {searchResults.length > 0 ? (
-                <div className="divide-y">
-                    {searchResults.map(product => (
-                        <Link key={product.id} href={`/products/${product.slug}`} onClick={handleResultClick} className="flex items-center gap-4 p-2 hover:bg-accent">
-                            <Image src={product.imageUrl} alt={product.name} width={40} height={40} className="rounded-md" />
-                            <div className="flex-grow">
-                                <p className="font-medium line-clamp-2">{product.name}</p>
-                                <p className="text-sm text-muted-foreground">LKR {product.price.toFixed(2)}</p>
-                            </div>
-                        </Link>
-                    ))}
-                    <form onSubmit={handleSearchSubmit}>
-                        <button type="submit" className="w-full text-center p-2 text-sm text-primary hover:bg-accent">
-                            View all results for &quot;{searchQuery}&quot;
-                        </button>
-                    </form>
-                </div>
-            ) : (
-                <div className="p-4 text-center text-sm text-muted-foreground">No results found.</div>
-            )}
-        </PopoverContent>
-    );
-    
     const SearchBar = ({ isMobile = false }: { isMobile?: boolean }) => (
-      <Popover open={isSearchFocused && searchQuery.length > 0}>
-        <PopoverTrigger asChild>
-          <form onSubmit={handleSearchSubmit} className="relative">
-            <Input
-              ref={searchInputRef}
-              type="search"
-              placeholder="Search products..."
-              className={cn("w-full pr-10", isMobile ? "" : "max-w-md")}
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              onFocus={() => setIsSearchFocused(true)}
-              onBlur={() => setIsSearchFocused(false)}
-              autoFocus
-            />
-            <Button type="submit" variant="ghost" size="icon" className="absolute right-0 top-0 h-full">
-              <Search className="h-5 w-5" />
-            </Button>
-          </form>
-        </PopoverTrigger>
-        {searchPopoverContent}
-      </Popover>
+        <Popover open={searchQuery.length > 0}>
+            <PopoverAnchor asChild>
+                <form onSubmit={handleSearchSubmit} className="relative w-full">
+                    <Input
+                        type="search"
+                        placeholder="Search products..."
+                        className={cn("pr-10", isMobile ? "h-10" : "h-9")}
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        autoFocus
+                    />
+                    <Button type="submit" variant="ghost" size="icon" className="absolute right-0 top-0 h-full w-10">
+                        <Search className="h-5 w-5" />
+                    </Button>
+                </form>
+            </PopoverAnchor>
+            <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0" onOpenAutoFocus={(e) => e.preventDefault()}>
+                {searchResults.length > 0 ? (
+                    <div className="divide-y">
+                        {searchResults.map(product => (
+                            <Link key={product.id} href={`/products/${product.slug}`} onClick={handleResultClick} className="flex items-center gap-4 p-2 hover:bg-accent">
+                                <Image src={product.imageUrl} alt={product.name} width={40} height={40} className="rounded-md" />
+                                <div className="flex-grow">
+                                    <p className="font-medium line-clamp-2">{product.name}</p>
+                                    <p className="text-sm text-muted-foreground">LKR {product.price.toFixed(2)}</p>
+                                </div>
+                            </Link>
+                        ))}
+                        <form onSubmit={handleSearchSubmit}>
+                            <button type="submit" className="w-full text-center p-2 text-sm text-primary hover:bg-accent">
+                                View all results for &quot;{searchQuery}&quot;
+                            </button>
+                        </form>
+                    </div>
+                ) : (
+                    <div className="p-4 text-center text-sm text-muted-foreground">No results found.</div>
+                )}
+            </PopoverContent>
+        </Popover>
     );
 
     return (
@@ -177,65 +167,65 @@ export function Header() {
                     </Link>
 
                     <div className="hidden md:flex flex-1 items-center justify-center">
-                       {isSearchOpen ? (
-                           <div className="w-full max-w-md">
+                        {isSearchOpen ? (
+                            <div className="w-full max-w-md">
                                 <SearchBar />
-                           </div>
-                       ) : (
-                        <NavigationMenu>
-                            <NavigationMenuList>
-                                {desktopNavLinks.slice(0, 2).map((link) => (
-                                     <NavigationMenuItem key={link.href}>
-                                         <Link href={link.href} passHref>
-                                            <NavigationMenuLink asChild>
-                                                <div className={cn(navigationMenuTriggerStyle(), pathname === link.href ? "text-primary" : "text-muted-foreground", "cursor-pointer")}>
-                                                    {link.label}
+                            </div>
+                        ) : (
+                            <NavigationMenu>
+                                <NavigationMenuList>
+                                    {desktopNavLinks.slice(0, 2).map((link) => (
+                                        <NavigationMenuItem key={link.href}>
+                                            <Link href={link.href} passHref>
+                                                <NavigationMenuLink asChild>
+                                                    <div className={cn(navigationMenuTriggerStyle(), pathname === link.href ? "text-primary" : "text-muted-foreground", "cursor-pointer")}>
+                                                        {link.label}
+                                                    </div>
+                                                </NavigationMenuLink>
+                                            </Link>
+                                        </NavigationMenuItem>
+                                    ))}
+
+                                    <NavigationMenuItem>
+                                        <NavigationMenuTrigger className={cn((pathname.startsWith('/store') || pathname.startsWith('/products')) && "text-primary")}>Online Store</NavigationMenuTrigger>
+                                        <NavigationMenuContent>
+                                            <div className="grid w-[400px] grid-cols-2 gap-x-8 p-4">
+                                                <div>
+                                                    <h3 className="font-semibold text-sm mb-2 px-3">SHOP TEA</h3>
+                                                    <ul className="space-y-1">
+                                                        <ListItem href="/store" title="Shop All Products" />
+                                                    </ul>
                                                 </div>
-                                             </NavigationMenuLink>
-                                         </Link>
-                                     </NavigationMenuItem>
-                                ))}
-
-                                <NavigationMenuItem>
-                                    <NavigationMenuTrigger className={cn((pathname.startsWith('/store') || pathname.startsWith('/products')) && "text-primary")}>Online Store</NavigationMenuTrigger>
-                                    <NavigationMenuContent>
-                                        <div className="grid w-[400px] grid-cols-2 gap-x-8 p-4">
-                                            <div>
-                                                <h3 className="font-semibold text-sm mb-2 px-3">SHOP TEA</h3>
-                                                <ul className="space-y-1">
-                                                    <ListItem href="/store" title="Shop All Products" />
-                                                </ul>
+                                                <div>
+                                                    <h3 className="font-semibold text-sm mb-2 px-3">SHOP BY COLLECTION</h3>
+                                                    <ul className="space-y-1">
+                                                        {collections.map((collection) => (
+                                                            <ListItem key={collection.id} href={`/store?collection=${collection.id}`} title={collection.title} />
+                                                        ))}
+                                                    </ul>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <h3 className="font-semibold text-sm mb-2 px-3">SHOP BY COLLECTION</h3>
-                                                 <ul className="space-y-1">
-                                                    {collections.map((collection) => (
-                                                        <ListItem key={collection.id} href={`/store?collection=${collection.id}`} title={collection.title} />
-                                                    ))}
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </NavigationMenuContent>
-                                </NavigationMenuItem>
+                                        </NavigationMenuContent>
+                                    </NavigationMenuItem>
 
-                                {desktopNavLinks.slice(2).map((link) => (
-                                     <NavigationMenuItem key={link.href}>
-                                         <Link href={link.href} passHref>
-                                            <NavigationMenuLink asChild>
-                                                 <div className={cn(navigationMenuTriggerStyle(), pathname === link.href ? "text-primary" : "text-muted-foreground", "cursor-pointer")}>
-                                                     {link.label}
-                                                 </div>
-                                             </NavigationMenuLink>
-                                         </Link>
-                                     </NavigationMenuItem>
-                                ))}
-                            </NavigationMenuList>
-                        </NavigationMenu>
-                       )}
+                                    {desktopNavLinks.slice(2).map((link) => (
+                                        <NavigationMenuItem key={link.href}>
+                                            <Link href={link.href} passHref>
+                                                <NavigationMenuLink asChild>
+                                                    <div className={cn(navigationMenuTriggerStyle(), pathname === link.href ? "text-primary" : "text-muted-foreground", "cursor-pointer")}>
+                                                        {link.label}
+                                                    </div>
+                                                </NavigationMenuLink>
+                                            </Link>
+                                        </NavigationMenuItem>
+                                    ))}
+                                </NavigationMenuList>
+                            </NavigationMenu>
+                        )}
                     </div>
 
                     <div className="hidden md:flex items-center space-x-2">
-                        <Button variant="ghost" size="icon" onClick={() => setIsSearchOpen(!isSearchOpen)}>
+                        <Button variant="ghost" size="icon" onClick={() => { setIsSearchOpen(!isSearchOpen); setSearchQuery('') }}>
                             {isSearchOpen ? <X className="h-5 w-5" /> : <Search className="h-5 w-5" />}
                         </Button>
                         <Button variant="ghost" size="icon" className="relative" onClick={openCart}>
@@ -250,7 +240,7 @@ export function Header() {
                     </div>
                     
                     <div className="md:hidden flex items-center gap-2">
-                        <Button variant="ghost" size="icon" onClick={() => setIsSearchOpen(!isSearchOpen)}>
+                        <Button variant="ghost" size="icon" onClick={() => { setIsSearchOpen(!isSearchOpen); setSearchQuery(''); }}>
                              {isSearchOpen ? <X className="h-6 w-6" /> : <Search className="h-6 w-6" />}
                         </Button>
                         <Button variant="ghost" size="icon" className="relative" onClick={openCart}>
@@ -292,7 +282,7 @@ export function Header() {
                     </div>
                 </div>
                  {isSearchOpen && (
-                    <div className="md:hidden py-2">
+                    <div className="md:hidden py-2 border-t">
                         <SearchBar isMobile={true} />
                     </div>
                 )}
@@ -300,3 +290,5 @@ export function Header() {
         </header>
     );
 }
+
+    
