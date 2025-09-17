@@ -1,15 +1,14 @@
+
 "use client";
 
 import * as React from "react";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-} from "@/components/ui/carousel";
+import { Swiper, SwiperSlide } from 'swiper/react';
 import { ProductCard } from "./product-card";
 import type { Product } from "@/lib/types";
 import Link from "next/link";
 import { Button } from "./ui/button";
+
+import 'swiper/css';
 
 interface ProductSwiperClientProps {
   products: Product[];
@@ -26,26 +25,33 @@ export function ProductSwiperClient({ products }: ProductSwiperClientProps) {
             sourced directly from Sri Lankan farms.
           </p>
         </div>
-        <Carousel
-          opts={{
-            align: "start",
-            loop: true,
+        <Swiper
+          spaceBetween={16}
+          slidesPerView={1.5}
+          breakpoints={{
+            640: {
+              slidesPerView: 2.5,
+              spaceBetween: 20,
+            },
+            768: {
+              slidesPerView: 3.5,
+              spaceBetween: 24,
+            },
+            1024: {
+              slidesPerView: 4.5,
+              spaceBetween: 32,
+            },
           }}
           className="w-full"
         >
-          <CarouselContent className="-ml-2 pl-4">
-            {products.map((product) => (
-              <CarouselItem
-                key={product.id}
-                className="basis-4/5 sm:basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5 pl-2"
-              >
-                <div className="p-1">
-                  <ProductCard product={product} />
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </Carousel>
+          {products.map((product) => (
+            <SwiperSlide key={product.id}>
+              <div className="p-1 h-full">
+                <ProductCard product={product} />
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
         <div className="text-center mt-12">
           <Button asChild size="lg" variant="outline">
             <Link href="/store">View All Products</Link>
