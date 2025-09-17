@@ -3,17 +3,18 @@
 
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { Search, ShoppingCart, Menu, X, ChevronDown } from "lucide-react";
+import { Search, ShoppingCart, Menu, X } from "lucide-react";
 import { Logo } from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/cart-provider";
 import { cn } from "@/lib/utils";
-import { useState, useEffect, FormEvent } from "react";
-import type { Collection } from "@/lib/types";
-import { getCollections } from "@/lib/mock-data";
+import { useState, useEffect, FormEvent, useRef } from "react";
+import type { Collection, Product } from "@/lib/types";
+import { getCollections, getProducts } from "@/lib/mock-data";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Input } from "@/components/ui/input";
+import Image from "next/image";
 
 import {
     NavigationMenu,
@@ -24,6 +25,7 @@ import {
     NavigationMenuTrigger,
     navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 
 const navLinks = [
     { href: "/", label: "Home" },
@@ -44,25 +46,53 @@ export function Header() {
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState(searchParams.get("q") || "");
     const [collections, setCollections] = useState<Collection[]>([]);
+    const [allProducts, setAllProducts] = useState<Product[]>([]);
+    const [searchResults, setSearchResults] = useState<Product[]>([]);
+
+    const searchInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
-        const fetchCollections = async () => {
+        const fetchCollectionsAndProducts = async () => {
             try {
-                const data = await getCollections();
-                setCollections(data);
+                const [collectionsData, productsData] = await Promise.all([
+                    getCollections(),
+                    getProducts()
+                ]);
+                setCollections(collectionsData);
+                setAllProducts(productsData);
             } catch (error) {
-                console.error("Failed to fetch collections in Header:", error);
+                console.error("Failed to fetch collections or products in Header:", error);
             }
         };
-        fetchCollections();
+        fetchCollectionsAndProducts();
     }, []);
+
+    useEffect(() => {
+        if (searchQuery.trim() === "") {
+            setSearchResults([]);
+            return;
+        }
+
+        const filtered = allProducts
+            .filter(product =>
+                product.name.toLowerCase().includes(searchQuery.toLowerCase())
+            )
+            .slice(0, 5);
+        setSearchResults(filtered);
+    }, [searchQuery, allProducts]);
 
     const handleSearchSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!searchQuery.trim()) return;
         router.push(`/store?q=${encodeURIComponent(searchQuery)}`);
         setIsSearchOpen(false);
+        setSearchQuery("");
     };
+
+    const handleResultClick = () => {
+        setIsSearchOpen(false);
+        setSearchQuery("");
+    }
 
     const ListItem = ({ href, title }: { href: string; title: string }) => (
         <li>
@@ -81,6 +111,26 @@ export function Header() {
 
     const desktopNavLinks = navLinks.filter(link => link.label !== "Online Store");
 
+    const searchPopoverContent = (
+        <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0" onOpenAutoFocus={(e) => e.preventDefault()}>
+            {searchResults.length > 0 ? (
+                <div className="divide-y">
+                    {searchResults.map(product => (
+                        <Link key={product.id} href={`/products/${product.slug}`} onClick={handleResultClick} className="flex items-center gap-4 p-2 hover:bg-accent">
+                            <Image src={product.imageUrl} alt={product.name} width={40} height={40} className="rounded-md" />
+                            <div className="flex-grow">
+                                <p className="font-medium">{product.name}</p>
+                                <p className="text-sm text-muted-foreground">LKR {product.price.toFixed(2)}</p>
+                            </div>
+                        </Link>
+                    ))}
+                </div>
+            ) : (
+                <div className="p-4 text-center text-sm text-muted-foreground">No results found.</div>
+            )}
+        </PopoverContent>
+    );
+
     return (
         <header className="bg-card text-card-foreground border-b sticky top-0 z-50">
             <div className="container mx-auto px-4">
@@ -92,19 +142,25 @@ export function Header() {
                     <div className="hidden md:flex flex-1 items-center justify-center">
                        {isSearchOpen ? (
                            <div className="w-full max-w-md">
-                               <form onSubmit={handleSearchSubmit} className="relative">
-                                   <Input 
-                                       type="search" 
-                                       placeholder="Search products..." 
-                                       className="w-full pr-10"
-                                       value={searchQuery}
-                                       onChange={(e) => setSearchQuery(e.target.value)}
-                                       autoFocus
-                                   />
-                                   <Button type="submit" variant="ghost" size="icon" className="absolute right-0 top-0 h-full">
-                                       <Search className="h-5 w-5" />
-                                   </Button>
-                               </form>
+                                <Popover open={searchQuery.length > 0}>
+                                    <PopoverTrigger asChild>
+                                        <form onSubmit={handleSearchSubmit} className="relative">
+                                            <Input 
+                                                ref={searchInputRef}
+                                                type="search" 
+                                                placeholder="Search products..." 
+                                                className="w-full pr-10"
+                                                value={searchQuery}
+                                                onChange={(e) => setSearchQuery(e.target.value)}
+                                                autoFocus
+                                            />
+                                            <Button type="submit" variant="ghost" size="icon" className="absolute right-0 top-0 h-full">
+                                                <Search className="h-5 w-5" />
+                                            </Button>
+                                        </form>
+                                    </PopoverTrigger>
+                                    {searchPopoverContent}
+                                </Popover>
                            </div>
                        ) : (
                         <NavigationMenu>
@@ -218,24 +274,27 @@ export function Header() {
                 </div>
                  {isSearchOpen && (
                     <div className="md:hidden py-2">
-                         <form onSubmit={handleSearchSubmit} className="relative">
-                           <Input 
-                               type="search" 
-                               placeholder="Search products..." 
-                               className="w-full pr-10"
-                               value={searchQuery}
-                               onChange={(e) => setSearchQuery(e.target.value)}
-                               autoFocus
-                           />
-                           <Button type="submit" variant="ghost" size="icon" className="absolute right-0 top-0 h-full">
-                               <Search className="h-5 w-5" />
-                           </Button>
-                       </form>
+                        <Popover open={searchQuery.length > 0}>
+                            <PopoverTrigger asChild>
+                                <form onSubmit={handleSearchSubmit} className="relative">
+                                <Input 
+                                    type="search" 
+                                    placeholder="Search products..." 
+                                    className="w-full pr-10"
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    autoFocus
+                                />
+                                <Button type="submit" variant="ghost" size="icon" className="absolute right-0 top-0 h-full">
+                                    <Search className="h-5 w-5" />
+                                </Button>
+                                </form>
+                            </PopoverTrigger>
+                            {searchPopoverContent}
+                        </Popover>
                     </div>
                 )}
             </div>
         </header>
     );
 }
-
-    
