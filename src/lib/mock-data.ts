@@ -1,5 +1,4 @@
 
-
 import type { Product, ApiResponse, ApiProductData, Collection, CollectionProduct, SingleProductApiResponse, ApiProductImage } from './types';
 
 const imageBaseUrl = "https://content-provider.payshia.com/payshia-erp";
@@ -10,7 +9,12 @@ const mapApiProductToProduct = (apiProduct: ApiProductData, productImages: ApiPr
   const allImages = Array.isArray(productImages) ? productImages.map(img => 
     `${imageBaseUrl}${img.img_url}`
   ) : [];
-  const firstImage = allImages[0] ?? 'https://placehold.co/600x400.png';
+  
+  // Use the first image from the variant if available, otherwise use a placeholder
+  const firstVariantImage = apiProduct.product_images?.[0]?.img_url;
+  const initialImageUrl = firstVariantImage ? `${imageBaseUrl}${firstVariantImage}` : 'https://placehold.co/600x400.png';
+
+  const firstImage = allImages[0] ?? initialImageUrl;
   
   return {
     id: apiProduct.product.id,
@@ -24,9 +28,28 @@ const mapApiProductToProduct = (apiProduct: ApiProductData, productImages: ApiPr
     reviewCount: 0, // Static value as it's not in the API response
     featured: true, // Static value as it's not in the API response
     details: [], // Static value as it's not in the API response
-    images: allImages
+    images: allImages.length > 0 ? allImages : (firstVariantImage ? [initialImageUrl] : [])
   };
 };
+
+export const getProductImages = async (productId: string): Promise<string[]> => {
+    try {
+        const imagesResponse = await fetch(`https://server-erp.payshia.com/product-images/${productId}`);
+        if (!imagesResponse.ok) {
+            if (imagesResponse.status !== 404) {
+                 console.error(`Failed to fetch images for product ${productId}: ${imagesResponse.status}`);
+            }
+            return [];
+        }
+        let imagesData = await imagesResponse.json();
+        const images: ApiProductImage[] = Array.isArray(imagesData) ? imagesData : [imagesData];
+        return images.map(img => `${imageBaseUrl}${img.img_url}`);
+    } catch (error) {
+        console.error(`Error fetching images for product ${productId}:`, error);
+        return [];
+    }
+}
+
 
 export const getProducts = async (): Promise<Product[]> => {
   try {
@@ -36,25 +59,10 @@ export const getProducts = async (): Promise<Product[]> => {
     }
     const data: ApiResponse = await response.json();
     
-    const productsWithImages = await Promise.all(data.products.map(async (apiProduct) => {
-        try {
-            const imagesResponse = await fetch(`https://server-erp.payshia.com/product-images/${apiProduct.product.id}`);
-            if (!imagesResponse.ok) {
-                if (imagesResponse.status !== 404) {
-                    console.error(`Failed to fetch images for product ${apiProduct.product.id}: ${imagesResponse.status}`);
-                }
-                return mapApiProductToProduct(apiProduct, []);
-            }
-            let imagesData = await imagesResponse.json();
-            const images: ApiProductImage[] = Array.isArray(imagesData) ? imagesData : [imagesData];
-            return mapApiProductToProduct(apiProduct, images);
-        } catch (error) {
-            console.error(`Error fetching images for product ${apiProduct.product.id}:`, error);
-            return mapApiProductToProduct(apiProduct, []);
-        }
-    }));
+    // Map products without fetching all images initially
+    const products = data.products.map(apiProduct => mapApiProductToProduct(apiProduct, []));
     
-    return productsWithImages;
+    return products;
   } catch (error) {
     console.error("Failed to fetch products:", error);
     return [];
@@ -80,21 +88,10 @@ export const getProductBySlug = async (slug: string): Promise<Product | undefine
     const data: SingleProductApiResponse = await response.json();
 
     let images: ApiProductImage[] = [];
-    try {
-        const imagesResponse = await fetch(`https://server-erp.payshia.com/product-images/${data.product.id}`);
-        if (imagesResponse.ok) {
-            const imagesData = await imagesResponse.json();
-            images = Array.isArray(imagesData) ? imagesData : [imagesData];
-        } else {
-            if (imagesResponse.status !== 404) {
-                console.error(`Failed to fetch images for product ${data.product.id}: ${imagesResponse.status}`);
-            }
-        }
-    } catch (error) {
-        console.error(`Error fetching images for product ${data.product.id}:`, error);
-    }
-    
-    const allImages = images.map(img => 
+    // Initially, we won't fetch images here to speed up page load.
+    // The client will fetch them. We pass an empty array.
+
+    const allImages = (data.product_images || []).map(img => 
       `${imageBaseUrl}${img.img_url}`
     );
     const firstImage = allImages[0] ?? 'https://placehold.co/600x400.png';
@@ -122,7 +119,9 @@ export const getProductBySlug = async (slug: string): Promise<Product | undefine
 export const getFeaturedProducts = async (): Promise<Product[]> => {
     try {
         const products = await getProducts();
-        return products.filter(p => p.featured);
+        // Assuming all products can be featured for now.
+        // Add specific logic if there is a featured flag from the API
+        return products;
     } catch (error) {
         console.error("Failed to fetch featured products:", error);
         return [];

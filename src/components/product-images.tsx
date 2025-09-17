@@ -5,34 +5,30 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import type { Product } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { useProductImages } from "@/hooks/use-product-images";
 
 interface ProductImagesProps {
     product: Product;
 }
 
-export function ProductImages({ product }: ProductImagesProps) {
-    const [allImages, setAllImages] = useState<string[]>([]);
-    const [activeImage, setActiveImage] = useState<string>('');
+export function ProductImages({ product: initialProduct }: ProductImagesProps) {
+    const { product } = useProductImages(initialProduct);
+    const [activeImage, setActiveImage] = useState<string>(initialProduct.imageUrl);
+
+    const allImages = [product.imageUrl, ...(product.images || [])].filter(Boolean);
+    const uniqueImages = [...new Set(allImages)];
 
     useEffect(() => {
-        const images = [
-            product.imageUrl,
-            ...(product.images || []),
-        ].filter(Boolean); // Filter out any null/undefined values
-
-        const uniqueImages = [...new Set(images)];
-
-        if (uniqueImages.length === 0) {
-            uniqueImages.push('https://placehold.co/600x400.png');
+        // Update active image if the main product image URL changes (after fetching)
+        if (product.imageUrl !== activeImage && !initialProduct.images?.includes(product.imageUrl)) {
+            setActiveImage(product.imageUrl);
         }
+    }, [product.imageUrl, activeImage, initialProduct.images]);
 
-        setAllImages(uniqueImages);
-        setActiveImage(uniqueImages[0]);
-    }, [product]);
 
-    const thumbnailImages = allImages.slice(0, 4);
+    const thumbnailImages = uniqueImages.slice(0, 4);
 
-    if (allImages.length === 0) {
+    if (uniqueImages.length === 0) {
         return (
             <div className="rounded-lg overflow-hidden border">
                 <Image
