@@ -174,15 +174,17 @@ export function HeaderClient() {
         <header className="bg-card text-card-foreground border-b sticky top-0 z-50">
             <div className="container mx-auto px-4">
                 <div className="flex items-center justify-between h-16">
-                    <Link href="/">
-                        <Logo />
-                    </Link>
+                    <div className={cn("flex items-center", isSearchVisible && "hidden sm:flex")}>
+                        <Link href="/">
+                            <Logo />
+                        </Link>
+                    </div>
                     
-                    <div className="hidden md:flex flex-1 items-center justify-center" ref={searchRef}>
-                        <div className={cn("w-full max-w-md relative", !isSearchVisible && "hidden")}>
+                    <div className="flex-1 items-center justify-center" ref={searchRef}>
+                        <div className={cn("w-full h-full flex items-center", !isSearchVisible && "hidden")}>
                             <Popover open={searchQuery.length > 0}>
                                 <PopoverTrigger asChild>
-                                    <form onSubmit={handleSearchSubmit} className="relative">
+                                    <form onSubmit={handleSearchSubmit} className="relative w-full">
                                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                                         <Input
                                             ref={inputRef}
@@ -198,7 +200,7 @@ export function HeaderClient() {
                             </Popover>
                         </div>
                         
-                        <div className={cn(isSearchVisible && "hidden")}>
+                        <div className={cn("hidden md:flex h-full items-center justify-center", isSearchVisible && "hidden")}>
                             <NavigationMenu>
                                 <NavigationMenuList>
                                     {desktopNavLinks.slice(0, 2).map((link) => (
@@ -251,25 +253,27 @@ export function HeaderClient() {
                         </div>
                     </div>
 
-                    <div className="flex items-center space-x-2">
+                    <div className={cn("flex items-center space-x-2", isSearchVisible && "w-full sm:w-auto justify-end")}>
                         <Button variant="ghost" size="icon" onClick={() => setIsSearchVisible(prev => !prev)}>
                             {isSearchVisible ? <X className="h-5 w-5" /> : <Search className="h-5 w-5" />}
                         </Button>
                         
-                        <Button variant="ghost" size="icon" className="relative" onClick={openCart}>
-                            <ShoppingCart className="h-5 w-5" />
-                            {itemCount > 0 && (
-                                <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs rounded-full h-4 w-4 flex items-center justify-center">
-                                    {itemCount}
-                                </span>
-                            )}
-                        </Button>
-                        <ThemeToggle />
+                        <div className={cn(isSearchVisible && "hidden sm:flex")}>
+                            <Button variant="ghost" size="icon" className="relative" onClick={openCart}>
+                                <ShoppingCart className="h-5 w-5" />
+                                {itemCount > 0 && (
+                                    <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs rounded-full h-4 w-4 flex items-center justify-center">
+                                        {itemCount}
+                                    </span>
+                                )}
+                            </Button>
+                            <ThemeToggle />
+                        </div>
                         
                         <div className="md:hidden">
                             <Sheet open={isMenuOpen} onOpenChange={setMenuOpen}>
                                 <SheetTrigger asChild>
-                                    <Button variant="ghost" size="icon">
+                                    <Button variant="ghost" size="icon" className={cn(isSearchVisible && "hidden")}>
                                         <Menu className="h-6 w-6" />
                                     </Button>
                                 </SheetTrigger>
