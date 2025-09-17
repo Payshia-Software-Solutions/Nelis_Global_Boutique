@@ -45,7 +45,6 @@ export function HeaderClient() {
     const { itemCount, openCart } = useCart();
     const [isMenuOpen, setMenuOpen] = useState(false);
     
-    const [isSearchOpen, setIsSearchOpen] = useState(false);
     const [isSearchInputVisible, setIsSearchInputVisible] = useState(false);
     const [searchQuery, setSearchQuery] = useState(searchParams.get("q") || "");
     const [allProducts, setAllProducts] = useState<Product[]>([]);
@@ -82,6 +81,7 @@ export function HeaderClient() {
         const handleClickOutside = (event: MouseEvent) => {
             if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
                 setIsSearchInputVisible(false);
+                setSearchQuery('');
             }
         };
 
@@ -100,8 +100,8 @@ export function HeaderClient() {
         e.preventDefault();
         if (!searchQuery.trim()) return;
         router.push(`/store?q=${encodeURIComponent(searchQuery)}`);
-        setIsSearchOpen(false);
         setIsSearchInputVisible(false);
+        setSearchQuery('');
     };
 
     const ListItem = ({ href, title }: { href: string; title: string }) => (
@@ -122,7 +122,6 @@ export function HeaderClient() {
     const desktopNavLinks = navLinks.filter(link => link.label !== "Online Store");
 
     const closeSearch = () => {
-      setIsSearchOpen(false);
       setIsSearchInputVisible(false);
       setSearchQuery('');
       setFilteredProducts([]);
@@ -136,10 +135,10 @@ export function HeaderClient() {
                         <Logo />
                     </Link>
                     
-                    <div className={cn("hidden md:flex flex-1 items-center justify-center", isSearchInputVisible && "w-full")}>
+                    <div className={cn("hidden md:flex flex-1 items-center justify-center")} ref={searchRef}>
                         {isSearchInputVisible ? (
-                             <div ref={searchRef} className="w-full max-w-md">
-                                <Popover open={isSearchOpen && searchQuery.length > 0} onOpenChange={setIsSearchOpen}>
+                             <div className="w-full max-w-md">
+                                <Popover open={searchQuery.length > 0} >
                                     <PopoverTrigger asChild>
                                         <form onSubmit={handleSearchSubmit} className="relative">
                                             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
@@ -150,7 +149,6 @@ export function HeaderClient() {
                                                 value={searchQuery}
                                                 onChange={(e) => {
                                                     setSearchQuery(e.target.value)
-                                                    setIsSearchOpen(true);
                                                 }}
                                                 autoFocus
                                             />
@@ -244,15 +242,8 @@ export function HeaderClient() {
                     </div>
 
                     <div className="flex items-center space-x-2">
-                        <div className="hidden md:block">
-                            {!isSearchInputVisible && (
-                                <Button variant="ghost" size="icon" onClick={() => setIsSearchInputVisible(true)}>
-                                    <Search className="h-5 w-5" />
-                                </Button>
-                            )}
-                        </div>
-                        <div className="md:hidden">
-                             <Popover open={isSearchOpen && searchQuery.length > 0} onOpenChange={setIsSearchOpen}>
+                         <div className="md:hidden">
+                             <Popover open={searchQuery.length > 0} >
                                 <PopoverTrigger asChild>
                                     <div className="relative">
                                         {isSearchInputVisible ? (
@@ -265,7 +256,6 @@ export function HeaderClient() {
                                                     value={searchQuery}
                                                     onChange={(e) => {
                                                         setSearchQuery(e.target.value)
-                                                        setIsSearchOpen(true);
                                                     }}
                                                     autoFocus
                                                 />
@@ -310,6 +300,13 @@ export function HeaderClient() {
                                     )}
                                 </PopoverContent>
                             </Popover>
+                        </div>
+                        <div className="hidden md:block">
+                            {!isSearchInputVisible && (
+                                <Button variant="ghost" size="icon" onClick={() => setIsSearchInputVisible(true)}>
+                                    <Search className="h-5 w-5" />
+                                </Button>
+                            )}
                         </div>
                         
                         <Button variant="ghost" size="icon" className="relative" onClick={openCart}>
@@ -357,3 +354,5 @@ export function HeaderClient() {
         </header>
     );
 }
+
+    
