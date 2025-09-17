@@ -10,7 +10,7 @@ import { ThemeProvider } from '@/context/theme-provider';
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | NelisGlobal Boutique',
+    template: '%s | Nelis Global Boutique - Natural Products from Sri Lanka',
     default: 'NelisGlobal Boutique | Natural Products from Sri Lanka'
   },
   description: 'Discover the finest natural products from Sri Lanka. We bring you premium dried fruits, herbal teas, and authentic flavors crafted with sustainable practices and community care.',
