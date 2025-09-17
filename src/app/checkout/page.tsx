@@ -110,11 +110,12 @@ export default function CheckoutPage() {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <main className="flex-grow bg-gray-50/50">
+      <main className="flex-grow bg-background">
         <div className="container mx-auto px-4 py-8">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="grid lg:grid-cols-2 gap-12 items-start" id="checkout-form">
-                <div className="lg:col-span-1 space-y-6">
+                <Card className="lg:col-span-1">
+                  <CardContent className="p-6 space-y-6">
                     <div className="space-y-4">
                       <div className="flex justify-between items-center">
                           <h2 className="text-xl font-semibold">Contact</h2>
@@ -240,89 +241,98 @@ export default function CheckoutPage() {
                         )}
                       />
                     </div>
-                </div>
+                  </CardContent>
+                </Card>
                 <div className="lg:col-span-1 space-y-6">
-                    <div className="bg-gray-50 p-8 rounded-lg">
-                      <h2 className="text-xl font-semibold">Order Summary</h2>
-                      <ul className="space-y-4 mt-4">
-                          {cart.map(item => (
-                              <li key={item.id} className="flex items-center space-x-4">
-                                  <div className="relative">
-                                      <Image src={item.imageUrl} alt={item.name} width={64} height={64} className="rounded-md border" />
-                                      <span className="absolute -top-2 -right-2 bg-gray-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">{item.quantity}</span>
-                                  </div>
-                                  <div className="flex-grow">
-                                      <p className="font-medium">{item.name}</p>
-                                      <p className="text-sm text-muted-foreground">LKR {item.price.toFixed(2)} x {item.quantity}</p>
-                                  </div>
-                                  <p className="font-medium">LKR {(item.price * item.quantity).toFixed(2)}</p>
-                              </li>
-                          ))}
-                      </ul>
-                      <Separator className="my-4" />
-                      <div className="flex space-x-2">
-                          <Input placeholder="Discount code or gift card" />
-                          <Button variant="secondary">Apply</Button>
-                      </div>
-                      <Separator className="my-4" />
-                      <div className="space-y-2">
-                          <div className="flex justify-between">
-                              <span>Subtotal</span>
-                              <span>LKR {cartTotal.toFixed(2)}</span>
-                          </div>
-                          <div className="flex justify-between">
-                              <span>Shipping</span>
-                              <span>Rs 0.00</span>
-                          </div>
-                          <Separator className="my-2" />
-                          <div className="flex justify-between font-semibold text-lg">
-                              <span>Total</span>
-                              <span>LKR {cartTotal.toFixed(2)}</span>
-                          </div>
-                      </div>
-                    </div>
-                    <div className="space-y-4">
-                      <h2 className="text-xl font-semibold">Payment</h2>
-                      <p className="text-sm text-muted-foreground">All transactions are secure and encrypted.</p>
-                      <FormField
-                        control={form.control}
-                        name="paymentMethod"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="space-y-2">
-                                <Label className={`p-4 border rounded-md cursor-pointer ${field.value === 'payhere' ? 'border-primary ring-2 ring-primary/20' : 'border-input'}`}>
-                                  <div className="flex justify-between items-center">
-                                      <div className="flex items-center space-x-3">
-                                          <RadioGroupItem value="payhere" id="payhere" />
-                                          <span className="font-semibold">Bank Card / Bank Account - PayHere</span>
-                                      </div>
-                                      <CreditCard className="h-6 w-6" />
-                                  </div>
-                                  <div className="pl-8 pt-4 text-sm text-muted-foreground">
-                                      <p>After clicking "Pay now", you will be redirected to Bank Card / Bank Account - PayHere to complete your purchase securely.</p>
-                                  </div>
-                                </Label>
-                                <Label className={`flex items-center space-x-3 p-4 border rounded-md cursor-pointer ${field.value === 'cod' ? 'border-primary ring-2 ring-primary/20' : 'border-input'}`}>
-                                  <RadioGroupItem value="cod" id="cod" />
-                                  <span>Cash On Delivery</span>
-                                </Label>
-                              </RadioGroup>
-                            </FormControl>
-                          </FormItem>
-                        )}
-                      />
-                    </div>
+                    <Card>
+                      <CardHeader>
+                        <h2 className="text-xl font-semibold">Order Summary</h2>
+                      </CardHeader>
+                      <CardContent>
+                        <ul className="space-y-4">
+                            {cart.map(item => (
+                                <li key={item.id} className="flex items-center space-x-4">
+                                    <div className="relative">
+                                        <Image src={item.imageUrl} alt={item.name} width={64} height={64} className="rounded-md border" />
+                                        <span className="absolute -top-2 -right-2 bg-gray-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">{item.quantity}</span>
+                                    </div>
+                                    <div className="flex-grow">
+                                        <p className="font-medium">{item.name}</p>
+                                        <p className="text-sm text-muted-foreground">LKR {item.price.toFixed(2)} x {item.quantity}</p>
+                                    </div>
+                                    <p className="font-medium">LKR {(item.price * item.quantity).toFixed(2)}</p>
+                                </li>
+                            ))}
+                        </ul>
+                        <Separator className="my-4" />
+                        <div className="flex space-x-2">
+                            <Input placeholder="Discount code or gift card" />
+                            <Button variant="secondary">Apply</Button>
+                        </div>
+                        <Separator className="my-4" />
+                        <div className="space-y-2">
+                            <div className="flex justify-between">
+                                <span>Subtotal</span>
+                                <span>LKR {cartTotal.toFixed(2)}</span>
+                            </div>
+                            <div className="flex justify-between">
+                                <span>Shipping</span>
+                                <span>Rs 0.00</span>
+                            </div>
+                            <Separator className="my-2" />
+                            <div className="flex justify-between font-semibold text-lg">
+                                <span>Total</span>
+                                <span>LKR {cartTotal.toFixed(2)}</span>
+                            </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardHeader>
+                        <h2 className="text-xl font-semibold">Payment</h2>
+                      </CardHeader>
+                      <CardContent className="space-y-4">
+                        <p className="text-sm text-muted-foreground">All transactions are secure and encrypted.</p>
+                        <FormField
+                          control={form.control}
+                          name="paymentMethod"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormControl>
+                                <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="space-y-2">
+                                  <Label className={`p-4 border rounded-md cursor-pointer ${field.value === 'payhere' ? 'border-primary ring-2 ring-primary/20' : 'border-input'}`}>
+                                    <div className="flex justify-between items-center">
+                                        <div className="flex items-center space-x-3">
+                                            <RadioGroupItem value="payhere" id="payhere" />
+                                            <span className="font-semibold">Bank Card / Bank Account - PayHere</span>
+                                        </div>
+                                        <CreditCard className="h-6 w-6" />
+                                    </div>
+                                    <div className="pl-8 pt-4 text-sm text-muted-foreground">
+                                        <p>After clicking "Pay now", you will be redirected to Bank Card / Bank Account - PayHere to complete your purchase securely.</p>
+                                    </div>
+                                  </Label>
+                                  <Label className={`flex items-center space-x-3 p-4 border rounded-md cursor-pointer ${field.value === 'cod' ? 'border-primary ring-2 ring-primary/20' : 'border-input'}`}>
+                                    <RadioGroupItem value="cod" id="cod" />
+                                    <span>Cash On Delivery</span>
+                                  </Label>
+                                </RadioGroup>
+                              </FormControl>
+                            </FormItem>
+                          )}
+                        />
+                      </CardContent>
+                    </Card>
                     
-                    <Alert variant="default" className="bg-yellow-50 border-yellow-200 text-yellow-800">
-                      <TriangleAlert className="h-4 w-4 !text-yellow-600" />
+                    <Alert variant="default" className="bg-yellow-50 border-yellow-200 text-yellow-800 dark:bg-yellow-900/20 dark:border-yellow-800 dark:text-yellow-300">
+                      <TriangleAlert className="h-4 w-4 !text-yellow-600 dark:!text-yellow-400" />
                       <AlertTitle className="font-bold">Important Notice</AlertTitle>
                       <AlertDescription>
                         Please do not close your tab or browser after completing your payment. Kindly remain on this tab/browser until you are redirected to the order confirmation page to ensure that your transaction is processed successfully.
                       </AlertDescription>
                     </Alert>
 
-                    <Button type="submit" form="checkout-form" size="lg" className="w-full text-lg h-12 bg-black text-white hover:bg-gray-800">
+                    <Button type="submit" form="checkout-form" size="lg" className="w-full text-lg h-12 bg-black text-white hover:bg-gray-800 dark:bg-primary dark:hover:bg-primary/90">
                       Place the order
                     </Button>
                 </div>
@@ -334,3 +344,5 @@ export default function CheckoutPage() {
     </div>
   );
 }
+
+    
