@@ -127,6 +127,38 @@ export function HeaderClient() {
       setFilteredProducts([]);
     }
 
+    const SearchPopoverContent = () => (
+        <PopoverContent className="w-[--radix-popover-trigger-width] max-h-[60vh] overflow-y-auto p-0" align="start" sideOffset={10}>
+            {filteredProducts.length > 0 ? (
+                <>
+                    <div className="max-h-[60vh] overflow-y-auto">
+                    {filteredProducts.map(product => (
+                        <Link key={product.id} href={`/products/${product.slug}`} onClick={closeSearch}>
+                            <div className="flex items-center gap-4 p-3 hover:bg-muted">
+                                <Image src={product.imageUrl} alt={product.name} width={60} height={60} className="rounded-md object-cover" />
+                                <div className="flex-grow">
+                                    <p className="font-medium truncate">{product.name}</p>
+                                    <p className="text-sm text-primary">Rs {product.price.toFixed(2)}</p>
+                                </div>
+                            </div>
+                        </Link>
+                    ))}
+                    </div>
+                    <Separator />
+                    <form onSubmit={handleSearchSubmit}>
+                        <Button type="submit" variant="ghost" className="w-full justify-center p-3">
+                            View all results for &quot;{searchQuery}&quot;
+                        </Button>
+                    </form>
+                </>
+            ) : (
+                <div className="p-4 text-center text-sm text-muted-foreground">
+                    <p>No products found.</p>
+                </div>
+            )}
+        </PopoverContent>
+    );
+
     return (
         <header className="bg-card text-card-foreground border-b sticky top-0 z-50">
             <div className="container mx-auto px-4">
@@ -157,35 +189,7 @@ export function HeaderClient() {
                                             </Button>
                                         </form>
                                     </PopoverTrigger>
-                                     <PopoverContent className="w-[--radix-popover-trigger-width] max-h-[60vh] overflow-y-auto p-0" align="start" sideOffset={10}>
-                                        {filteredProducts.length > 0 ? (
-                                            <>
-                                                <div className="max-h-[60vh] overflow-y-auto">
-                                                {filteredProducts.map(product => (
-                                                    <Link key={product.id} href={`/products/${product.slug}`} onClick={closeSearch}>
-                                                        <div className="flex items-center gap-4 p-3 hover:bg-muted">
-                                                            <Image src={product.imageUrl} alt={product.name} width={60} height={60} className="rounded-md object-cover" />
-                                                            <div className="flex-grow">
-                                                                <p className="font-medium truncate">{product.name}</p>
-                                                                <p className="text-sm text-primary">Rs {product.price.toFixed(2)}</p>
-                                                            </div>
-                                                        </div>
-                                                    </Link>
-                                                ))}
-                                                </div>
-                                                <Separator />
-                                                <form onSubmit={handleSearchSubmit}>
-                                                    <Button type="submit" variant="ghost" className="w-full justify-center p-3">
-                                                        View all results for &quot;{searchQuery}&quot;
-                                                    </Button>
-                                                </form>
-                                            </>
-                                        ) : (
-                                            <div className="p-4 text-center text-sm text-muted-foreground">
-                                                <p>No products found.</p>
-                                            </div>
-                                        )}
-                                    </PopoverContent>
+                                     <SearchPopoverContent />
                                 </Popover>
                             </div>
                         ) : (
@@ -270,34 +274,8 @@ export function HeaderClient() {
                                         )}
                                     </div>
                                 </PopoverTrigger>
-                                 <PopoverContent className="w-screen max-w-sm sm:max-w-md p-0" align="end" sideOffset={10}>
-                                    {filteredProducts.length > 0 ? (
-                                        <>
-                                            <div className="max-h-[60vh] overflow-y-auto">
-                                            {filteredProducts.map(product => (
-                                                <Link key={product.id} href={`/products/${product.slug}`} onClick={closeSearch}>
-                                                    <div className="flex items-center gap-4 p-3 hover:bg-muted">
-                                                        <Image src={product.imageUrl} alt={product.name} width={60} height={60} className="rounded-md object-cover" />
-                                                        <div className="flex-grow">
-                                                            <p className="font-medium truncate">{product.name}</p>
-                                                            <p className="text-sm text-primary">Rs {product.price.toFixed(2)}</p>
-                                                        </div>
-                                                    </div>
-                                                </Link>
-                                            ))}
-                                            </div>
-                                            <Separator />
-                                            <form onSubmit={handleSearchSubmit}>
-                                                <Button type="submit" variant="ghost" className="w-full justify-center p-3">
-                                                    View all results for &quot;{searchQuery}&quot;
-                                                </Button>
-                                            </form>
-                                        </>
-                                    ) : (
-                                        <div className="p-4 text-center text-sm text-muted-foreground">
-                                            <p>No products found.</p>
-                                        </div>
-                                    )}
+                                <PopoverContent className="w-screen max-w-sm sm:max-w-md p-0" align="end" sideOffset={10}>
+                                    <SearchPopoverContent />
                                 </PopoverContent>
                             </Popover>
                         </div>
@@ -354,5 +332,3 @@ export function HeaderClient() {
         </header>
     );
 }
-
-    
