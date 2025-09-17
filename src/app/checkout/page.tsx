@@ -48,8 +48,23 @@ const formSchema = z.object({
   postalCode: z.string().min(1, "Postal code is required"),
   phone: z.string().min(1, "Phone is required"),
   saveInfo: z.boolean().default(false),
-  billingAddress: z.enum(["same", "different"]).default("same"),
+  billingSameAsShipping: z.enum(["same", "different"]).default("same"),
   paymentMethod: z.enum(["payhere", "cod"]).default("payhere"),
+  billingFirstName: z.string().optional(),
+  billingLastName: z.string().optional(),
+  billingAddress: z.string().optional(),
+  billingApartment: z.string().optional(),
+  billingCity: z.string().optional(),
+  billingPostalCode: z.string().optional(),
+  billingCountry: z.string().optional(),
+}).refine(data => {
+    if (data.billingSameAsShipping === 'different') {
+        return data.billingAddress && data.billingCity && data.billingPostalCode && data.billingCountry;
+    }
+    return true;
+}, {
+    message: "Billing address is required when different from shipping address.",
+    path: ["billingAddress"],
 });
 
 export default function CheckoutPage() {
@@ -88,10 +103,20 @@ export default function CheckoutPage() {
       postalCode: "",
       phone: "",
       saveInfo: false,
-      billingAddress: "same",
+      billingSameAsShipping: "same",
       paymentMethod: "payhere",
+      billingFirstName: "",
+      billingLastName: "",
+      billingAddress: "",
+      billingApartment: "",
+      billingCity: "",
+      billingPostalCode: "",
+      billingCountry: "Sri Lanka",
     },
   });
+
+  const billingSameAsShipping = form.watch("billingSameAsShipping");
+
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     setOrderData({
@@ -110,11 +135,11 @@ export default function CheckoutPage() {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <main className="flex-grow bg-background">
+      <main className="flex-grow bg-muted/20">
         <div className="container mx-auto px-4 py-8">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="grid lg:grid-cols-2 gap-12 items-start" id="checkout-form">
-                <Card className="lg:col-span-1">
+                <Card>
                   <CardContent className="p-6 space-y-6">
                     <div className="space-y-4">
                       <div className="flex justify-between items-center">
@@ -222,7 +247,7 @@ export default function CheckoutPage() {
                       <h2 className="text-xl font-semibold">Billing Address</h2>
                       <FormField
                         control={form.control}
-                        name="billingAddress"
+                        name="billingSameAsShipping"
                         render={({ field }) => (
                           <FormItem>
                             <FormControl>
@@ -240,13 +265,63 @@ export default function CheckoutPage() {
                           </FormItem>
                         )}
                       />
+
+                      {billingSameAsShipping === 'different' && (
+                        <div className="space-y-4 pt-4 border-t">
+                            <h3 className="text-lg font-semibold">Enter Billing Address</h3>
+                            <FormField
+                                control={form.control}
+                                name="billingCountry"
+                                render={({ field }) => (
+                                    <FormItem>
+                                    <FormLabel>Country/Region</FormLabel>
+                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                        <FormControl>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Select a country" />
+                                        </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                            <SelectItem value="Sri Lanka">Sri Lanka</SelectItem>
+                                            <SelectItem value="USA">United States</SelectItem>
+                                            <SelectItem value="UK">United Kingdom</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                    <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <div className="grid grid-cols-2 gap-4">
+                                <FormField name="billingFirstName" render={({ field }) => (
+                                    <FormItem><FormLabel>First name (optional)</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
+                                )} />
+                                <FormField name="billingLastName" render={({ field }) => (
+                                    <FormItem><FormLabel>Last name</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
+                                )} />
+                            </div>
+                            <FormField name="billingAddress" render={({ field }) => (
+                                <FormItem><FormLabel>Address</FormLabel><FormControl><Input placeholder="Address" {...field} /></FormControl><FormMessage /></FormItem>
+                            )} />
+                            <FormField name="billingApartment" render={({ field }) => (
+                                <FormItem><FormLabel>Apartment, suite, etc. (optional)</FormLabel><FormControl><Input placeholder="Apartment, suite, etc. (optional)" {...field} /></FormControl><FormMessage /></FormItem>
+                            )} />
+                            <div className="grid grid-cols-2 gap-4">
+                                <FormField name="billingCity" render={({ field }) => (
+                                    <FormItem><FormLabel>City</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
+                                )} />
+                                <FormField name="billingPostalCode" render={({ field }) => (
+                                    <FormItem><FormLabel>Postal Code</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
+                                )} />
+                            </div>
+                        </div>
+                      )}
                     </div>
                   </CardContent>
                 </Card>
                 <div className="lg:col-span-1 space-y-6">
                     <Card>
                       <CardHeader>
-                        <h2 className="text-xl font-semibold">Order Summary</h2>
+                        <h2 className="text-xl font-bold">Order Summary</h2>
                       </CardHeader>
                       <CardContent>
                         <ul className="space-y-4">
@@ -289,7 +364,7 @@ export default function CheckoutPage() {
                     </Card>
                     <Card>
                       <CardHeader>
-                        <h2 className="text-xl font-semibold">Payment</h2>
+                        <h2 className="text-xl font-bold">Payment</h2>
                       </CardHeader>
                       <CardContent className="space-y-4">
                         <p className="text-sm text-muted-foreground">All transactions are secure and encrypted.</p>
@@ -344,5 +419,7 @@ export default function CheckoutPage() {
     </div>
   );
 }
+
+    
 
     

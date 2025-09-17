@@ -15,7 +15,16 @@ const VisaIcon = () => (
 
 export function ConfirmationPaymentDetails({ orderData }: { orderData: any }) {
     const { formValues } = orderData;
-    const { paymentMethod, billingAddress, firstName, lastName, address, city, postalCode, country } = formValues;
+    const { 
+        paymentMethod, 
+        billingSameAsShipping, 
+        billingFirstName,
+        billingLastName,
+        billingAddress,
+        billingCity,
+        billingPostalCode,
+        billingCountry
+    } = formValues;
 
     return (
         <Card>
@@ -34,14 +43,14 @@ export function ConfirmationPaymentDetails({ orderData }: { orderData: any }) {
                 <div>
                     <p className="text-sm font-medium text-muted-foreground mb-1">Billing Address</p>
                     <div className="text-sm">
-                        {billingAddress === 'same' ? (
+                        {billingSameAsShipping === 'same' ? (
                             <p>Same as shipping address</p>
                         ) : (
                             <>
-                                <p>{firstName} {lastName}</p>
-                                <p>{address}</p>
-                                <p>{city}, {postalCode}</p>
-                                <p>{country}</p>
+                                <p>{billingFirstName} {billingLastName}</p>
+                                <p>{billingAddress}</p>
+                                <p>{billingCity}, {billingPostalCode}</p>
+                                <p>{billingCountry}</p>
                             </>
                         )}
                     </div>
@@ -50,3 +59,5 @@ export function ConfirmationPaymentDetails({ orderData }: { orderData: any }) {
         </Card>
     );
 }
+
+    
