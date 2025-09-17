@@ -53,3 +53,4 @@ export default async function ProductPage({ params }: { params: { productId: str
     </div>
   );
 }
+
