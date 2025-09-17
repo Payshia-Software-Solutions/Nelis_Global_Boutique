@@ -1,6 +1,7 @@
+
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import type { Product } from "@/lib/types";
 import { cn } from "@/lib/utils";
@@ -10,18 +11,42 @@ interface ProductImagesProps {
 }
 
 export function ProductImages({ product }: ProductImagesProps) {
-    const allImages = product.images?.length > 0 ? product.images : [
-        product.imageUrl,
-        'https://placehold.co/600x600.png?text=View+2',
-        'https://placehold.co/600x600.png?text=View+3',
-        'https://placehold.co/600x600.png?text=View+4',
-    ];
+    const [allImages, setAllImages] = useState<string[]>([]);
+    const [activeImage, setActiveImage] = useState<string>('');
 
-    const mainImage = allImages[0];
+    useEffect(() => {
+        const images = [
+            product.imageUrl,
+            ...(product.images || []),
+        ].filter(Boolean); // Filter out any null/undefined values
+
+        const uniqueImages = [...new Set(images)];
+
+        if (uniqueImages.length === 0) {
+            uniqueImages.push('https://placehold.co/600x400.png');
+        }
+
+        setAllImages(uniqueImages);
+        setActiveImage(uniqueImages[0]);
+    }, [product]);
+
     const thumbnailImages = allImages.slice(0, 4);
 
-    const [activeImage, setActiveImage] = useState<string>(mainImage);
-
+    if (allImages.length === 0) {
+        return (
+            <div className="rounded-lg overflow-hidden border">
+                <Image
+                    src="https://placehold.co/600x400.png"
+                    alt="Placeholder"
+                    width={600}
+                    height={400}
+                    className="w-full h-auto object-cover aspect-[4/3]"
+                    priority
+                />
+            </div>
+        );
+    }
+    
     return (
         <div className="grid grid-cols-[80px_1fr] gap-4">
             <div className="flex flex-col gap-4">
