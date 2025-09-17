@@ -64,7 +64,7 @@ export function HeroSlider() {
   };
 
   return (
-    <section className="relative h-screen min-h-[600px] w-full -mt-20">
+    <section className="relative w-full h-[calc(100vh-4rem)] min-h-[500px]">
       <Carousel
         setApi={setApi}
         plugins={[plugin.current]}
@@ -76,7 +76,7 @@ export function HeroSlider() {
         <CarouselContent>
           {sliderItems.map((item, index) => (
             <CarouselItem key={index}>
-              <div className="relative h-screen min-h-[600px] w-full">
+              <div className="relative w-full h-[calc(100vh-4rem)] min-h-[500px]">
                 <Image
                   src={item.src}
                   alt={item.alt}
