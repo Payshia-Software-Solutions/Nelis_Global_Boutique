@@ -4,7 +4,7 @@ import { GiftPacksSection } from "@/components/gift-packs-section";
 import { WhyChooseUs } from "@/components/why-choose-us";
 import { WholesaleExportSection } from "@/components/wholesale-export-section";
 import { ContactUsSection } from "@/components/contact-us-section";
-import { ProductSwiper } from "@/components/product-swiper";
+import { ProductSwiperClient } from "@/components/product-swiper-client";
 import { MotionSection } from "@/components/motion-section";
 import { HeroSlider } from "@/components/hero-slider";
 
@@ -33,7 +33,7 @@ export default async function HomePage() {
       
       {/* Our Products Section */}
       <MotionSection className="bg-background">
-        <ProductSwiper />
+        <ProductSwiperClient />
       </MotionSection>
 
       {/* Gift Packs Section */}

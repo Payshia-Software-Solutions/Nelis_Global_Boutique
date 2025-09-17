@@ -1,3 +1,4 @@
+
 import Image from "next/image";
 import Link from "next/link";
 import type { Product } from "@/lib/types";
@@ -20,7 +21,6 @@ export function ProductCard({ product }: ProductCardProps) {
           className="w-full h-auto object-cover aspect-square transition-transform duration-300 hover:scale-105"
           data-ai-hint={`${product.category} product`}
           priority={product.featured}
-          onError={(e) => e.currentTarget.src = 'https://placehold.co/400x400.png'}
         />
       </Link>
       <CardContent className="p-4 flex-grow space-y-2">

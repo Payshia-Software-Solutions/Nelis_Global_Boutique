@@ -7,14 +7,47 @@ import { ProductCard } from "./product-card";
 import type { Product } from "@/lib/types";
 import Link from "next/link";
 import { Button } from "./ui/button";
+import { getFeaturedProducts } from "@/lib/mock-data";
+import { Skeleton } from "./ui/skeleton";
 
 import 'swiper/css';
 
-interface ProductSwiperClientProps {
-  products: Product[];
-}
+export function ProductSwiperClient() {
+  const [products, setProducts] = React.useState<Product[]>([]);
+  const [loading, setLoading] = React.useState(true);
 
-export function ProductSwiperClient({ products }: ProductSwiperClientProps) {
+  React.useEffect(() => {
+    const fetchProducts = async () => {
+      const featuredProducts = await getFeaturedProducts();
+      setProducts(featuredProducts);
+      setLoading(false);
+    };
+    fetchProducts();
+  }, []);
+
+  if (loading) {
+    return (
+        <section className="w-full py-24">
+            <div className="container mx-auto px-4">
+                 <div className="text-center mb-8">
+                    <Skeleton className="h-8 w-48 mx-auto" />
+                    <Skeleton className="h-4 w-96 mx-auto mt-4" />
+                </div>
+                <div className="flex space-x-4">
+                    {[...Array(4)].map((_, i) => (
+                        <div key={i} className="flex-1 p-1 h-full">
+                            <Skeleton className="w-full h-auto aspect-square" />
+                            <Skeleton className="h-6 w-3/4 mt-4" />
+                            <Skeleton className="h-6 w-1/2 mt-2" />
+                            <Skeleton className="h-10 w-full mt-4" />
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
+    )
+  }
+
   return (
     <section id="our-products" className="w-full py-24">
       <div className="container mx-auto px-4">
