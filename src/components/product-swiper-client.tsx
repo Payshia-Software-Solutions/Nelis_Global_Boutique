@@ -9,6 +9,7 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import { getFeaturedProducts } from "@/lib/mock-data";
 import { Skeleton } from "./ui/skeleton";
+import { ShoppingBag } from "lucide-react";
 
 import 'swiper/css';
 
@@ -87,7 +88,10 @@ export function ProductSwiperClient() {
         </Swiper>
         <div className="text-center mt-12">
           <Button asChild size="lg" variant="outline">
-            <Link href="/store">View All Products</Link>
+            <Link href="/store">
+              <ShoppingBag />
+              View All Products
+            </Link>
           </Button>
         </div>
       </div>
