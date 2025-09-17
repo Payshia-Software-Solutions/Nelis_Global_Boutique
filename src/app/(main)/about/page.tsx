@@ -3,6 +3,7 @@ import { OurStorySection } from '@/components/our-story-section';
 import { MissionValuesSection } from '@/components/mission-values-section';
 import { CertificationsSection } from '@/components/certifications-section';
 import { JoinOurJourneySection } from '@/components/join-our-journey-section';
+import { PageHeroSection } from '@/components/page-hero-section';
 
 export const metadata = {
     title: "About Us",
@@ -12,6 +13,7 @@ export const metadata = {
 export default function AboutPage() {
   return (
     <div>
+      <PageHeroSection title="About Us" subtitle="Discover Our Story" />
       <OurStorySection />
       <MissionValuesSection />
       <CertificationsSection />
