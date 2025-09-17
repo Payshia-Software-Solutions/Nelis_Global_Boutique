@@ -2,17 +2,18 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Search, ShoppingCart, Menu, X, ChevronDown } from "lucide-react";
 import { Logo } from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/cart-provider";
 import { cn } from "@/lib/utils";
-import { useState, useEffect } from "react";
+import { useState, useEffect, FormEvent } from "react";
 import type { Collection } from "@/lib/types";
 import { getCollections } from "@/lib/mock-data";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { Input } from "@/components/ui/input";
 
 import {
     NavigationMenu,
@@ -36,8 +37,12 @@ const navLinks = [
 
 export function Header() {
     const pathname = usePathname();
+    const router = useRouter();
+    const searchParams = useSearchParams();
     const { itemCount, openCart } = useCart();
     const [isMenuOpen, setMenuOpen] = useState(false);
+    const [isSearchOpen, setIsSearchOpen] = useState(false);
+    const [searchQuery, setSearchQuery] = useState(searchParams.get("q") || "");
     const [collections, setCollections] = useState<Collection[]>([]);
 
     useEffect(() => {
@@ -51,6 +56,13 @@ export function Header() {
         };
         fetchCollections();
     }, []);
+
+    const handleSearchSubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if (!searchQuery.trim()) return;
+        router.push(`/store?q=${encodeURIComponent(searchQuery)}`);
+        setIsSearchOpen(false);
+    };
 
     const ListItem = ({ href, title }: { href: string; title: string }) => (
         <li>
@@ -78,6 +90,23 @@ export function Header() {
                     </Link>
 
                     <div className="hidden md:flex flex-1 items-center justify-center">
+                       {isSearchOpen ? (
+                           <div className="w-full max-w-md">
+                               <form onSubmit={handleSearchSubmit} className="relative">
+                                   <Input 
+                                       type="search" 
+                                       placeholder="Search products..." 
+                                       className="w-full pr-10"
+                                       value={searchQuery}
+                                       onChange={(e) => setSearchQuery(e.target.value)}
+                                       autoFocus
+                                   />
+                                   <Button type="submit" variant="ghost" size="icon" className="absolute right-0 top-0 h-full">
+                                       <Search className="h-5 w-5" />
+                                   </Button>
+                               </form>
+                           </div>
+                       ) : (
                         <NavigationMenu>
                             <NavigationMenuList>
                                 {desktopNavLinks.slice(0, 2).map((link) => (
@@ -127,11 +156,12 @@ export function Header() {
                                 ))}
                             </NavigationMenuList>
                         </NavigationMenu>
+                       )}
                     </div>
 
                     <div className="hidden md:flex items-center space-x-2">
-                        <Button variant="ghost" size="icon">
-                            <Search className="h-5 w-5" />
+                        <Button variant="ghost" size="icon" onClick={() => setIsSearchOpen(!isSearchOpen)}>
+                            {isSearchOpen ? <X className="h-5 w-5" /> : <Search className="h-5 w-5" />}
                         </Button>
                         <Button variant="ghost" size="icon" className="relative" onClick={openCart}>
                             <ShoppingCart className="h-5 w-5" />
@@ -145,8 +175,8 @@ export function Header() {
                     </div>
                     
                     <div className="md:hidden flex items-center gap-2">
-                        <Button variant="ghost" size="icon">
-                            <Search className="h-6 w-6" />
+                        <Button variant="ghost" size="icon" onClick={() => setIsSearchOpen(!isSearchOpen)}>
+                             {isSearchOpen ? <X className="h-6 w-6" /> : <Search className="h-6 w-6" />}
                         </Button>
                         <Button variant="ghost" size="icon" className="relative" onClick={openCart}>
                             <ShoppingCart className="h-6 w-6" />
@@ -186,7 +216,26 @@ export function Header() {
                         </Sheet>
                     </div>
                 </div>
+                 {isSearchOpen && (
+                    <div className="md:hidden py-2">
+                         <form onSubmit={handleSearchSubmit} className="relative">
+                           <Input 
+                               type="search" 
+                               placeholder="Search products..." 
+                               className="w-full pr-10"
+                               value={searchQuery}
+                               onChange={(e) => setSearchQuery(e.target.value)}
+                               autoFocus
+                           />
+                           <Button type="submit" variant="ghost" size="icon" className="absolute right-0 top-0 h-full">
+                               <Search className="h-5 w-5" />
+                           </Button>
+                       </form>
+                    </div>
+                )}
             </div>
         </header>
     );
 }
+
+    

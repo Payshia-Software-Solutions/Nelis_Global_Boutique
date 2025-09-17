@@ -36,6 +36,7 @@ export function ProductListing({ products, categories, collections, collectionPr
   const searchParams = useSearchParams();
   
   const [filters, setFilters] = useState({
+    searchQuery: searchParams.get("q") || "",
     category: searchParams.get("category") || "all",
     collection: (searchParams.get("collection") ? [searchParams.get("collection")!] : []) as string[],
     priceRange: [0, 5000],
@@ -49,7 +50,11 @@ export function ProductListing({ products, categories, collections, collectionPr
     if (collectionFromUrl && !filters.collection.includes(collectionFromUrl)) {
       setFilters(prev => ({ ...prev, collection: [collectionFromUrl] }));
     }
-  }, [searchParams, filters.collection]);
+    const searchFromUrl = searchParams.get("q") || "";
+    if (searchFromUrl !== filters.searchQuery) {
+      setFilters(prev => ({...prev, searchQuery: searchFromUrl}));
+    }
+  }, [searchParams, filters.collection, filters.searchQuery]);
 
   const handleFilterChange = (key: keyof typeof filters, value: any) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
@@ -66,6 +71,13 @@ export function ProductListing({ products, categories, collections, collectionPr
 
   const filteredAndSortedProducts = useMemo(() => {
     let filtered = products;
+
+    if (filters.searchQuery) {
+        filtered = filtered.filter(product => 
+            product.name.toLowerCase().includes(filters.searchQuery.toLowerCase()) ||
+            product.description.toLowerCase().includes(filters.searchQuery.toLowerCase())
+        );
+    }
 
     if (filters.collection.length > 0) {
         const productIdsInCollection = collectionProducts
@@ -107,6 +119,10 @@ export function ProductListing({ products, categories, collections, collectionPr
     const collectionsToDisplay = filters.collection.length > 0
         ? collections.filter(c => filters.collection.includes(c.id))
         : collections;
+
+    if (filters.searchQuery && filteredAndSortedProducts.length > 0) {
+        return { [`Search Results for "${filters.searchQuery}"`]: filteredAndSortedProducts };
+    }
 
     collectionsToDisplay.forEach(collection => {
         const productIdsForCollection = new Set(
@@ -173,7 +189,7 @@ export function ProductListing({ products, categories, collections, collectionPr
     }
 
     return group;
-  }, [filteredAndSortedProducts, collections, collectionProducts, filters.collection, filters.sortBy]);
+  }, [filteredAndSortedProducts, collections, collectionProducts, filters.collection, filters.sortBy, filters.searchQuery]);
 
   const FilterControls = () => (
     <div className="space-y-6">
@@ -310,3 +326,5 @@ export function ProductListing({ products, categories, collections, collectionPr
     </div>
   );
 }
+
+    
