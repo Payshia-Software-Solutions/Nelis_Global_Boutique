@@ -45,7 +45,7 @@ export function HeaderClient() {
     const { itemCount, openCart } = useCart();
     const [isMenuOpen, setMenuOpen] = useState(false);
     
-    const [isSearchInputVisible, setIsSearchInputVisible] = useState(false);
+    const [isSearchVisible, setIsSearchVisible] = useState(false);
     const [searchQuery, setSearchQuery] = useState(searchParams.get("q") || "");
     const [allProducts, setAllProducts] = useState<Product[]>([]);
     const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
@@ -81,12 +81,11 @@ export function HeaderClient() {
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
-                setIsSearchInputVisible(false);
-                setSearchQuery('');
+                setIsSearchVisible(false);
             }
         };
 
-        if (isSearchInputVisible) {
+        if (isSearchVisible) {
             document.addEventListener('mousedown', handleClickOutside);
         } else {
             document.removeEventListener('mousedown', handleClickOutside);
@@ -95,13 +94,7 @@ export function HeaderClient() {
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
-    }, [isSearchInputVisible]);
-
-    useEffect(() => {
-        if (isSearchInputVisible) {
-            inputRef.current?.focus();
-        }
-    }, [isSearchInputVisible]);
+    }, [isSearchVisible]);
     
     const handleSearchSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -128,7 +121,7 @@ export function HeaderClient() {
     const desktopNavLinks = navLinks.filter(link => link.label !== "Online Store");
 
     const closeSearch = () => {
-      setIsSearchInputVisible(false);
+      setIsSearchVisible(false);
       setSearchQuery('');
       setFilteredProducts([]);
     }
@@ -164,6 +157,13 @@ export function HeaderClient() {
             )}
         </PopoverContent>
     );
+    
+    useEffect(() => {
+        if (isSearchVisible && inputRef.current) {
+            inputRef.current.focus();
+        }
+    }, [isSearchVisible]);
+
 
     return (
         <header className="bg-card text-card-foreground border-b sticky top-0 z-50">
@@ -173,27 +173,27 @@ export function HeaderClient() {
                         <Logo />
                     </Link>
                     
-                    <div className={cn("hidden md:flex flex-1 items-center justify-center")} ref={searchRef}>
-                        <div className={cn("w-full max-w-md relative", { 'hidden': !isSearchInputVisible })}>
-                            <Popover open={searchQuery.length > 0}>
-                                <PopoverTrigger asChild>
-                                    <form onSubmit={handleSearchSubmit} className="relative">
-                                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                                        <Input
-                                            ref={inputRef}
-                                            type="search"
-                                            placeholder="Search products..."
-                                            className="w-full pl-10"
-                                            value={searchQuery}
-                                            onChange={(e) => setSearchQuery(e.target.value)}
-                                        />
-                                    </form>
-                                </PopoverTrigger>
-                                <SearchPopoverContent />
-                            </Popover>
-                        </div>
-                        
-                        <div className={cn({ 'hidden': isSearchInputVisible })}>
+                    <div className="hidden md:flex flex-1 items-center justify-center" ref={searchRef}>
+                        {isSearchVisible ? (
+                            <div className="w-full max-w-md relative">
+                                <Popover open={searchQuery.length > 0 && filteredProducts.length > 0}>
+                                    <PopoverTrigger asChild>
+                                        <form onSubmit={handleSearchSubmit} className="relative">
+                                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                                            <Input
+                                                ref={inputRef}
+                                                type="search"
+                                                placeholder="Search products..."
+                                                className="w-full pl-10"
+                                                value={searchQuery}
+                                                onChange={(e) => setSearchQuery(e.target.value)}
+                                            />
+                                        </form>
+                                    </PopoverTrigger>
+                                    <SearchPopoverContent />
+                                </Popover>
+                            </div>
+                        ) : (
                             <NavigationMenu>
                                 <NavigationMenuList>
                                     {desktopNavLinks.slice(0, 2).map((link) => (
@@ -243,43 +243,13 @@ export function HeaderClient() {
                                     ))}
                                 </NavigationMenuList>
                             </NavigationMenu>
-                        </div>
+                        )}
                     </div>
 
                     <div className="flex items-center space-x-2">
-                         <div className="md:hidden">
-                             <Popover open={searchQuery.length > 0} >
-                                <PopoverTrigger asChild>
-                                    <div className="relative">
-                                        {isSearchInputVisible ? (
-                                            <form onSubmit={handleSearchSubmit} className="relative">
-                                                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                                                <Input
-                                                    type="search"
-                                                    placeholder="Search products..."
-                                                    className="w-full pl-10"
-                                                    value={searchQuery}
-                                                    onChange={(e) => setSearchQuery(e.target.value)}
-                                                    autoFocus
-                                                />
-                                            </form>
-                                        ) : (
-                                            <Button variant="ghost" size="icon" onClick={() => setIsSearchInputVisible(true)}>
-                                                <Search className="h-5 w-5" />
-                                            </Button>
-                                        )}
-                                    </div>
-                                </PopoverTrigger>
-                                <PopoverContent className="w-screen max-w-sm sm:max-w-md p-0" align="end" sideOffset={10}>
-                                    <SearchPopoverContent />
-                                </PopoverContent>
-                            </Popover>
-                        </div>
-                        <div className="hidden md:block">
-                            <Button variant="ghost" size="icon" onClick={() => setIsSearchInputVisible(prev => !prev)}>
-                                {isSearchInputVisible ? <X className="h-5 w-5" /> : <Search className="h-5 w-5" />}
-                            </Button>
-                        </div>
+                        <Button variant="ghost" size="icon" onClick={() => setIsSearchVisible(prev => !prev)}>
+                            {isSearchVisible ? <X className="h-5 w-5" /> : <Search className="h-5 w-5" />}
+                        </Button>
                         
                         <Button variant="ghost" size="icon" className="relative" onClick={openCart}>
                             <ShoppingCart className="h-5 w-5" />
@@ -326,5 +296,3 @@ export function HeaderClient() {
         </header>
     );
 }
-
-    
