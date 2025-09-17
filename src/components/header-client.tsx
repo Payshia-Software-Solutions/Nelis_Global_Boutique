@@ -127,7 +127,12 @@ export function HeaderClient() {
     }
 
     const SearchPopoverContent = () => (
-        <PopoverContent className="w-[--radix-popover-trigger-width] max-h-[60vh] overflow-y-auto p-0" align="start" sideOffset={10}>
+        <PopoverContent 
+            className="w-[--radix-popover-trigger-width] max-h-[60vh] overflow-y-auto p-0" 
+            align="start" 
+            sideOffset={10}
+            onOpenAutoFocus={(e) => e.preventDefault()}
+        >
             {filteredProducts.length > 0 ? (
                 <>
                     <div className="max-h-[60vh] overflow-y-auto">
@@ -175,7 +180,7 @@ export function HeaderClient() {
                     
                     <div className="hidden md:flex flex-1 items-center justify-center" ref={searchRef}>
                         <div className={cn("w-full max-w-md relative", !isSearchVisible && "hidden")}>
-                            <Popover open={searchQuery.length > 0 && filteredProducts.length > 0}>
+                            <Popover open={searchQuery.length > 0}>
                                 <PopoverTrigger asChild>
                                     <form onSubmit={handleSearchSubmit} className="relative">
                                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
@@ -296,5 +301,3 @@ export function HeaderClient() {
         </header>
     );
 }
-
-    
