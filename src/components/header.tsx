@@ -145,6 +145,9 @@ export function Header() {
                     </div>
                     
                     <div className="md:hidden flex items-center gap-2">
+                        <Button variant="ghost" size="icon">
+                            <Search className="h-6 w-6" />
+                        </Button>
                         <Button variant="ghost" size="icon" className="relative" onClick={openCart}>
                             <ShoppingCart className="h-6 w-6" />
                             {itemCount > 0 && (
@@ -178,11 +181,6 @@ export function Header() {
                                             {link.label}
                                         </Link>
                                     ))}
-                                    <div className="flex items-center space-x-2 pt-4">
-                                        <Button variant="ghost" size="icon">
-                                            <Search className="h-6 w-6" />
-                                        </Button>
-                                    </div>
                                 </nav>
                             </SheetContent>
                         </Sheet>
