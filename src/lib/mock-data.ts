@@ -40,7 +40,9 @@ export const getProducts = async (): Promise<Product[]> => {
         try {
             const imagesResponse = await fetch(`https://server-erp.payshia.com/product-images/${apiProduct.product.id}`);
             if (!imagesResponse.ok) {
-                console.error(`Failed to fetch images for product ${apiProduct.product.id}: ${imagesResponse.status}`);
+                if (imagesResponse.status !== 404) {
+                    console.error(`Failed to fetch images for product ${apiProduct.product.id}: ${imagesResponse.status}`);
+                }
                 return mapApiProductToProduct(apiProduct, []);
             }
             const images: ApiProductImage[] = await imagesResponse.json();
@@ -82,7 +84,9 @@ export const getProductBySlug = async (slug: string): Promise<Product | undefine
         if (imagesResponse.ok) {
             images = await imagesResponse.json();
         } else {
-            console.error(`Failed to fetch images for product ${data.product.id}: ${imagesResponse.status}`);
+            if (imagesResponse.status !== 404) {
+                console.error(`Failed to fetch images for product ${data.product.id}: ${imagesResponse.status}`);
+            }
         }
     } catch (error) {
         console.error(`Error fetching images for product ${data.product.id}:`, error);
@@ -150,4 +154,3 @@ export const getCollectionProducts = async (): Promise<CollectionProduct[]> => {
         return [];
     }
 }
-
