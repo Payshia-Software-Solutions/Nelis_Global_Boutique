@@ -2,7 +2,7 @@
 "use client";
 
 import { useState } from "react";
-import { Star, Heart, Leaf, Moon, Sun } from "lucide-react"; // Using Sun as a placeholder for Palette
+import { Star, Heart, Leaf, Moon, Sun, ShoppingCart, Zap } from "lucide-react"; // Using Sun as a placeholder for Palette
 
 import type { Product } from "@/lib/types";
 import { Button } from "@/components/ui/button";
@@ -104,9 +104,11 @@ export function ProductDetailsClient({ product }: ProductDetailsClientProps) {
             
             <div className="grid grid-cols-2 gap-4">
                 <Button size="lg" onClick={handleAddToCart}>
+                    <ShoppingCart />
                     Add to Cart
                 </Button>
                  <Button size="lg" variant="outline" onClick={handleBuyNow}>
+                    <Zap />
                     Buy Now
                 </Button>
             </div>
