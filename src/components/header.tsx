@@ -44,7 +44,7 @@ export function Header() {
     const { itemCount, openCart } = useCart();
     const [isMenuOpen, setMenuOpen] = useState(false);
     const [isSearchOpen, setIsSearchOpen] = useState(false);
-    const [searchQuery, setSearchQuery] = useState(searchParams.get("q") || "");
+    const [searchQuery, setSearchQuery] = useState("");
     const [collections, setCollections] = useState<Collection[]>([]);
     const [allProducts, setAllProducts] = useState<Product[]>([]);
     const [searchResults, setSearchResults] = useState<Product[]>([]);
@@ -68,6 +68,14 @@ export function Header() {
     }, []);
 
     useEffect(() => {
+        const queryFromUrl = searchParams.get("q") || "";
+        if(!isSearchOpen) {
+            setSearchQuery(queryFromUrl);
+        }
+    }, [searchParams, isSearchOpen]);
+
+
+    useEffect(() => {
         if (searchQuery.trim() === "") {
             setSearchResults([]);
             return;
@@ -86,7 +94,6 @@ export function Header() {
         if (!searchQuery.trim()) return;
         router.push(`/store?q=${encodeURIComponent(searchQuery)}`);
         setIsSearchOpen(false);
-        setSearchQuery("");
     };
 
     const handleResultClick = () => {
@@ -303,5 +310,7 @@ export function Header() {
         </header>
     );
 }
+
+    
 
     
