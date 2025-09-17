@@ -6,6 +6,7 @@ import { CartProvider } from '@/context/cart-provider';
 import { WhatsAppButton } from '@/components/whatsapp-button';
 import { ProgressBar } from '@/components/progress-bar';
 import { Suspense } from 'react';
+import { ThemeProvider } from '@/context/theme-provider';
 
 export const metadata: Metadata = {
   title: {
@@ -21,21 +22,28 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="light scroll-smooth">
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
       </head>
       <body className="font-body antialiased">
-        <CartProvider>
-          <Suspense>
-            <ProgressBar />
-          </Suspense>
-          {children}
-          <Toaster />
-          <WhatsAppButton />
-        </CartProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <CartProvider>
+            <Suspense>
+              <ProgressBar />
+            </Suspense>
+            {children}
+            <Toaster />
+            <WhatsAppButton />
+          </CartProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

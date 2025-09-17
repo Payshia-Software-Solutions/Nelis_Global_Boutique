@@ -12,6 +12,7 @@ import { useState, useEffect } from "react";
 import type { Collection } from "@/lib/types";
 import { getCollections } from "@/lib/mock-data";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 import {
     NavigationMenu,
@@ -140,6 +141,7 @@ export function Header() {
                                 </span>
                             )}
                         </Button>
+                        <ThemeToggle />
                     </div>
                     
                     <div className="md:hidden flex items-center gap-2">
@@ -158,8 +160,9 @@ export function Header() {
                                 </Button>
                             </SheetTrigger>
                             <SheetContent side="left">
-                                <div className="p-4">
+                                <div className="p-4 flex justify-between items-center">
                                   <Logo />
+                                  <ThemeToggle />
                                 </div>
                                 <nav className="flex flex-col items-start space-y-2 p-4">
                                     {navLinks.map((link) => (
