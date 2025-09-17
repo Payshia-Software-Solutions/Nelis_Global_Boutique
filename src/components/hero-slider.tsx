@@ -12,7 +12,7 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import { Button } from "@/components/ui/button";
-import { ArrowDown } from "lucide-react";
+import { ArrowDown, Mail, ShoppingCart } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const sliderItems = [
@@ -104,10 +104,16 @@ export function HeroSlider() {
             </p>
             <div className="mt-8 flex gap-4 justify-center md:justify-start">
               <Button asChild size="lg">
-                <Link href="/store">Shop Now</Link>
+                <Link href="/store">
+                  <ShoppingCart />
+                  Shop Now
+                </Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="bg-transparent border-white text-white hover:bg-white hover:text-primary">
-                <Link href="/contact">Contact Us</Link>
+                <Link href="/contact">
+                  <Mail />
+                  Contact Us
+                </Link>
               </Button>
             </div>
           </div>
