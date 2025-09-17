@@ -1,30 +1,20 @@
 
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import type { Product } from "@/lib/types";
 import { cn } from "@/lib/utils";
-import { useProductImages } from "@/hooks/use-product-images";
 
 interface ProductImagesProps {
     product: Product;
 }
 
-export function ProductImages({ product: initialProduct }: ProductImagesProps) {
-    const { product } = useProductImages(initialProduct);
-    const [activeImage, setActiveImage] = useState<string>(initialProduct.imageUrl);
+export function ProductImages({ product }: ProductImagesProps) {
+    const [activeImage, setActiveImage] = useState(product.imageUrl);
 
     const allImages = [product.imageUrl, ...(product.images || [])].filter(Boolean);
     const uniqueImages = [...new Set(allImages)];
-
-    useEffect(() => {
-        // Update active image if the main product image URL changes (after fetching)
-        if (product.imageUrl !== activeImage && !initialProduct.images?.includes(product.imageUrl)) {
-            setActiveImage(product.imageUrl);
-        }
-    }, [product.imageUrl, activeImage, initialProduct.images]);
-
 
     const thumbnailImages = uniqueImages.slice(0, 4);
 

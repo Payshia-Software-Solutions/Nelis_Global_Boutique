@@ -5,51 +5,28 @@ const imageBaseUrl = "https://content-provider.payshia.com/payshia-erp";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 const companyId = process.env.NEXT_PUBLIC_COMPANY_ID;
 
-const mapApiProductToProduct = (apiProduct: ApiProductData, productImages: ApiProductImage[]): Product => {
-  const allImages = Array.isArray(productImages) ? productImages.map(img => 
+const mapApiProductToProduct = (apiProductData: ApiProductData): Product => {
+  const allImages = (apiProductData.product_images || []).map(img => 
     `${imageBaseUrl}${img.img_url}`
-  ) : [];
+  );
   
-  // Use the first image from the variant if available, otherwise use a placeholder
-  const firstVariantImage = apiProduct.product_images?.[0]?.img_url;
-  const initialImageUrl = firstVariantImage ? `${imageBaseUrl}${firstVariantImage}` : 'https://placehold.co/600x400.png';
-
-  const firstImage = allImages[0] ?? initialImageUrl;
+  const firstImage = allImages[0] || 'https://placehold.co/600x400.png';
   
   return {
-    id: apiProduct.product.id,
-    name: apiProduct.product.name,
-    description: apiProduct.product.description,
-    price: parseFloat(apiProduct.product.price) || 0,
+    id: apiProductData.product.id,
+    name: apiProductData.product.name,
+    description: apiProductData.product.description,
+    price: parseFloat(apiProductData.product.price) || 0,
     imageUrl: firstImage,
-    category: apiProduct.product.category,
-    slug: apiProduct.product.slug,
+    category: apiProductData.product.category,
+    slug: apiProductData.product.slug,
     rating: 5, // Static value as it's not in the API response
     reviewCount: 0, // Static value as it's not in the API response
     featured: true, // Static value as it's not in the API response
     details: [], // Static value as it's not in the API response
-    images: allImages.length > 0 ? allImages : (firstVariantImage ? [initialImageUrl] : [])
+    images: allImages
   };
 };
-
-export const getProductImages = async (productId: string): Promise<string[]> => {
-    try {
-        const imagesResponse = await fetch(`https://server-erp.payshia.com/product-images/${productId}`);
-        if (!imagesResponse.ok) {
-            if (imagesResponse.status !== 404) {
-                 console.error(`Failed to fetch images for product ${productId}: ${imagesResponse.status}`);
-            }
-            return [];
-        }
-        let imagesData = await imagesResponse.json();
-        const images: ApiProductImage[] = Array.isArray(imagesData) ? imagesData : [imagesData];
-        return images.map(img => `${imageBaseUrl}${img.img_url}`);
-    } catch (error) {
-        console.error(`Error fetching images for product ${productId}:`, error);
-        return [];
-    }
-}
-
 
 export const getProducts = async (): Promise<Product[]> => {
   try {
@@ -59,8 +36,7 @@ export const getProducts = async (): Promise<Product[]> => {
     }
     const data: ApiResponse = await response.json();
     
-    // Map products without fetching all images initially
-    const products = data.products.map(apiProduct => mapApiProductToProduct(apiProduct, []));
+    const products = data.products.map(apiProductData => mapApiProductToProduct(apiProductData));
     
     return products;
   } catch (error) {
@@ -86,10 +62,6 @@ export const getProductBySlug = async (slug: string): Promise<Product | undefine
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data: SingleProductApiResponse = await response.json();
-
-    let images: ApiProductImage[] = [];
-    // Initially, we won't fetch images here to speed up page load.
-    // The client will fetch them. We pass an empty array.
 
     const allImages = (data.product_images || []).map(img => 
       `${imageBaseUrl}${img.img_url}`
@@ -152,6 +124,25 @@ export const getCollectionProducts = async (): Promise<CollectionProduct[]> => {
         return data;
     } catch (error) {
         console.error("Failed to fetch collection products:", error);
+        return [];
+    }
+}
+
+export const getProductImages = async (productId: string): Promise<string[]> => {
+    try {
+        const imagesResponse = await fetch(`https://server-erp.payshia.com/product-images/${productId}`);
+        if (!imagesResponse.ok) {
+            if (imagesResponse.status !== 404) {
+                 console.error(`Failed to fetch images for product ${productId}: ${imagesResponse.status}`);
+            }
+            return [];
+        }
+        let imagesData = await imagesResponse.json();
+        // The API might return a single object instead of an array if there's only one image
+        const images: ApiProductImage[] = Array.isArray(imagesData) ? imagesData : [imagesData];
+        return images.map(img => `${imageBaseUrl}${img.img_url}`);
+    } catch (error) {
+        console.error(`Error fetching images for product ${productId}:`, error);
         return [];
     }
 }

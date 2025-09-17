@@ -3,15 +3,12 @@ import Link from "next/link";
 import type { Product } from "@/lib/types";
 import { ProductCardClient } from "./product-card-client";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { useProductImages } from "@/hooks/use-product-images";
 
 interface ProductCardProps {
   product: Product;
 }
 
-export function ProductCard({ product: initialProduct }: ProductCardProps) {
-  const { product } = useProductImages(initialProduct);
-
+export function ProductCard({ product }: ProductCardProps) {
   return (
     <Card className="flex flex-col h-full overflow-hidden transition-shadow duration-300 hover:shadow-xl">
       <Link href={`/products/${product.slug}`} className="block overflow-hidden">
