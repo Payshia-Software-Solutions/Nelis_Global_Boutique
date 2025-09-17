@@ -1,4 +1,3 @@
-
 "use client";
 
 import * as React from "react";
@@ -26,20 +25,20 @@ export function ProductSwiperClient({ products }: ProductSwiperClientProps) {
           </p>
         </div>
         <Swiper
-          spaceBetween={16}
+          spaceBetween={8}
           slidesPerView={1.5}
           breakpoints={{
             640: {
               slidesPerView: 2.5,
-              spaceBetween: 20,
+              spaceBetween: 12,
             },
             768: {
               slidesPerView: 3.5,
-              spaceBetween: 24,
+              spaceBetween: 16,
             },
             1024: {
               slidesPerView: 4.5,
-              spaceBetween: 32,
+              spaceBetween: 20,
             },
           }}
           className="w-full"
