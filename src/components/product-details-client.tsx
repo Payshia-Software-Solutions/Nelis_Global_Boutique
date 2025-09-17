@@ -128,20 +128,22 @@ export function ProductDetailsClient({ product }: ProductDetailsClientProps) {
                 </Select>
             </div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <Button size="lg" onClick={handleAddToCart}>
-                    <ShoppingCart />
-                    Add to Cart
-                </Button>
-                 <Button size="lg" variant="outline" onClick={handleBuyNow}>
-                    <Zap />
-                    Buy Now
+            <div className="flex flex-col gap-2">
+                <div className="flex gap-2">
+                    <Button size="lg" onClick={handleAddToCart} className="flex-1">
+                        <ShoppingCart />
+                        Add to Cart
+                    </Button>
+                    <Button size="lg" variant="outline" onClick={handleBuyNow} className="flex-1">
+                        <Zap />
+                        Buy Now
+                    </Button>
+                </div>
+                <Button size="lg" variant="outline" className="w-full" onClick={handleShare}>
+                    <Share2 className="mr-2 h-5 w-5" />
+                    Share
                 </Button>
             </div>
-            <Button size="lg" variant="outline" className="w-full" onClick={handleShare}>
-                <Share2 className="mr-2 h-5 w-5" />
-                Share
-            </Button>
         </div>
     );
 }
