@@ -25,7 +25,6 @@ import {
     NavigationMenuTrigger,
     navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { Popover, PopoverContent, PopoverTrigger, PopoverAnchor } from "@/components/ui/popover";
 
 const navLinks = [
     { href: "/", label: "Home" },
@@ -46,20 +45,14 @@ export function Header() {
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const [collections, setCollections] = useState<Collection[]>([]);
-    const [allProducts, setAllProducts] = useState<Product[]>([]);
-    const [searchResults, setSearchResults] = useState<Product[]>([]);
     
     useEffect(() => {
         const fetchCollectionsAndProducts = async () => {
             try {
-                const [collectionsData, productsData] = await Promise.all([
-                    getCollections(),
-                    getProducts()
-                ]);
+                const collectionsData = await getCollections();
                 setCollections(collectionsData);
-                setAllProducts(productsData);
             } catch (error) {
-                console.error("Failed to fetch collections or products in Header:", error);
+                console.error("Failed to fetch collections in Header:", error);
             }
         };
         fetchCollectionsAndProducts();
@@ -72,20 +65,6 @@ export function Header() {
         }
     }, [searchParams, isSearchOpen]);
 
-    useEffect(() => {
-        if (searchQuery.trim() === "") {
-            setSearchResults([]);
-            return;
-        }
-
-        const filtered = allProducts
-            .filter(product =>
-                product.name.toLowerCase().includes(searchQuery.toLowerCase())
-            )
-            .slice(0, 5);
-        setSearchResults(filtered);
-    }, [searchQuery, allProducts]);
-
     const handleSearchSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!searchQuery.trim()) return;
@@ -93,11 +72,6 @@ export function Header() {
         setIsSearchOpen(false);
         setSearchQuery("");
     };
-
-    const handleResultClick = () => {
-        setIsSearchOpen(false);
-        setSearchQuery("");
-    }
 
     const ListItem = ({ href, title }: { href: string; title: string }) => (
         <li>
@@ -117,45 +91,19 @@ export function Header() {
     const desktopNavLinks = navLinks.filter(link => link.label !== "Online Store");
 
     const SearchBar = ({ isMobile = false }: { isMobile?: boolean }) => (
-        <Popover open={searchQuery.length > 0}>
-            <PopoverAnchor asChild>
-                <form onSubmit={handleSearchSubmit} className="relative w-full">
-                    <Input
-                        type="search"
-                        placeholder="Search products..."
-                        className={cn("pr-10", isMobile ? "h-10" : "h-9")}
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        autoFocus
-                    />
-                    <Button type="submit" variant="ghost" size="icon" className="absolute right-0 top-0 h-full w-10">
-                        <Search className="h-5 w-5" />
-                    </Button>
-                </form>
-            </PopoverAnchor>
-            <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0" onOpenAutoFocus={(e) => e.preventDefault()}>
-                {searchResults.length > 0 ? (
-                    <div className="divide-y">
-                        {searchResults.map(product => (
-                            <Link key={product.id} href={`/products/${product.slug}`} onClick={handleResultClick} className="flex items-center gap-4 p-2 hover:bg-accent">
-                                <Image src={product.imageUrl} alt={product.name} width={40} height={40} className="rounded-md" />
-                                <div className="flex-grow">
-                                    <p className="font-medium line-clamp-2">{product.name}</p>
-                                    <p className="text-sm text-muted-foreground">LKR {product.price.toFixed(2)}</p>
-                                </div>
-                            </Link>
-                        ))}
-                        <form onSubmit={handleSearchSubmit}>
-                            <button type="submit" className="w-full text-center p-2 text-sm text-primary hover:bg-accent">
-                                View all results for &quot;{searchQuery}&quot;
-                            </button>
-                        </form>
-                    </div>
-                ) : (
-                    <div className="p-4 text-center text-sm text-muted-foreground">No results found.</div>
-                )}
-            </PopoverContent>
-        </Popover>
+        <form onSubmit={handleSearchSubmit} className="relative w-full">
+            <Input
+                type="search"
+                placeholder="Search products..."
+                className={cn("pr-10", isMobile ? "h-10" : "h-9")}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                autoFocus
+            />
+            <Button type="submit" variant="ghost" size="icon" className="absolute right-0 top-0 h-full w-10">
+                <Search className="h-5 w-5" />
+            </Button>
+        </form>
     );
 
     return (
@@ -290,5 +238,3 @@ export function Header() {
         </header>
     );
 }
-
-    
