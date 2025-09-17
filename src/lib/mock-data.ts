@@ -2,12 +2,14 @@
 
 import type { Product, ApiResponse, ApiProductData, Collection, CollectionProduct, SingleProductApiResponse, ApiProductImage } from './types';
 
-const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGE_URL_BASE || '';
+const imageBaseUrl = "https://content-provider.payshia.com/payshia-erp/product-images";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 const companyId = process.env.NEXT_PUBLIC_COMPANY_ID;
 
 const mapApiProductToProduct = (apiProduct: ApiProductData, productImages: ApiProductImage[]): Product => {
-  const allImages = productImages.map(img => img.img_url.startsWith('http') ? img.img_url : `${imageBaseUrl}${img.img_url}`);
+  const allImages = productImages.map(img => 
+    `${imageBaseUrl}/company-${companyId}/product-${apiProduct.product.id}/${img.img_url}`
+  );
   const firstImage = allImages[0] ?? 'https://placehold.co/600x400.png';
   
   return {
@@ -86,7 +88,9 @@ export const getProductBySlug = async (slug: string): Promise<Product | undefine
         console.error(`Error fetching images for product ${data.product.id}:`, error);
     }
     
-    const allImages = images.map(img => img.img_url.startsWith('http') ? img.img_url : `${imageBaseUrl}${img.img_url}`);
+    const allImages = images.map(img => 
+      `${imageBaseUrl}/company-${companyId}/product-${data.product.id}/${img.img_url}`
+    );
     const firstImage = allImages[0] ?? 'https://placehold.co/600x400.png';
 
     return {
