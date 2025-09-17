@@ -4,6 +4,7 @@
 import type { CartItem } from "@/lib/types";
 import type { ReactNode } from "react";
 import { createContext, useContext, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 type OrderData = {
   formValues: any;
@@ -18,6 +19,7 @@ interface CartContextType {
   removeFromCart: (itemId: string) => void;
   updateQuantity: (itemId: string, quantity: number) => void;
   clearCart: () => void;
+  buyNow: (item: CartItem) => void;
   cartTotal: number;
   itemCount: number;
   isCartOpen: boolean;
@@ -25,6 +27,7 @@ interface CartContextType {
   closeCart: () => void;
   orderData: OrderData;
   setOrderData: (data: OrderData) => void;
+  restoreCart: () => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -33,6 +36,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [orderData, setOrderData] = useState<OrderData>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const storedCart = localStorage.getItem("nelisglobal-cart");
@@ -46,7 +50,10 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("nelisglobal-cart", JSON.stringify(cart));
+    const buyNowCart = sessionStorage.getItem("nelisglobal-buy-now-cart");
+    if (!buyNowCart) {
+      localStorage.setItem("nelisglobal-cart", JSON.stringify(cart));
+    }
   }, [cart]);
 
   const handleSetOrderData = (data: OrderData) => {
@@ -94,6 +101,30 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   
   const clearCart = () => {
     setCart([]);
+    sessionStorage.removeItem("nelisglobal-buy-now-cart");
+    localStorage.removeItem("nelisglobal-cart-backup");
+  };
+
+  const buyNow = (item: CartItem) => {
+    // Backup current cart
+    localStorage.setItem("nelisglobal-cart-backup", JSON.stringify(cart));
+    // Set cart to only the buy now item
+    setCart([item]);
+    // Mark that we are in a buy now flow
+    sessionStorage.setItem("nelisglobal-buy-now-cart", "true");
+    // Redirect to checkout
+    router.push('/checkout');
+  };
+
+  const restoreCart = () => {
+    const backup = localStorage.getItem("nelisglobal-cart-backup");
+    const isBuyNow = sessionStorage.getItem("nelisglobal-buy-now-cart");
+
+    if (isBuyNow && backup) {
+      setCart(JSON.parse(backup));
+      localStorage.removeItem("nelisglobal-cart-backup");
+      sessionStorage.removeItem("nelisglobal-buy-now-cart");
+    }
   };
 
   const cartTotal = cart.reduce((total, item) => total + item.price * item.quantity, 0);
@@ -107,6 +138,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         removeFromCart,
         updateQuantity,
         clearCart,
+        buyNow,
         cartTotal,
         itemCount,
         isCartOpen,
@@ -114,6 +146,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         closeCart,
         orderData,
         setOrderData: handleSetOrderData,
+        restoreCart,
       }}
     >
       {children}

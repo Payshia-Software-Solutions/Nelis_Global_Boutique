@@ -53,13 +53,26 @@ const formSchema = z.object({
 });
 
 export default function CheckoutPage() {
-  const { cart, cartTotal, itemCount, setOrderData } = useCart();
+  const { cart, cartTotal, itemCount, setOrderData, restoreCart } = useCart();
   const router = useRouter();
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
-  }, []);
+    
+    // Restore cart if user navigates away
+    const handlePopState = () => {
+      restoreCart();
+    };
+
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+      // Also restore if component unmounts for other reasons (e.g., link click)
+      restoreCart();
+    };
+  }, [restoreCart]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -321,5 +334,3 @@ export default function CheckoutPage() {
     </div>
   );
 }
-
-    

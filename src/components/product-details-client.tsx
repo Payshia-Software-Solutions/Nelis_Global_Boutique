@@ -24,7 +24,7 @@ interface ProductDetailsClientProps {
 
 export function ProductDetailsClient({ product }: ProductDetailsClientProps) {
     const [quantity, setQuantity] = useState(1);
-    const { addToCart, openCart } = useCart();
+    const { addToCart, openCart, buyNow } = useCart();
     const { toast } = useToast();
 
     const handleAddToCart = () => {
@@ -43,6 +43,16 @@ export function ProductDetailsClient({ product }: ProductDetailsClientProps) {
           ),
         });
     };
+
+    const handleBuyNow = () => {
+      buyNow({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        imageUrl: product.imageUrl,
+        quantity: quantity
+      });
+    }
     
     const productFeatures = [
         { icon: Leaf, text: "Handpicked from Sri Lankan gardens"},
@@ -96,7 +106,7 @@ export function ProductDetailsClient({ product }: ProductDetailsClientProps) {
                 <Button size="lg" onClick={handleAddToCart}>
                     Add to Cart
                 </Button>
-                 <Button size="lg" variant="outline">
+                 <Button size="lg" variant="outline" onClick={handleBuyNow}>
                     Buy Now
                 </Button>
             </div>

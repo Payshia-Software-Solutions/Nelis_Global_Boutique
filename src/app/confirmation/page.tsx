@@ -13,18 +13,21 @@ import { useRouter } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function ConfirmationPage() {
-    const { orderData } = useCart();
+    const { orderData, restoreCart } = useCart();
     const router = useRouter();
     const [isClient, setIsClient] = useState(false);
 
     useEffect(() => {
         setIsClient(true);
         if (!orderData) {
-            // Redirect to home if there's no order data, maybe after a small delay
-            // This prevents users from accessing the page directly
-            // setTimeout(() => router.push('/'), 1000);
+            // Redirect to home if there's no order data
+            router.push('/');
         }
-    }, [orderData, router]);
+
+        return () => {
+            restoreCart();
+        }
+    }, [orderData, router, restoreCart]);
 
     if (!isClient || !orderData) {
         return (
