@@ -7,9 +7,9 @@ const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 const companyId = process.env.NEXT_PUBLIC_COMPANY_ID;
 
 const mapApiProductToProduct = (apiProduct: ApiProductData, productImages: ApiProductImage[]): Product => {
-  const allImages = productImages.map(img => 
+  const allImages = Array.isArray(productImages) ? productImages.map(img => 
     `${imageBaseUrl}${img.img_url}`
-  );
+  ) : [];
   const firstImage = allImages[0] ?? 'https://placehold.co/600x400.png';
   
   return {
@@ -45,7 +45,8 @@ export const getProducts = async (): Promise<Product[]> => {
                 }
                 return mapApiProductToProduct(apiProduct, []);
             }
-            const images: ApiProductImage[] = await imagesResponse.json();
+            let imagesData = await imagesResponse.json();
+            const images: ApiProductImage[] = Array.isArray(imagesData) ? imagesData : [imagesData];
             return mapApiProductToProduct(apiProduct, images);
         } catch (error) {
             console.error(`Error fetching images for product ${apiProduct.product.id}:`, error);
@@ -82,7 +83,8 @@ export const getProductBySlug = async (slug: string): Promise<Product | undefine
     try {
         const imagesResponse = await fetch(`https://server-erp.payshia.com/product-images/${data.product.id}`);
         if (imagesResponse.ok) {
-            images = await imagesResponse.json();
+            const imagesData = await imagesResponse.json();
+            images = Array.isArray(imagesData) ? imagesData : [imagesData];
         } else {
             if (imagesResponse.status !== 404) {
                 console.error(`Failed to fetch images for product ${data.product.id}: ${imagesResponse.status}`);
