@@ -2,13 +2,13 @@
 
 import type { Product, ApiResponse, ApiProductData, Collection, CollectionProduct, SingleProductApiResponse, ApiProductImage } from './types';
 
-const imageBaseUrl = "https://content-provider.payshia.com/payshia-erp/product-images";
+const imageBaseUrl = "https://content-provider.payshia.com/payshia-erp";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 const companyId = process.env.NEXT_PUBLIC_COMPANY_ID;
 
 const mapApiProductToProduct = (apiProduct: ApiProductData, productImages: ApiProductImage[]): Product => {
   const allImages = productImages.map(img => 
-    `${imageBaseUrl}/company-${companyId}/product-${apiProduct.product.id}/${img.img_url}`
+    `${imageBaseUrl}${img.img_url}`
   );
   const firstImage = allImages[0] ?? 'https://placehold.co/600x400.png';
   
@@ -89,7 +89,7 @@ export const getProductBySlug = async (slug: string): Promise<Product | undefine
     }
     
     const allImages = images.map(img => 
-      `${imageBaseUrl}/company-${companyId}/product-${data.product.id}/${img.img_url}`
+      `${imageBaseUrl}${img.img_url}`
     );
     const firstImage = allImages[0] ?? 'https://placehold.co/600x400.png';
 
@@ -150,3 +150,4 @@ export const getCollectionProducts = async (): Promise<CollectionProduct[]> => {
         return [];
     }
 }
+
