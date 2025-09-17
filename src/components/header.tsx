@@ -48,6 +48,7 @@ export function Header() {
     const [collections, setCollections] = useState<Collection[]>([]);
     const [allProducts, setAllProducts] = useState<Product[]>([]);
     const [searchResults, setSearchResults] = useState<Product[]>([]);
+    const [isSearchFocused, setIsSearchFocused] = useState(false);
 
     const searchInputRef = useRef<HTMLInputElement>(null);
 
@@ -142,6 +143,30 @@ export function Header() {
             )}
         </PopoverContent>
     );
+    
+    const SearchBar = ({ isMobile = false }: { isMobile?: boolean }) => (
+      <Popover open={isSearchFocused && searchQuery.length > 0}>
+        <PopoverTrigger asChild>
+          <form onSubmit={handleSearchSubmit} className="relative">
+            <Input
+              ref={searchInputRef}
+              type="search"
+              placeholder="Search products..."
+              className={cn("w-full pr-10", isMobile ? "" : "max-w-md")}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onFocus={() => setIsSearchFocused(true)}
+              onBlur={() => setIsSearchFocused(false)}
+              autoFocus
+            />
+            <Button type="submit" variant="ghost" size="icon" className="absolute right-0 top-0 h-full">
+              <Search className="h-5 w-5" />
+            </Button>
+          </form>
+        </PopoverTrigger>
+        {searchPopoverContent}
+      </Popover>
+    );
 
     return (
         <header className="bg-card text-card-foreground border-b sticky top-0 z-50">
@@ -154,25 +179,7 @@ export function Header() {
                     <div className="hidden md:flex flex-1 items-center justify-center">
                        {isSearchOpen ? (
                            <div className="w-full max-w-md">
-                                <Popover open={searchQuery.length > 0}>
-                                    <PopoverTrigger asChild>
-                                        <form onSubmit={handleSearchSubmit} className="relative">
-                                            <Input 
-                                                ref={searchInputRef}
-                                                type="search" 
-                                                placeholder="Search products..." 
-                                                className="w-full pr-10"
-                                                value={searchQuery}
-                                                onChange={(e) => setSearchQuery(e.target.value)}
-                                                autoFocus
-                                            />
-                                            <Button type="submit" variant="ghost" size="icon" className="absolute right-0 top-0 h-full">
-                                                <Search className="h-5 w-5" />
-                                            </Button>
-                                        </form>
-                                    </PopoverTrigger>
-                                    {searchPopoverContent}
-                                </Popover>
+                                <SearchBar />
                            </div>
                        ) : (
                         <NavigationMenu>
@@ -286,31 +293,12 @@ export function Header() {
                 </div>
                  {isSearchOpen && (
                     <div className="md:hidden py-2">
-                        <Popover open={searchQuery.length > 0}>
-                            <PopoverTrigger asChild>
-                                <form onSubmit={handleSearchSubmit} className="relative">
-                                <Input 
-                                    type="search" 
-                                    placeholder="Search products..." 
-                                    className="w-full pr-10"
-                                    value={searchQuery}
-                                    onChange={(e) => setSearchQuery(e.target.value)}
-                                    autoFocus
-                                />
-                                <Button type="submit" variant="ghost" size="icon" className="absolute right-0 top-0 h-full">
-                                    <Search className="h-5 w-5" />
-                                </Button>
-                                </form>
-                            </PopoverTrigger>
-                            {searchPopoverContent}
-                        </Popover>
+                        <SearchBar isMobile={true} />
                     </div>
                 )}
             </div>
         </header>
     );
 }
-
-    
 
     
