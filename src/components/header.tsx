@@ -119,11 +119,16 @@ export function Header() {
                         <Link key={product.id} href={`/products/${product.slug}`} onClick={handleResultClick} className="flex items-center gap-4 p-2 hover:bg-accent">
                             <Image src={product.imageUrl} alt={product.name} width={40} height={40} className="rounded-md" />
                             <div className="flex-grow">
-                                <p className="font-medium">{product.name}</p>
+                                <p className="font-medium line-clamp-2">{product.name}</p>
                                 <p className="text-sm text-muted-foreground">LKR {product.price.toFixed(2)}</p>
                             </div>
                         </Link>
                     ))}
+                    <form onSubmit={handleSearchSubmit}>
+                        <button type="submit" className="w-full text-center p-2 text-sm text-primary hover:bg-accent">
+                            View all results for &quot;{searchQuery}&quot;
+                        </button>
+                    </form>
                 </div>
             ) : (
                 <div className="p-4 text-center text-sm text-muted-foreground">No results found.</div>
@@ -298,3 +303,5 @@ export function Header() {
         </header>
     );
 }
+
+    
