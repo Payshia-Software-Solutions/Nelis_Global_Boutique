@@ -106,7 +106,7 @@ export function Header() {
             <Input
                 type="search"
                 placeholder="Search products..."
-                className="w-full pl-10 pr-4 h-12"
+                className="w-full pl-10 pr-10 h-12"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 autoFocus
