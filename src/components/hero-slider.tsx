@@ -10,9 +10,11 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
+  type CarouselApi,
 } from "@/components/ui/carousel";
 import { Button } from "@/components/ui/button";
 import { ArrowDown } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const sliderItems = [
   {
@@ -33,13 +35,39 @@ const sliderItems = [
 ];
 
 export function HeroSlider() {
+  const [api, setApi] = React.useState<CarouselApi>();
+  const [current, setCurrent] = React.useState(0);
+
   const plugin = React.useRef(
     Autoplay({ delay: 5000, stopOnInteraction: true })
   );
 
+  React.useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    setCurrent(api.selectedScrollSnap());
+
+    const onSelect = () => {
+      setCurrent(api.selectedScrollSnap());
+    };
+
+    api.on("select", onSelect);
+
+    return () => {
+      api.off("select", onSelect);
+    };
+  }, [api]);
+
+  const scrollTo = (index: number) => {
+    api?.scrollTo(index);
+  };
+
   return (
     <section className="relative h-screen min-h-[600px] w-full -mt-20">
       <Carousel
+        setApi={setApi}
         plugins={[plugin.current]}
         className="w-full h-full"
         onMouseEnter={plugin.current.stop}
@@ -84,7 +112,20 @@ export function HeroSlider() {
               </Button>
             </div>
           </div>
-          <Link href="#our-products" className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
+          <div className="absolute bottom-20 left-1/2 -translate-x-1/2 flex gap-2">
+            {sliderItems.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => scrollTo(index)}
+                className={cn(
+                  "h-2 w-2 rounded-full bg-white/50 transition-all",
+                  current === index ? "w-6 bg-white" : "hover:bg-white/75"
+                )}
+                aria-label={`Go to slide ${index + 1}`}
+              />
+            ))}
+          </div>
+          <Link href="#our-products" className="absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce">
             <ArrowDown className="h-8 w-8 text-white" />
           </Link>
         </div>
