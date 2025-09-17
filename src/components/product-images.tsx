@@ -16,22 +16,15 @@ export function ProductImages({ product }: ProductImagesProps) {
     const allImages = [product.imageUrl, ...(product.images || [])].filter(Boolean);
     const uniqueImages = [...new Set(allImages)];
 
-    const thumbnailImages = uniqueImages.slice(0, 4);
-
-    if (uniqueImages.length === 0) {
-        return (
-            <div className="rounded-lg overflow-hidden border">
-                <Image
-                    src="https://placehold.co/600x400.png"
-                    alt="Placeholder"
-                    width={600}
-                    height={400}
-                    className="w-full h-auto object-cover aspect-[4/3]"
-                    priority
-                />
-            </div>
-        );
+    if (uniqueImages.length === 0 || !uniqueImages[0]) {
+        uniqueImages.push('https://placehold.co/600x400.png');
     }
+    
+    if(!activeImage || !uniqueImages.includes(activeImage)) {
+        setActiveImage(uniqueImages[0]);
+    }
+
+    const thumbnailImages = uniqueImages.slice(0, 4);
     
     return (
         <div className="grid grid-cols-[80px_1fr] gap-4">

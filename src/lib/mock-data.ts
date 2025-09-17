@@ -2,8 +2,8 @@
 import type { Product, ApiResponse, ApiProductData, Collection, CollectionProduct, SingleProductApiResponse, ApiProductImage } from './types';
 
 const imageBaseUrl = "https://content-provider.payshia.com/payshia-erp";
-const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-const companyId = process.env.NEXT_PUBLIC_COMPANY_ID;
+const apiBaseUrl = "https://server-erp.payshia.com";
+const companyId = "3";
 
 const mapApiProductToProduct = (apiProductData: ApiProductData): Product => {
   const allImages = (apiProductData.product_images || []).map(img => 
@@ -57,31 +57,8 @@ export const getProductById = async (id: string): Promise<Product | undefined> =
 
 export const getProductBySlug = async (slug: string): Promise<Product | undefined> => {
   try {
-    const response = await fetch(`${apiBaseUrl}/products/details/slug/${slug}`);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const data: SingleProductApiResponse = await response.json();
-
-    const allImages = (data.product_images || []).map(img => 
-      `${imageBaseUrl}${img.img_url}`
-    );
-    const firstImage = allImages[0] ?? 'https://placehold.co/600x400.png';
-
-    return {
-      id: data.product.id,
-      name: data.product.name,
-      description: data.product.description,
-      price: parseFloat(data.product.price) || 0,
-      imageUrl: firstImage,
-      category: data.product.category,
-      slug: data.product.slug,
-      rating: 5,
-      reviewCount: 0,
-      featured: true,
-      details: [],
-      images: allImages,
-    };
+    const products = await getProducts();
+    return products.find(p => p.slug === slug);
   } catch (error) {
     console.error(`Failed to fetch product by slug ${slug}:`, error);
     return undefined;
@@ -138,8 +115,9 @@ export const getProductImages = async (productId: string): Promise<string[]> => 
             return [];
         }
         let imagesData = await imagesResponse.json();
-        // The API might return a single object instead of an array if there's only one image
-        const images: ApiProductImage[] = Array.isArray(imagesData) ? imagesData : [imagesData];
+        
+        const images: ApiProductImage[] = Array.isArray(imagesData) ? imagesData : [imagesData].filter(Boolean);
+        
         return images.map(img => `${imageBaseUrl}${img.img_url}`);
     } catch (error) {
         console.error(`Error fetching images for product ${productId}:`, error);
