@@ -11,7 +11,7 @@ export function RecentPostsSection() {
     <section className="bg-muted py-20">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-4xl">Recent Posts</h2>
+          <h2 className="text-4xl font-bold">Recent Posts</h2>
         </div>
         {posts.length > 0 ? (
           <div className="grid md:grid-cols-2 gap-8">

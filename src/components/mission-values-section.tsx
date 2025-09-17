@@ -31,7 +31,7 @@ export function MissionValuesSection() {
         <section className="bg-muted py-24">
             <div className="container mx-auto px-4">
                 <div className="text-center mb-12">
-                    <h2 className="text-4xl">Our Mission & Values</h2>
+                    <h2 className="text-4xl font-bold">Our Mission & Values</h2>
                 </div>
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {values.map((value, index) => (

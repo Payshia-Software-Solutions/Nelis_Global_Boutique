@@ -291,7 +291,7 @@ export function ProductListing({ products, categories, collections, collectionPr
               {Object.entries(groupedProducts).length > 0 ? (
                 Object.entries(groupedProducts).map(([collectionTitle, products]) => (
                   <div key={collectionTitle}>
-                    <h2 className="text-3xl text-center mb-8">{collectionTitle} ({products.length})</h2>
+                    <h2 className="text-3xl font-bold text-center mb-8">{collectionTitle} ({products.length})</h2>
                     <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                       {products.map((product) => (
                         <ProductCard key={product.id} product={product} />

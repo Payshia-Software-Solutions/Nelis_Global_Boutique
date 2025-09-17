@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -16,7 +17,7 @@ export function GiftPacksSection() {
     return (
         <section className="container mx-auto px-4 py-16">
             <div className="text-center mb-12">
-                <h2 className="text-3xl">Gift Packs – Perfect for Every Occasion</h2>
+                <h2 className="text-3xl font-bold">Gift Packs – Perfect for Every Occasion</h2>
             </div>
             <div className="grid md:grid-cols-2 gap-12 items-stretch">
                 <div className="order-1 md:order-2 flex flex-col justify-center">

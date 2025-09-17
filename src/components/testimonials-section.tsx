@@ -22,7 +22,7 @@ export function TestimonialsSection() {
         <section className="py-24 bg-background">
             <div className="container mx-auto px-4">
                 <div className="text-center mb-12">
-                    <h2 className="text-4xl">What Our Clients Say</h2>
+                    <h2 className="text-4xl font-bold">What Our Clients Say</h2>
                 </div>
                 <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
                     {testimonials.map((testimonial, index) => (

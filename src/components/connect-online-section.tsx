@@ -12,8 +12,8 @@ export function ConnectOnlineSection() {
                 <div className="flex justify-center items-center gap-3">
                     <Globe className="h-8 w-8 text-primary" />
                     <div>
-                        <h2 className="text-3xl">Connect with Us</h2>
-                        <h2 className="text-3xl">Online</h2>
+                        <h2 className="text-3xl font-bold">Connect with Us</h2>
+                        <h2 className="text-3xl font-bold">Online</h2>
                     </div>
                 </div>
                 <p className="mt-4 max-w-2xl mx-auto text-muted-foreground">

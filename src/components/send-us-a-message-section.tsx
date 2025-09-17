@@ -54,7 +54,7 @@ export function SendUsAMessageSection() {
         <div className="text-center mb-12 max-w-2xl mx-auto">
           <div className="flex justify-center items-center gap-3">
             <MessageSquareText className="h-8 w-8 text-muted-foreground" />
-            <h2 className="text-4xl">Send Us a Message</h2>
+            <h2 className="text-4xl font-bold">Send Us a Message</h2>
           </div>
           <p className="mt-4 text-muted-foreground">
             If you have any questions or need more information, feel free to fill out the form below. Our team will get back to you as soon as possible.

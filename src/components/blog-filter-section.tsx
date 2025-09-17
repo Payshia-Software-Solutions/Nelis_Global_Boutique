@@ -24,7 +24,7 @@ export function BlogFilterSection() {
                     />
                 </div>
                 <div className="text-center">
-                    <h2 className="text-2xl font-semibold mb-6">Categories</h2>
+                    <h2 className="text-2xl font-bold mb-6">Categories</h2>
                     <div className="flex flex-wrap justify-center gap-3">
                         {categories.map((category, index) => (
                             <Button

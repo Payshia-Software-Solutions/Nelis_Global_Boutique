@@ -56,7 +56,7 @@ export function CuratedCelebrationsSection() {
         <section className="py-24 bg-background">
             <div className="container mx-auto px-4">
                 <div className="text-center mb-16">
-                    <h2 className="text-4xl tracking-tight">Curated for Every Celebration</h2>
+                    <h2 className="text-4xl font-bold tracking-tight">Curated for Every Celebration</h2>
                 </div>
 
                 <div className="space-y-20">

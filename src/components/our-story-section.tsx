@@ -10,7 +10,7 @@ export function OurStorySection() {
           <div>
             <div className="flex items-center gap-3 mb-4">
               <Leaf className="h-8 w-8 text-primary" />
-              <h2 className="text-4xl">Our Story</h2>
+              <h2 className="text-4xl font-bold">Our Story</h2>
             </div>
             <div className="space-y-4 text-muted-foreground">
               <p>

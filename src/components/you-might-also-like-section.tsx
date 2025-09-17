@@ -26,7 +26,7 @@ export function YouMightAlsoLikeSection() {
     return (
         <section className="py-24">
             <div className="container mx-auto px-4">
-                <h2 className="text-3xl mb-8">You Might Also Like</h2>
+                <h2 className="text-3xl font-bold mb-8">You Might Also Like</h2>
                 {loading ? (
                     <div className="flex space-x-4">
                         {[...Array(4)].map((_, i) => (

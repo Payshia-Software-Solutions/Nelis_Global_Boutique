@@ -23,7 +23,7 @@ export function CertificationsSection() {
         <section className="py-24">
             <div className="container mx-auto px-4">
                 <div className="text-center mb-12">
-                    <h2 className="text-4xl mb-4">Our Certifications & Achievements</h2>
+                    <h2 className="text-4xl font-bold mb-4">Our Certifications & Achievements</h2>
                     <div className="flex justify-center items-center gap-2 text-muted-foreground">
                         <Pin className="h-5 w-5 text-destructive transform -rotate-45" />
                         <span>Certified for Quality – ISO 22000:2018, HACCP, and GMP</span>

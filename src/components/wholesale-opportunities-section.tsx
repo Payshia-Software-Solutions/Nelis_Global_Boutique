@@ -44,7 +44,7 @@ export function WholesaleOpportunitiesSection() {
                 <div className="text-center max-w-4xl mx-auto">
                     <div className="flex justify-center items-center gap-3">
                         <Package className="h-8 w-8 text-primary" />
-                        <h2 className="text-4xl">Wholesale Opportunities</h2>
+                        <h2 className="text-4xl font-bold">Wholesale Opportunities</h2>
                     </div>
                     <p className="mt-4 text-muted-foreground text-lg">
                         We offer competitive wholesale pricing on a wide range of products, including herbal teas, dried fruits, and special blends. Our products are perfect for:

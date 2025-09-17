@@ -26,7 +26,7 @@ export function WhyChooseUs() {
         <section className="py-16">
             <div className="container mx-auto px-4">
                 <div className="text-center mb-12">
-                    <h2 className="text-3xl">Why Choose Us?</h2>
+                    <h2 className="text-3xl font-bold">Why Choose Us?</h2>
                 </div>
                 <div className="grid md:grid-cols-3 gap-12 text-center">
                     {features.map((feature, index) => (

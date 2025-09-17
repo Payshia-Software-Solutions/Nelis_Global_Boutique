@@ -30,7 +30,7 @@ export function FutureGoalsSection() {
                 <div className="text-center mb-12">
                     <div className="flex justify-center items-center gap-3">
                         <Leaf className="h-8 w-8 text-primary" />
-                        <h2 className="text-4xl">Future Goals</h2>
+                        <h2 className="text-4xl font-bold">Future Goals</h2>
                     </div>
                     <p className="mt-4 max-w-2xl mx-auto text-muted-foreground">
                         Our commitment to sustainability doesn't stop here. In the future, we plan to:
