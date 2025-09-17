@@ -174,14 +174,14 @@ export function HeaderClient() {
         <header className="bg-card text-card-foreground border-b sticky top-0 z-50">
             <div className="container mx-auto px-4">
                 <div className="flex items-center justify-between h-16">
-                    <div className={cn("flex items-center", isSearchVisible && "hidden")}>
+                    <div className={cn("flex items-center transition-opacity duration-300", isSearchVisible ? "opacity-0 pointer-events-none" : "opacity-100")}>
                         <Link href="/">
                             <Logo />
                         </Link>
                     </div>
 
-                    <div className={cn("flex-1 items-center justify-center md:flex", isSearchVisible ? "block" : "hidden")} ref={searchRef}>
-                         <Popover open={searchQuery.length > 0}>
+                    <div className={cn("absolute left-1/2 -translate-x-1/2 w-full max-w-lg px-4 md:flex items-center justify-center transition-opacity duration-300", isSearchVisible ? "opacity-100 z-10" : "opacity-0 pointer-events-none")}>
+                         <Popover open={searchQuery.length > 0 && isSearchVisible}>
                             <PopoverTrigger asChild>
                                 <form onSubmit={handleSearchSubmit} className="relative w-full">
                                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
@@ -199,7 +199,7 @@ export function HeaderClient() {
                         </Popover>
                     </div>
 
-                    <div className={cn("hidden h-full items-center justify-center", isSearchVisible ? "hidden" : "md:flex")}>
+                    <div className={cn("hidden h-full items-center justify-center transition-opacity duration-300", isSearchVisible ? "md:hidden opacity-0" : "md:flex opacity-100")}>
                         <NavigationMenu>
                             <NavigationMenuList>
                                 {desktopNavLinks.slice(0, 2).map((link) => (
@@ -253,11 +253,11 @@ export function HeaderClient() {
 
 
                     <div className={cn("flex items-center space-x-2")}>
-                        <Button variant="ghost" size="icon" onClick={() => setIsSearchVisible(prev => !prev)}>
+                        <Button variant="ghost" size="icon" onClick={() => setIsSearchVisible(prev => !prev)} className="z-20">
                             {isSearchVisible ? <X className="h-5 w-5" /> : <Search className="h-5 w-5" />}
                         </Button>
                         
-                        <div className={cn("flex", isSearchVisible && "hidden")}>
+                        <div className={cn("flex transition-opacity duration-300", isSearchVisible ? "opacity-0 pointer-events-none" : "opacity-100")}>
                             <Button variant="ghost" size="icon" className="relative" onClick={openCart}>
                                 <ShoppingCart className="h-5 w-5" />
                                 {itemCount > 0 && (
@@ -304,3 +304,5 @@ export function HeaderClient() {
         </header>
     );
 }
+
+    
