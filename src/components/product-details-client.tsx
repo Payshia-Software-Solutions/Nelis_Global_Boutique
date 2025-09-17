@@ -2,7 +2,7 @@
 "use client";
 
 import { useState } from "react";
-import { Star, Heart, Leaf, Moon, Sun, ShoppingCart, Zap } from "lucide-react"; // Using Sun as a placeholder for Palette
+import { Star, Heart, Leaf, Moon, Sun, ShoppingCart, Zap, Share2 } from "lucide-react";
 
 import type { Product } from "@/lib/types";
 import { Button } from "@/components/ui/button";
@@ -53,12 +53,38 @@ export function ProductDetailsClient({ product }: ProductDetailsClientProps) {
         quantity: quantity
       });
     }
+
+    const handleShare = async () => {
+        const shareData = {
+            title: product.name,
+            text: `Check out this product: ${product.name}`,
+            url: window.location.href,
+        };
+        try {
+            if (navigator.share) {
+                await navigator.share(shareData);
+            } else {
+                await navigator.clipboard.writeText(window.location.href);
+                toast({
+                    title: "Link Copied!",
+                    description: "Product link copied to clipboard.",
+                });
+            }
+        } catch (error) {
+            console.error("Error sharing:", error);
+            toast({
+                variant: "destructive",
+                title: "Error",
+                description: "Could not share product.",
+            });
+        }
+    };
     
     const productFeatures = [
         { icon: Leaf, text: "Handpicked from Sri Lankan gardens"},
         { icon: Heart, text: "Rich in antioxidants"},
         { icon: Moon, text: "100% caffeine-free"},
-        { icon: Sun, text: "Color-changing magic"}, // Using Sun as placeholder
+        { icon: Sun, text: "Color-changing magic"},
     ]
 
     return (
@@ -102,7 +128,7 @@ export function ProductDetailsClient({ product }: ProductDetailsClientProps) {
                 </Select>
             </div>
             
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <Button size="lg" onClick={handleAddToCart}>
                     <ShoppingCart />
                     Add to Cart
@@ -112,6 +138,10 @@ export function ProductDetailsClient({ product }: ProductDetailsClientProps) {
                     Buy Now
                 </Button>
             </div>
+            <Button size="lg" variant="outline" className="w-full" onClick={handleShare}>
+                <Share2 className="mr-2 h-5 w-5" />
+                Share
+            </Button>
         </div>
     );
 }
