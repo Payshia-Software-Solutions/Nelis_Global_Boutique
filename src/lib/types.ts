@@ -25,6 +25,13 @@ export type ApiProduct = {
   slug: string;
 }
 
+export type ApiProductImage = {
+  id: string;
+  product_id: string;
+  img_url: string;
+  display_order: number;
+}
+
 export type ApiProductData = {
   product: ApiProduct;
   product_images: {
