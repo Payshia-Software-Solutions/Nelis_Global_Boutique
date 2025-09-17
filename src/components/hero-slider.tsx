@@ -21,12 +21,12 @@ const sliderItems = [
     hint: "natural products market",
   },
   {
-    src: "http://content-provider.payshia.com/nelis-global/002-1080x1920-optimized.webp",
+    src: "https://content-provider.payshia.com/nelis-global/002-1080x1920-optimized.webp",
     alt: "A person holding a cup of butterfly pea tea",
     hint: "butterfly pea tea",
   },
   {
-    src: "http://content-provider.payshia.com/nelis-global/003-1080x1920-optimized.webp",
+    src: "https://content-provider.payshia.com/nelis-global/003-1080x1920-optimized.webp",
     alt: "Dried fruits and spices on a wooden table",
     hint: "dried fruits spices",
   },
