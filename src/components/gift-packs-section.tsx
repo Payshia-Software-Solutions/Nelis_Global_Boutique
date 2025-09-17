@@ -2,7 +2,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Check } from "lucide-react";
+import { Check, Gift } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -34,7 +34,10 @@ export function GiftPacksSection() {
                         ))}
                     </ul>
                     <Button asChild size="lg">
-                        <Link href="/gift-packs">Shop Gift Packs</Link>
+                        <Link href="/gift-packs">
+                            <Gift />
+                            Shop Gift Packs
+                        </Link>
                     </Button>
                 </div>
                 <div className="order-2 md:order-1 h-full">
