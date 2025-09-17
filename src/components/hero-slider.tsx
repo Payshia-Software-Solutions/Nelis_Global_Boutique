@@ -1,4 +1,3 @@
-
 "use client";
 
 import * as React from "react";
@@ -83,11 +82,11 @@ export function HeroSlider() {
                   alt={item.alt}
                   fill
                   objectFit="cover"
-                  className="opacity-70"
+                  className="opacity-100"
                   data-ai-hint={item.hint}
                   priority={index === 0}
                 />
-                <div className="absolute inset-0 bg-black/30" />
+                <div className="absolute inset-0 bg-black/20" />
               </div>
             </CarouselItem>
           ))}
@@ -96,7 +95,7 @@ export function HeroSlider() {
 
       <div className="absolute inset-0 flex items-center justify-center md:justify-start">
         <div className="container mx-auto h-full flex flex-col items-center md:items-start justify-center text-center md:text-left relative z-10 text-white px-4">
-          <div className="max-w-2xl bg-black/20 p-8 rounded-lg">
+          <div className="max-w-2xl bg-black/40 p-8 rounded-lg">
             <h1 className="text-4xl md:text-6xl tracking-tight">
               Welcome to Nelis Global Boutique
             </h1>
@@ -112,19 +111,21 @@ export function HeroSlider() {
               </Button>
             </div>
           </div>
-          <div className="absolute bottom-20 left-1/2 -translate-x-1/2 flex gap-2">
+          
+          <div className="absolute right-8 top-1/2 -translate-y-1/2 flex flex-col gap-2">
             {sliderItems.map((_, index) => (
               <button
                 key={index}
                 onClick={() => scrollTo(index)}
                 className={cn(
                   "h-2 w-2 rounded-full bg-white/50 transition-all",
-                  current === index ? "w-6 bg-white" : "hover:bg-white/75"
+                  current === index ? "h-6 bg-white" : "hover:bg-white/75"
                 )}
                 aria-label={`Go to slide ${index + 1}`}
               />
             ))}
           </div>
+
           <Link href="#our-products" className="absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce">
             <ArrowDown className="h-8 w-8 text-white" />
           </Link>
