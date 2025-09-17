@@ -82,11 +82,11 @@ export function HeroSlider() {
                   alt={item.alt}
                   fill
                   objectFit="cover"
-                  className="opacity-100"
+                  className="opacity-70"
                   data-ai-hint={item.hint}
                   priority={index === 0}
                 />
-                <div className="absolute inset-0 bg-black/10" />
+                <div className="absolute inset-0 bg-black/30" />
               </div>
             </CarouselItem>
           ))}
@@ -95,7 +95,7 @@ export function HeroSlider() {
 
       <div className="absolute inset-0 flex items-center justify-center md:justify-start">
         <div className="container mx-auto h-full flex flex-col items-center md:items-start justify-center text-center md:text-left relative z-10 text-white px-4">
-          <div className="max-w-2xl">
+          <div className="max-w-2xl bg-black/20 p-8 rounded-lg">
             <h1 className="text-4xl md:text-6xl tracking-tight">
               Welcome to Nelis Global Boutique
             </h1>
