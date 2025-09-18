@@ -7,6 +7,7 @@ import { WhatsAppButton } from '@/components/whatsapp-button';
 import { ProgressBar } from '@/components/progress-bar';
 import { Suspense } from 'react';
 import { ThemeProvider } from '@/context/theme-provider';
+import { GoogleAnalytics } from '@/components/google-analytics';
 
 export const metadata: Metadata = {
   title: {
@@ -50,6 +51,7 @@ export default function RootLayout({
           <CartProvider>
             <Suspense>
               <ProgressBar />
+              <GoogleAnalytics />
             </Suspense>
             {children}
             <Toaster />
@@ -60,4 +62,3 @@ export default function RootLayout({
     </html>
   );
 }
-
