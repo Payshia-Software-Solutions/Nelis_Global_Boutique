@@ -8,6 +8,7 @@ import { ProgressBar } from '@/components/progress-bar';
 import { Suspense } from 'react';
 import { ThemeProvider } from '@/context/theme-provider';
 import { GoogleAnalytics } from '@/components/google-analytics';
+import { TopBar } from '@/components/top-bar';
 
 export const metadata: Metadata = {
   title: {
@@ -53,6 +54,7 @@ export default function RootLayout({
               <ProgressBar />
               <GoogleAnalytics />
             </Suspense>
+            <TopBar />
             {children}
             <Toaster />
             <WhatsAppButton />
