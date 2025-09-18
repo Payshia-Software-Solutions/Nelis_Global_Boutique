@@ -1,3 +1,4 @@
+
 "use client";
 
 import * as React from "react";
@@ -64,7 +65,7 @@ export function HeroSlider() {
   };
 
   return (
-    <section className="relative w-full h-[calc(100vh-4rem)] min-h-[500px]">
+    <section className="relative w-full h-[calc(100vh-6rem)] min-h-[500px]">
       <Carousel
         setApi={setApi}
         plugins={[plugin.current]}
@@ -76,7 +77,7 @@ export function HeroSlider() {
         <CarouselContent>
           {sliderItems.map((item, index) => (
             <CarouselItem key={index}>
-              <div className="relative w-full h-[calc(100vh-4rem)] min-h-[500px]">
+              <div className="relative w-full h-[calc(100vh-6rem)] min-h-[500px]">
                 <Image
                   src={item.src}
                   alt={item.alt}
