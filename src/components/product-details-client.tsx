@@ -90,7 +90,7 @@ export function ProductDetailsClient({ product }: ProductDetailsClientProps) {
     return (
         <div className="space-y-6">
             <div>
-                <h1 className="text-3xl md:text-4xl tracking-tight">{product.name}</h1>
+                <h1 className="text-3xl md:text-4xl tracking-tight font-bold">{product.name}</h1>
                 <div className="flex items-center gap-2 mt-2">
                     <div className="flex items-center">
                         {[...Array(5)].map((_, i) => (
