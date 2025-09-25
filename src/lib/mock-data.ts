@@ -47,18 +47,24 @@ export const getProducts = async (): Promise<Product[]> => {
 
 export const getProductsByCollection = async (collectionId: string): Promise<Product[]> => {
     try {
+        const allProducts = await getProducts();
+        const allProductsMap = new Map(allProducts.map(p => [p.id, p]));
+
         const response = await fetch(`${apiBaseUrl}/collection-products/get/by?collection_id=${collectionId}&company_id=${companyId}`);
         if (!response.ok) {
             console.error(`Failed to fetch products for collection ${collectionId}: ${response.status}`);
             return [];
         }
-        const data: ApiResponse = await response.json();
+        const collectionProductsData: CollectionProduct[] = await response.json();
         
-        if (!data.products) {
+        if (!Array.isArray(collectionProductsData)) {
             return [];
         }
+        
+        const products = collectionProductsData
+            .map(cp => allProductsMap.get(cp.product_id))
+            .filter((p): p is Product => p !== undefined);
 
-        const products = data.products.map(apiProductData => mapApiProductToProduct(apiProductData));
         return products;
     } catch (error) {
         console.error(`Failed to fetch products for collection ${collectionId}:`, error);

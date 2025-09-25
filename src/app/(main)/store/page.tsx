@@ -1,7 +1,7 @@
 
 import { Suspense } from 'react';
 import { StoreHeroSection } from '@/components/store-hero-section';
-import { getCollections, getProductsByCollection } from "@/lib/mock-data";
+import { getCollections, getProductsByCollection, getProducts } from "@/lib/mock-data";
 import { ProductListing } from '@/components/product-listing';
 import { ShoppingFeaturesSection } from '@/components/shopping-features-section';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -35,6 +35,7 @@ interface CollectionWithProducts {
 
 async function ProductListingData() {
   const collections = await getCollections();
+  const allProducts = await getProducts();
   
   const collectionsWithProducts: CollectionWithProducts[] = await Promise.all(
     collections.map(async (collection) => {
@@ -43,7 +44,6 @@ async function ProductListingData() {
     })
   );
   
-  const allProducts = collectionsWithProducts.flatMap(cwp => cwp.products);
   const categories = [...new Set(allProducts.map(p => p.category))];
 
   return (
