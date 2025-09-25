@@ -70,7 +70,7 @@ export function ProductListing({ products, categories, collections, collectionPr
   };
 
   const filteredAndSortedProducts = useMemo(() => {
-    let filtered = products;
+    let filtered = products || [];
 
     if (filters.searchQuery) {
         filtered = filtered.filter(product => 
