@@ -116,15 +116,15 @@ export function ProductListing({ products, categories, collections, collectionPr
   const groupedProducts = useMemo(() => {
     const group: Record<string, Product[]> = {};
 
-    const collectionsToDisplay = filters.collection.length > 0
-        ? collections.filter(c => filters.collection.includes(c.id))
-        : collections;
-
     if (filters.searchQuery && filteredAndSortedProducts.length > 0) {
         return { [`Search Results for "${filters.searchQuery}"`]: filteredAndSortedProducts };
     }
 
-    collectionsToDisplay.forEach(collection => {
+    const collectionsToGroup = filters.collection.length > 0
+        ? collections.filter(c => filters.collection.includes(c.id))
+        : collections;
+
+    collectionsToGroup.forEach(collection => {
         const productIdsForCollection = new Set(
             collectionProducts
                 .filter(cp => cp.collection_id === collection.id)
@@ -141,32 +141,38 @@ export function ProductListing({ products, categories, collections, collectionPr
         }
     });
 
-    // If no collection filter is active, group all filtered products
+    // If no collection filter is active, some products might be uncategorized if they don't belong to any displayed collection
+    // This part of the logic seems to be the issue. Let's fix it.
     if(filters.collection.length === 0) {
+        // Clear the group and rebuild it based on products
+        const newGroup: Record<string, Product[]> = {};
         filteredAndSortedProducts.forEach(product => {
             const productCollections = collectionProducts.filter(cp => cp.product_id === product.id);
             if (productCollections.length > 0) {
                 productCollections.forEach(pc => {
                     const collection = collections.find(c => c.id === pc.collection_id);
                     if (collection) {
-                        if (!group[collection.title]) {
-                            group[collection.title] = [];
+                        if (!newGroup[collection.title]) {
+                            newGroup[collection.title] = [];
                         }
-                        if (!group[collection.title].some(p => p.id === product.id)) {
-                             group[collection.title].push(product);
+                        if (!newGroup[collection.title].some(p => p.id === product.id)) {
+                             newGroup[collection.title].push(product);
                         }
                     }
                 });
             } else {
-                if (!group['Uncategorized']) {
-                    group['Uncategorized'] = [];
+                // Products without any collection
+                if (!newGroup['Uncategorized']) {
+                    newGroup['Uncategorized'] = [];
                 }
-                if (!group['Uncategorized'].some(p => p.id === product.id)) {
-                    group['Uncategorized'].push(product);
+                 if (!newGroup['Uncategorized'].some(p => p.id === product.id)) {
+                    newGroup['Uncategorized'].push(product);
                 }
             }
         });
+        return newGroup;
     }
+
 
     // Sort products within each group
     for (const collectionTitle in group) {
@@ -305,16 +311,21 @@ export function ProductListing({ products, categories, collections, collectionPr
             
             <div className="space-y-12">
               {Object.entries(groupedProducts).length > 0 ? (
-                Object.entries(groupedProducts).map(([collectionTitle, products]) => (
-                  <div key={collectionTitle}>
-                    <h2 className="text-3xl font-bold text-center mb-8">{collectionTitle} ({products.length})</h2>
-                    <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                      {products.map((product) => (
-                        <ProductCard key={product.id} product={product} />
-                      ))}
+                Object.entries(groupedProducts).map(([collectionTitle, products]) => {
+                  if (collectionTitle === 'Uncategorized' && products.length === 0) {
+                    return null;
+                  }
+                  return (
+                    <div key={collectionTitle}>
+                      <h2 className="text-3xl font-bold text-center mb-8">{collectionTitle} ({products.length})</h2>
+                      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                        {products.map((product) => (
+                          <ProductCard key={product.id} product={product} />
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                ))
+                  )
+                })
               ) : (
                 <div className="text-center py-16">
                   <p className="text-muted-foreground">No products found matching your criteria.</p>
@@ -326,5 +337,3 @@ export function ProductListing({ products, categories, collections, collectionPr
     </div>
   );
 }
-
-    
