@@ -4,7 +4,7 @@
 import { useState, useMemo, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { ProductCard } from "./product-card";
-import type { Product, Collection, CollectionProduct } from "@/lib/types";
+import type { Product, Collection } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -25,14 +25,19 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "./ui
 import { Checkbox } from "./ui/checkbox";
 import { Label } from "./ui/label";
 
-interface ProductListingProps {
+interface CollectionWithProducts {
+  collection: Collection;
   products: Product[];
-  categories: string[];
-  collections: Collection[];
-  collectionProducts: CollectionProduct[];
 }
 
-export function ProductListing({ products, categories, collections, collectionProducts }: ProductListingProps) {
+interface ProductListingProps {
+  collectionsWithProducts: CollectionWithProducts[];
+  allProducts: Product[];
+  allCategories: string[];
+  allCollections: Collection[];
+}
+
+export function ProductListing({ collectionsWithProducts, allProducts, allCategories, allCollections }: ProductListingProps) {
   const searchParams = useSearchParams();
   
   const [filters, setFilters] = useState({
@@ -69,8 +74,8 @@ export function ProductListing({ products, categories, collections, collectionPr
     });
   };
 
-  const filteredAndSortedProducts = useMemo(() => {
-    let filtered = products || [];
+  const displayedProducts = useMemo(() => {
+    let filtered = allProducts || [];
 
     if (filters.searchQuery) {
         filtered = filtered.filter(product => 
@@ -80,11 +85,10 @@ export function ProductListing({ products, categories, collections, collectionPr
     }
 
     if (filters.collection.length > 0) {
-        const productIdsInCollection = collectionProducts
-            .filter(cp => filters.collection.includes(cp.collection_id))
-            .map(cp => cp.product_id);
-        const uniqueProductIds = [...new Set(productIdsInCollection)];
-        filtered = filtered.filter(product => uniqueProductIds.includes(product.id));
+      const selectedCollectionIds = new Set(filters.collection);
+      filtered = collectionsWithProducts
+        .filter(cwp => selectedCollectionIds.has(cwp.collection.id))
+        .flatMap(cwp => cwp.products);
     }
 
     filtered = filtered.filter((product) => {
@@ -106,103 +110,30 @@ export function ProductListing({ products, categories, collections, collectionPr
         break;
       case "featured":
       default:
-        // No specific sort for featured, could be based on a featured flag or default order
+        // Keep original order
         break;
     }
+    
+    // Remove duplicates
+    return Array.from(new Map(filtered.map(p => [p.id, p])).values());
 
-    return filtered;
-  }, [products, filters, collectionProducts]);
+  }, [allProducts, filters, collectionsWithProducts]);
 
-  const groupedProducts = useMemo(() => {
-    const group: Record<string, Product[]> = {};
-
-    if (filters.searchQuery && filteredAndSortedProducts.length > 0) {
-        return { [`Search Results for "${filters.searchQuery}"`]: filteredAndSortedProducts };
+  const displayedGroupedProducts = useMemo(() => {
+    if (filters.collection.length > 0) {
+      const selectedCollectionIds = new Set(filters.collection);
+      return collectionsWithProducts.filter(cwp => selectedCollectionIds.has(cwp.collection.id));
     }
+    return collectionsWithProducts;
+  }, [collectionsWithProducts, filters.collection]);
 
-    const collectionsToGroup = filters.collection.length > 0
-        ? collections.filter(c => filters.collection.includes(c.id))
-        : collections;
-
-    collectionsToGroup.forEach(collection => {
-        const productIdsForCollection = new Set(
-            collectionProducts
-                .filter(cp => cp.collection_id === collection.id)
-                .map(cp => cp.product_id)
-        );
-
-        const productsInCollection = filteredAndSortedProducts.filter(p => productIdsForCollection.has(p.id));
-
-        if (productsInCollection.length > 0) {
-            if (!group[collection.title]) {
-                group[collection.title] = [];
-            }
-            group[collection.title].push(...productsInCollection);
-        }
-    });
-
-    // If no collection filter is active, some products might be uncategorized if they don't belong to any displayed collection
-    // This part of the logic seems to be the issue. Let's fix it.
-    if(filters.collection.length === 0) {
-        // Clear the group and rebuild it based on products
-        const newGroup: Record<string, Product[]> = {};
-        filteredAndSortedProducts.forEach(product => {
-            const productCollections = collectionProducts.filter(cp => cp.product_id === product.id);
-            if (productCollections.length > 0) {
-                productCollections.forEach(pc => {
-                    const collection = collections.find(c => c.id === pc.collection_id);
-                    if (collection) {
-                        if (!newGroup[collection.title]) {
-                            newGroup[collection.title] = [];
-                        }
-                        if (!newGroup[collection.title].some(p => p.id === product.id)) {
-                             newGroup[collection.title].push(product);
-                        }
-                    }
-                });
-            } else {
-                // Products without any collection
-                if (!newGroup['Uncategorized']) {
-                    newGroup['Uncategorized'] = [];
-                }
-                 if (!newGroup['Uncategorized'].some(p => p.id === product.id)) {
-                    newGroup['Uncategorized'].push(product);
-                }
-            }
-        });
-        return newGroup;
-    }
-
-
-    // Sort products within each group
-    for (const collectionTitle in group) {
-        let groupProducts = group[collectionTitle];
-        switch (filters.sortBy) {
-            case "price-asc":
-                groupProducts.sort((a, b) => a.price - b.price);
-                break;
-            case "price-desc":
-                groupProducts.sort((a, b) => b.price - a.price);
-                break;
-            case "rating-desc":
-                groupProducts.sort((a, b) => b.rating - a.rating);
-                break;
-            case "featured":
-            default:
-                // Keep original order or implement featured logic
-                break;
-        }
-    }
-
-    return group;
-  }, [filteredAndSortedProducts, collections, collectionProducts, filters.collection, filters.sortBy, filters.searchQuery]);
 
   const FilterControls = () => (
     <div className="space-y-6">
         <div>
             <h3 className="text-lg font-medium mb-2">Collection</h3>
             <div className="space-y-2">
-            {collections.map((col) => (
+            {allCollections.map((col) => (
                 <div key={col.id} className="flex items-center space-x-2">
                     <Checkbox 
                         id={`collection-${col.id}`}
@@ -225,7 +156,7 @@ export function ProductListing({ products, categories, collections, collectionPr
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Categories</SelectItem>
-              {categories.map((cat) => (
+              {allCategories.map((cat) => (
                 <SelectItem key={cat} value={cat}>
                   {cat}
                 </SelectItem>
@@ -268,6 +199,8 @@ export function ProductListing({ products, categories, collections, collectionPr
         </div>
     </div>
   );
+  
+  const hasActiveFilters = filters.collection.length > 0 || filters.category !== 'all' || filters.priceRange[0] !== 0 || filters.priceRange[1] !== 5000 || filters.rating !== 0 || filters.searchQuery !== '';
 
   return (
     <div className="flex">
@@ -293,7 +226,7 @@ export function ProductListing({ products, categories, collections, collectionPr
                         </SheetContent>
                     </Sheet>
                 </div>
-                <p className="text-sm text-muted-foreground">{filteredAndSortedProducts.length} products found</p>
+                <p className="text-sm text-muted-foreground">{displayedProducts.length} products found</p>
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button variant="outline">
@@ -310,29 +243,55 @@ export function ProductListing({ products, categories, collections, collectionPr
             </div>
             
             <div className="space-y-12">
-              {Object.entries(groupedProducts).length > 0 ? (
-                Object.entries(groupedProducts).map(([collectionTitle, products]) => {
-                  if (collectionTitle === 'Uncategorized' && products.length === 0) {
-                    return null;
-                  }
-                  return (
-                    <div key={collectionTitle}>
-                      <h2 className="text-3xl font-bold text-center mb-8">{collectionTitle} ({products.length})</h2>
-                      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                        {products.map((product) => (
-                          <ProductCard key={product.id} product={product} />
-                        ))}
-                      </div>
-                    </div>
-                  )
-                })
+              {hasActiveFilters ? (
+                displayedProducts.length > 0 ? (
+                  <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                    {displayedProducts.map((product) => (
+                      <ProductCard key={product.id} product={product} />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-center py-16">
+                    <p className="text-muted-foreground">No products found matching your criteria.</p>
+                  </div>
+                )
               ) : (
-                <div className="text-center py-16">
-                  <p className="text-muted-foreground">No products found matching your criteria.</p>
-                </div>
+                 displayedGroupedProducts.map(({ collection, products }) => {
+                    let collectionProducts = products;
+                    
+                    switch (filters.sortBy) {
+                        case "price-asc":
+                            collectionProducts.sort((a, b) => a.price - b.price);
+                            break;
+                        case "price-desc":
+                            collectionProducts.sort((a, b) => b.price - a.price);
+                            break;
+                        case "rating-desc":
+                            collectionProducts.sort((a, b) => b.rating - a.rating);
+                            break;
+                        default:
+                            break;
+                    }
+
+                    return (
+                        <div key={collection.id}>
+                            <h2 className="text-3xl font-bold text-center mb-8">{collection.title}</h2>
+                            {collectionProducts.length > 0 ? (
+                                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                                    {collectionProducts.map((product) => (
+                                        <ProductCard key={product.id} product={product} />
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="text-center py-8">
+                                    <p className="text-muted-foreground">No products found for this collection.</p>
+                                </div>
+                            )}
+                        </div>
+                    );
+                })
               )}
             </div>
-
         </div>
     </div>
   );

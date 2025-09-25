@@ -10,7 +10,7 @@ const mapApiProductToProduct = (apiProductData: ApiProductData): Product => {
     `${imageBaseUrl}${img.img_url}`
   );
   
-  const firstImage = allImages[0] || 'https://placehold.co/600x400.png';
+  const firstImage = allImages.find(img => img.includes('front')) || allImages[0] || 'https://placehold.co/600x400.png';
   
   return {
     id: apiProductData.product.id,
@@ -44,6 +44,28 @@ export const getProducts = async (): Promise<Product[]> => {
     return [];
   }
 };
+
+export const getProductsByCollection = async (collectionId: string): Promise<Product[]> => {
+    try {
+        const response = await fetch(`${apiBaseUrl}/collection-products/get/by?collection_id=${collectionId}&company_id=${companyId}`);
+        if (!response.ok) {
+            console.error(`Failed to fetch products for collection ${collectionId}: ${response.status}`);
+            return [];
+        }
+        const data: ApiResponse = await response.json();
+        
+        if (!data.products) {
+            return [];
+        }
+
+        const products = data.products.map(apiProductData => mapApiProductToProduct(apiProductData));
+        return products;
+    } catch (error) {
+        console.error(`Failed to fetch products for collection ${collectionId}:`, error);
+        return [];
+    }
+}
+
 
 export const getProductById = async (id: string): Promise<Product | undefined> => {
     try {
@@ -84,7 +106,7 @@ export const getCollections = async (): Promise<Collection[]> => {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data: Collection[] = await response.json();
-        return data;
+        return data.filter(c => c.status === 'active');
     } catch (error) {
         console.error("Failed to fetch collections:", error);
         return [];
