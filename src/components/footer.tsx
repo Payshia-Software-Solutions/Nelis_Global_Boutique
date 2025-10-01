@@ -33,11 +33,11 @@ export function Footer() {
             <ul className="space-y-3 text-sm">
               <li className="flex items-center gap-3">
                 <Mail className="h-4 w-4 text-white" />
-                <span className="text-gray-700 dark:text-gray-400">nelisglobalboutique@gmail.com</span>
+                <span className="text-gray-700 dark:text-gray-400">info@nelisglobal.com</span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="h-4 w-4 text-white" />
-                <span className="text-gray-700 dark:text-gray-400">+94 775 430 700</span>
+                <span className="text-gray-700 dark:text-gray-400">+94 718 885 777</span>
               </li>
               <li className="flex items-center gap-3">
                 <MapPin className="h-4 w-4 text-white" />

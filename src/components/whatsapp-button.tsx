@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 export function WhatsAppButton() {
-    const phoneNumber = "+94775430700"; // Replace with your WhatsApp number
+    const phoneNumber = "+94718885777"; // Replace with your WhatsApp number
     const message = "Hello! I'm interested in your products."; // Optional pre-filled message
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 

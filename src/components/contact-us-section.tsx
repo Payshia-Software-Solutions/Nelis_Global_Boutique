@@ -12,7 +12,7 @@ const contactDetails = [
     },
     {
         icon: Phone,
-        text: "+94 775 430 700",
+        text: "+94 718 885 777",
     },
     {
         icon: Mail,

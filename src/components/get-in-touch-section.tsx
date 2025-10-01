@@ -8,17 +8,17 @@ const contactMethods = [
     {
         icon: Phone,
         title: "Phone",
-        detail: "+94 775 430 700",
+        detail: "+94 718 885 777",
     },
     {
         icon: Headset,
         title: "Hotline",
-        detail: "+94 775 430 700",
+        detail: "+94 718 885 777",
     },
     {
         icon: Mail,
         title: "Email",
-        detail: "nelisglobalboutique@gmail.com",
+        detail: "info@nelisglobal.com",
     },
 ];
 
