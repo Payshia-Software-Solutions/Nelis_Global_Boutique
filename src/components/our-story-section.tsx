@@ -21,14 +21,14 @@ export function OurStorySection() {
               </p>
             </div>
           </div>
-          <div className="md:col-span-1">
+          <div className="md:col-span-1 w-full md:w-3/4 mx-auto">
             <Image
               src="https://content-provider.payshia.com/nelis-global/sketch.jpg"
-              alt="A collection of Nelis Global Boutique products"
-              width={600}
+              alt="A sketch of the company founder"
+              width={400}
               height={500}
               className="rounded-lg shadow-lg w-full h-auto object-cover"
-              data-ai-hint="tea products"
+              data-ai-hint="founder sketch"
             />
           </div>
         </div>
