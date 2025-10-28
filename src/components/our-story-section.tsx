@@ -23,7 +23,7 @@ export function OurStorySection() {
           </div>
           <div>
             <Image
-              src="https://content-provider.payshia.com/nelis-global/600x500-our-story.webp"
+              src="https://content-provider.payshia.com/nelis-global/sketch.jpg"
               alt="A collection of Nelis Global Boutique products"
               width={600}
               height={500}
