@@ -11,6 +11,10 @@ const partners = [
     name: "Charleston",
     logoUrl: "http://content-provider.payshia.com/nelis-global/logo/charleston.webp",
   },
+  {
+    name: "Good Market",
+    logoUrl: "http://content-provider.payshia.com/nelis-global/logo/good-market.webp",
+  },
 ];
 
 export function WholesaleExportSection() {
