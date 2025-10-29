@@ -33,7 +33,7 @@ export function GiftPacksSection() {
                             </li>
                         ))}
                     </ul>
-                    <Button asChild size="lg">
+                    <Button asChild size="lg" className="pointer-events-none opacity-50">
                         <Link href="/gift-packs">
                             <Gift />
                             Shop Gift Packs
