@@ -45,9 +45,9 @@ const partners = [
 
 export function OurPartnersSection() {
     return (
-        <section className="py-16 bg-background">
+        <section className="py-12 bg-background">
           <div className="container mx-auto px-4">
-              <div className="text-center mb-12">
+              <div className="text-center mb-10">
                 <h2 className="text-3xl font-bold">Our Partners</h2>
               </div>
               <Swiper
@@ -82,7 +82,7 @@ export function OurPartnersSection() {
                       alt={`${partner.name} logo`}
                       width={150}
                       height={60}
-                      className="h-14 w-auto object-contain"
+                      className="h-16 w-auto object-contain"
                     />
                   </SwiperSlide>
                 ))}
