@@ -15,6 +15,30 @@ const partners = [
     name: "Good Market",
     logoUrl: "http://content-provider.payshia.com/nelis-global/logo/good-market.webp",
   },
+  {
+    name: "Home Yoga Paris",
+    logoUrl: "http://content-provider.payshia.com/nelis-global/logo/home_yoga_paris.png",
+  },
+  {
+    name: "Jetwing",
+    logoUrl: "http://content-provider.payshia.com/nelis-global/logo/jetwing.webp",
+  },
+  {
+    name: "Odel",
+    logoUrl: "http://content-provider.payshia.com/nelis-global/logo/odel.webp",
+  },
+  {
+    name: "Refuge",
+    logoUrl: "http://content-provider.payshia.com/nelis-global/logo/refuge.webp",
+  },
+  {
+    name: "Royal Kandyan",
+    logoUrl: "http://content-provider.payshia.com/nelis-global/logo/royal_kandyan.webp",
+  },
+  {
+    name: "Tony and Guy",
+    logoUrl: "http://content-provider.payshia.com/nelis-global/logo/tony_and_guy.webp",
+  },
 ];
 
 export function WholesaleExportSection() {
