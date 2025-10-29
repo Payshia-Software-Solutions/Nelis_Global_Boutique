@@ -21,10 +21,10 @@ export function ConnectOnlineSection() {
                 </p>
                 <div className="flex justify-center space-x-4 mt-8">
                     <Button variant="ghost" size="icon" asChild>
-                        <Link href="#"><Facebook className="h-6 w-6" /></Link>
+                        <Link href="https://www.facebook.com/share/16w7i6f3Qg/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer"><Facebook className="h-6 w-6" /></Link>
                     </Button>
                     <Button variant="ghost" size="icon" asChild>
-                        <Link href="#"><Instagram className="h-6 w-6" /></Link>
+                        <Link href="https://www.instagram.com/nelisglobalboutique?igsh=MTkxcWxxNGxlczhhcg==" target="_blank" rel="noopener noreferrer"><Instagram className="h-6 w-6" /></Link>
                     </Button>
                     <Button variant="ghost" size="icon" asChild>
                         <Link href="#"><Linkedin className="h-6 w-6" /></Link>

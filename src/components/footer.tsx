@@ -50,10 +50,10 @@ export function Footer() {
           <div>
             <h3 className="font-semibold mb-4 text-gray-900 dark:text-white">Follow Us</h3>
             <div className="flex space-x-4">
-              <Link href="#" className="text-white hover:text-gray-200">
+              <Link href="https://www.facebook.com/share/16w7i6f3Qg/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-200">
                 <Facebook className="h-5 w-5" />
               </Link>
-              <Link href="#" className="text-white hover:text-gray-200">
+              <Link href="https://www.instagram.com/nelisglobalboutique?igsh=MTkxcWxxNGxlczhhcg==" target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-200">
                 <Instagram className="h-5 w-5" />
               </Link>
               <Link href="#" className="text-white hover:text-gray-200">
