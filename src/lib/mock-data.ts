@@ -1,5 +1,5 @@
 
-import type { Product, ApiResponse, ApiProductData, Collection, CollectionProduct, SingleProductApiResponse, ApiProductImage } from './types';
+import type { Product, ApiResponse, ApiProductData, Collection, CollectionProduct, SingleProductApiResponse, ApiProductImage, CustomField } from './types';
 
 const imageBaseUrl = "https://content-provider.payshia.com/payshia-erp";
 const apiBaseUrl = "https://server-erp.payshia.com";
@@ -46,7 +46,7 @@ const mapSingleApiProductToProduct = (apiProductData: SingleProductApiResponse):
     rating: 5, // Static value as it's not in the API response
     reviewCount: 0, // Static value as it's not in the API response
     featured: true, // Static value as it's not in the API response
-    details: [], // Static value as it's not in the API response
+    details: apiProductData.custom_fields || [], 
     images: allImages
   };
 }

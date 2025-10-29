@@ -1,4 +1,11 @@
 
+export type CustomField = {
+    field_id: string;
+    field_name: string;
+    description: string;
+    value: string;
+};
+
 export type Product = {
   id: string;
   name: string;
@@ -9,7 +16,7 @@ export type Product = {
   rating: number;
   reviewCount: number;
   featured?: boolean;
-  details: string[];
+  details: CustomField[];
   images: string[];
   slug: string;
 };
@@ -59,6 +66,7 @@ export type SingleProductApiResponse = {
       id: string;
       img_url: string;
   }[];
+  custom_fields?: CustomField[];
 }
 
 export type ApiResponse = {
