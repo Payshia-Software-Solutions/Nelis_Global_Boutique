@@ -82,7 +82,7 @@ export function OurPartnersSection() {
                       alt={`${partner.name} logo`}
                       width={150}
                       height={60}
-                      className="h-16 w-auto object-contain"
+                      className="h-20 w-auto object-contain"
                     />
                   </SwiperSlide>
                 ))}
