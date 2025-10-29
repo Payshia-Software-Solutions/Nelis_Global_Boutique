@@ -7,6 +7,7 @@ import { ContactUsSection } from "@/components/contact-us-section";
 import { ProductSwiperClient } from "@/components/product-swiper-client";
 import { MotionSection } from "@/components/motion-section";
 import { HeroSlider } from "@/components/hero-slider";
+import { OurPartnersSection } from "@/components/our-partners-section";
 
 export const metadata = {
   title: "NelisGlobal Boutique | Natural Products from Sri Lanka",
@@ -51,8 +52,13 @@ export default async function HomePage() {
         <WholesaleExportSection />
       </MotionSection>
 
+      {/* Our Partners Section */}
+      <MotionSection className="py-16 bg-background">
+        <OurPartnersSection />
+      </MotionSection>
+
       {/* Contact Us Section */}
-      <MotionSection className="bg-background">
+      <MotionSection className="bg-muted py-16">
         <ContactUsSection />
       </MotionSection>
     </div>
