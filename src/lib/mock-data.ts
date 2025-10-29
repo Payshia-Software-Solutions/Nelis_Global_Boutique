@@ -28,6 +28,29 @@ const mapApiProductToProduct = (apiProductData: ApiProductData): Product => {
   };
 };
 
+const mapSingleApiProductToProduct = (apiProductData: SingleProductApiResponse): Product => {
+    const allImages = (apiProductData.images || []).map(img => 
+    `${imageBaseUrl}${img.img_url}`
+  );
+  
+  const firstImage = allImages.find(img => img.includes('front')) || allImages[0] || 'https://placehold.co/600x400.png';
+  
+  return {
+    id: apiProductData.product.id,
+    name: apiProductData.product.name,
+    description: apiProductData.product.description,
+    price: parseFloat(apiProductData.product.price) || 0,
+    imageUrl: firstImage,
+    category: apiProductData.product.category,
+    slug: apiProductData.product.slug,
+    rating: 5, // Static value as it's not in the API response
+    reviewCount: 0, // Static value as it's not in the API response
+    featured: true, // Static value as it's not in the API response
+    details: [], // Static value as it's not in the API response
+    images: allImages
+  };
+}
+
 export const getProducts = async (): Promise<Product[]> => {
   try {
     const response = await fetch(`${apiBaseUrl}/products/with-variants/by-company?company_id=${companyId}`);
@@ -85,8 +108,15 @@ export const getProductById = async (id: string): Promise<Product | undefined> =
 
 export const getProductBySlug = async (slug: string): Promise<Product | undefined> => {
   try {
-    const products = await getProducts();
-    return products.find(p => p.slug === slug);
+    const response = await fetch(`${apiBaseUrl}/products/details/full/slug/?slug=${slug}`);
+    if (!response.ok) {
+        if(response.status === 404) return undefined;
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data: SingleProductApiResponse = await response.json();
+    if(!data.product) return undefined;
+
+    return mapSingleApiProductToProduct(data);
   } catch (error) {
     console.error(`Failed to fetch product by slug ${slug}:`, error);
     return undefined;

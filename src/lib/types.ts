@@ -55,7 +55,7 @@ export type SingleProductApiResponse = {
       id: string;
       sku: string;
   }[];
-  product_images?: {
+  images?: {
       id: string;
       img_url: string;
   }[];
