@@ -2,6 +2,11 @@
 "use client";
 
 import Image from "next/image";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay } from 'swiper/modules';
+
+import 'swiper/css';
+import 'swiper/css/autoplay';
 
 const partners = [
   {
@@ -45,9 +50,33 @@ export function OurPartnersSection() {
               <div className="text-center mb-12">
                 <h2 className="text-3xl font-bold">Our Partners</h2>
               </div>
-              <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16">
+              <Swiper
+                modules={[Autoplay]}
+                spaceBetween={50}
+                slidesPerView={2}
+                loop={true}
+                autoplay={{
+                    delay: 2500,
+                    disableOnInteraction: false,
+                }}
+                breakpoints={{
+                    640: {
+                        slidesPerView: 3,
+                        spaceBetween: 40,
+                    },
+                    768: {
+                        slidesPerView: 4,
+                        spaceBetween: 50,
+                    },
+                    1024: {
+                        slidesPerView: 5,
+                        spaceBetween: 60,
+                    },
+                }}
+                className="w-full"
+              >
                 {partners.map((partner) => (
-                  <div key={partner.name}>
+                  <SwiperSlide key={partner.name} className="flex items-center justify-center">
                     <Image
                       src={partner.logoUrl}
                       alt={`${partner.name} logo`}
@@ -55,9 +84,9 @@ export function OurPartnersSection() {
                       height={60}
                       className="h-14 w-auto object-contain"
                     />
-                  </div>
+                  </SwiperSlide>
                 ))}
-              </div>
+              </Swiper>
           </div>
         </section>
     );
