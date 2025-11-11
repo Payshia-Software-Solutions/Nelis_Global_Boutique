@@ -27,6 +27,11 @@ const sliderItems = [
     alt: "Dried fruits and spices on a wooden table",
     hint: "dried fruits spices",
   },
+  {
+    src: "https://content-provider.payshia.com/nelis-global/hero3.webp",
+    alt: "A collection of natural products from Sri Lanka",
+    hint: "natural products",
+  },
 ];
 
 export function HeroSlider() {
