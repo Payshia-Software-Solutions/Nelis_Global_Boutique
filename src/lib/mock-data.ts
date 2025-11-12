@@ -6,48 +6,70 @@ const apiBaseUrl = "https://server-erp.payshia.com";
 const companyId = "3";
 
 const mapApiProductToProduct = (apiProductData: ApiProductData): Product => {
-  const allImages = (apiProductData.product_images || []).map(img => 
-    `${imageBaseUrl}${img.img_url}`
-  );
+  const allImages = (apiProductData.product_images || []);
   
-  const firstImage = allImages.find(img => img.includes('front')) || allImages[0] || 'https://placehold.co/600x400.png';
+  const frontImages = allImages.filter(img => img.image_type === 'front img');
+  
+  let primaryImage;
+  if (frontImages.length > 0) {
+    // Sort by id descending to get the one with the highest id
+    frontImages.sort((a, b) => parseInt(b.id) - parseInt(a.id));
+    primaryImage = frontImages[0];
+  } else if (allImages.length > 0) {
+    // Fallback to the image with the highest id if no 'front img' is available
+    allImages.sort((a, b) => parseInt(b.id) - parseInt(a.id));
+    primaryImage = allImages[0];
+  }
+
+  const imageUrl = primaryImage ? `${imageBaseUrl}${primaryImage.img_url}` : 'https://placehold.co/600x400.png';
+  const allImageUrls = allImages.map(img => `${imageBaseUrl}${img.img_url}`);
   
   return {
     id: apiProductData.product.id,
     name: apiProductData.product.name,
     description: apiProductData.product.description,
     price: parseFloat(apiProductData.product.price) || 0,
-    imageUrl: firstImage,
+    imageUrl: imageUrl,
     category: apiProductData.product.category,
     slug: apiProductData.product.slug,
     rating: 5, // Static value as it's not in the API response
     reviewCount: 0, // Static value as it's not in the API response
     featured: true, // Static value as it's not in the API response
     details: [], // Static value as it's not in the API response
-    images: allImages
+    images: allImageUrls
   };
 };
 
 const mapSingleApiProductToProduct = (apiProductData: SingleProductApiResponse): Product => {
-    const allImages = (apiProductData.images || []).map(img => 
-    `${imageBaseUrl}${img.img_url}`
-  );
-  
-  const firstImage = allImages.find(img => img.includes('front')) || allImages[0] || 'https://placehold.co/600x400.png';
+    const allImages = (apiProductData.images || []);
+    
+    const frontImages = allImages.filter(img => img.image_type === 'front img');
+
+    let primaryImage;
+    if (frontImages.length > 0) {
+      frontImages.sort((a, b) => parseInt(b.id) - parseInt(a.id));
+      primaryImage = frontImages[0];
+    } else if (allImages.length > 0) {
+      allImages.sort((a, b) => parseInt(b.id) - parseInt(a.id));
+      primaryImage = allImages[0];
+    }
+
+    const imageUrl = primaryImage ? `${imageBaseUrl}${primaryImage.img_url}` : 'https://placehold.co/600x400.png';
+    const allImageUrls = allImages.map(img => `${imageBaseUrl}${img.img_url}`);
   
   return {
     id: apiProductData.product.id,
     name: apiProductData.product.name,
     description: apiProductData.product.description,
     price: parseFloat(apiProductData.product.price) || 0,
-    imageUrl: firstImage,
+    imageUrl: imageUrl,
     category: apiProductData.product.category,
     slug: apiProductData.product.slug,
     rating: 5, // Static value as it's not in the API response
     reviewCount: 0, // Static value as it's not in the API response
     featured: true, // Static value as it's not in the API response
     details: apiProductData.custom_fields || [], 
-    images: allImages
+    images: allImageUrls
   };
 }
 

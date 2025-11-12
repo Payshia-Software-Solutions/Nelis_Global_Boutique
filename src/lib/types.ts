@@ -36,23 +36,18 @@ export type ApiProductImage = {
   product_id: string;
   img_url: string;
   display_order: number;
+  image_type?: string;
 }
 
 export type ApiProductData = {
   product: ApiProduct;
-  product_images: {
-    id: string;
-    img_url: string;
-  }[];
+  product_images: ApiProductImage[];
   variants: {
     variant: {
       id: string;
       sku: string;
     };
-    images: {
-      id: string;
-      img_url: string;
-    }[];
+    images: ApiProductImage[];
   }[];
 };
 
@@ -62,10 +57,7 @@ export type SingleProductApiResponse = {
       id: string;
       sku: string;
   }[];
-  images?: {
-      id: string;
-      img_url: string;
-  }[];
+  images?: ApiProductImage[];
   custom_fields?: CustomField[];
 }
 
