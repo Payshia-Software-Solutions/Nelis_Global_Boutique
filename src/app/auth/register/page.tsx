@@ -59,7 +59,7 @@ export default function RegisterPage() {
                 Terms & Conditions
               </Link>{" "}
               and{" "}
-              <Link href="#" className="font-medium text-primary hover:underline">
+              <Link href="/privacy-policy" className="font-medium text-primary hover:underline">
                 Privacy Policy
               </Link>
             </Label>
