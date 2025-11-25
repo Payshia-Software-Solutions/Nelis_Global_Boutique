@@ -55,7 +55,7 @@ export default function RegisterPage() {
             <Checkbox id="terms" className="mt-1" />
             <Label htmlFor="terms" className="font-normal text-sm text-muted-foreground">
               I agree to the{" "}
-              <Link href="#" className="font-medium text-primary hover:underline">
+              <Link href="/terms-and-conditions" className="font-medium text-primary hover:underline">
                 Terms & Conditions
               </Link>{" "}
               and{" "}

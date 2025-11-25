@@ -26,6 +26,7 @@ export function Footer() {
               <li><Link href="/contact" className="text-gray-700 hover:text-primary dark:text-gray-400 dark:hover:text-primary">Contact</Link></li>
               <li><Link href="/privacy-policy" className="text-gray-700 hover:text-primary dark:text-gray-400 dark:hover:text-primary">Privacy Policy</Link></li>
               <li><Link href="/refund-policy" className="text-gray-700 hover:text-primary dark:text-gray-400 dark:hover:text-primary">Refund & Return Policy</Link></li>
+              <li><Link href="/terms-and-conditions" className="text-gray-700 hover:text-primary dark:text-gray-400 dark:hover:text-primary">Terms & Conditions</Link></li>
             </ul>
           </div>
 
