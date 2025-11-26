@@ -18,7 +18,7 @@ import { cn } from "@/lib/utils";
 
 const sliderItems = [
   {
-    src: "https://content-provider.payshia.com/nelis-global/hero.webp",
+    src: "https://content-provider.payshia.com/nelis-global/hero-img3.jpg",
     alt: "A market stall with various natural products",
     hint: "natural products market",
   },
