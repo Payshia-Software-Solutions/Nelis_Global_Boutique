@@ -28,7 +28,7 @@ const sliderItems = [
     hint: "natural products market",
   },
   {
-    src: "https://content-provider.payshia.com/nelis-global/hero3.webp",
+    src: "https://content-provider.payshia.com/nelis-global/hero-img4.png",
     alt: "A collection of natural products from Sri Lanka",
     hint: "natural products",
   },
