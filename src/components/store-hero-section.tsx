@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from 'next/image';
@@ -7,7 +6,7 @@ export function StoreHeroSection() {
     return (
         <section className="relative h-[60vh] min-h-[500px] w-full flex items-center justify-center text-white">
             <Image
-                src="https://content-provider.payshia.com/nelis-global/hero-img3.png"
+                src="https://content-provider.payshia.com/nelis-global/hero-img3.jpg"
                 alt="A market stall with various natural products"
                 layout="fill"
                 objectFit="cover"
