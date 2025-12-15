@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from "next/link";
@@ -27,7 +26,7 @@ export function WholesaleExportSection() {
                 </div>
                 <div className="order-1 md:order-2 h-full">
                     <Image
-                        src="https://content-provider.payshia.com/nelis-global/73muIOE-optimized.webp"
+                        src="https://content-provider.payshia.com/nelis-global/new/export.webp"
                         alt="Boxes of products ready for export"
                         width={600}
                         height={400}
