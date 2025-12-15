@@ -18,19 +18,14 @@ import { cn } from "@/lib/utils";
 
 const sliderItems = [
   {
-    src: "https://content-provider.payshia.com/nelis-global/003-1080x1920-optimized.webp",
-    alt: "Dried fruits and spices on a wooden table",
-    hint: "dried fruits spices",
-  },
-  {
-    src: "https://content-provider.payshia.com/nelis-global/hero-img3.jpg",
-    alt: "A market stall with various natural products",
-    hint: "natural products market",
-  },
-  {
-    src: "https://content-provider.payshia.com/nelis-global/hero-img4.png",
+    src: "https://content-provider.payshia.com/nelis-global/new/A)Home%20Page%2001-optimized.webp",
     alt: "A collection of natural products from Sri Lanka",
-    hint: "natural products",
+    hint: "natural products collection",
+  },
+  {
+    src: "https://content-provider.payshia.com/nelis-global/new/B)Home%20page%202nd%20picture-optimized.png",
+    alt: "Herbal tea and dried fruits",
+    hint: "herbal tea dried fruits",
   },
 ];
 
