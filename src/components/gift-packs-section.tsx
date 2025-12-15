@@ -42,7 +42,7 @@ export function GiftPacksSection() {
                 </div>
                 <div className="order-2 md:order-1 h-full">
                      <Image
-                        src="https://content-provider.payshia.com/nelis-global/gbox.png"
+                        src="https://content-provider.payshia.com/nelis-global/new/gift-pack.webp"
                         alt="A collection of beautifully packaged gift packs"
                         width={600}
                         height={400}
