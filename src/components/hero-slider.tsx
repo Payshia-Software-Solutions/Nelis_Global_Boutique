@@ -1,4 +1,3 @@
-
 "use client";
 
 import * as React from "react";
@@ -26,6 +25,11 @@ const sliderItems = [
     src: "https://content-provider.payshia.com/nelis-global/new/B)Home%20page%202nd%20picture-optimized.png",
     alt: "Herbal tea and dried fruits",
     hint: "herbal tea dried fruits",
+  },
+  {
+    src: "https://content-provider.payshia.com/nelis-global/new/nelis-hero-3.webp",
+    alt: "Nelis Global natural products",
+    hint: "natural products",
   },
 ];
 
