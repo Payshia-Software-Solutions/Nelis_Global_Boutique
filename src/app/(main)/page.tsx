@@ -48,7 +48,7 @@ export default async function HomePage() {
       </MotionSection>
 
       {/* Wholesale & Export Section */}
-      <MotionSection className="py-16 bg-muted">
+      <MotionSection>
         <WholesaleExportSection />
       </MotionSection>
 
