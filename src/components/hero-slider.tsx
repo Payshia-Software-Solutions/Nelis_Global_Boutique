@@ -1,3 +1,4 @@
+
 "use client";
 
 import * as React from "react";
@@ -86,7 +87,6 @@ export function HeroSlider() {
                   data-ai-hint={item.hint}
                   priority={index === 0}
                 />
-                <div className="absolute inset-0 bg-black/20" />
               </div>
             </CarouselItem>
           ))}
