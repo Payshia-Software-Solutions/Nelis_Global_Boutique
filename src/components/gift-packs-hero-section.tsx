@@ -7,7 +7,7 @@ export function GiftPacksHeroSection() {
     return (
         <section className="relative h-[60vh] min-h-[500px] w-full flex items-center justify-center text-white">
             <Image
-                src="https://placehold.co/1920x700.png"
+                src="https://content-provider.payshia.com/nelis-global/new/gift-pack.webp"
                 alt="A collection of beautifully wrapped gift packs with festive decorations"
                 layout="fill"
                 objectFit="cover"
