@@ -34,7 +34,7 @@ export function WhyChooseUs() {
                 data-ai-hint="tea leaves flowers"
             />
             <div className="container mx-auto px-4 relative z-10 flex justify-start">
-                <div className="max-w-2xl">
+                <div className="max-w-xl">
                     <div className="space-y-12 text-black">
                         <div className="text-left">
                             <h2 className="text-4xl md:text-5xl font-bold">Why Choose Us?</h2>
