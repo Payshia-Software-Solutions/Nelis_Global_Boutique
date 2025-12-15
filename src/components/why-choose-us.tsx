@@ -33,19 +33,18 @@ export function WhyChooseUs() {
                 className="z-0"
                 data-ai-hint="tea leaves flowers"
             />
-            <div className="absolute inset-0 bg-white/70 dark:bg-black/70 z-10" />
             <div className="container mx-auto px-4 relative z-20">
                 <div className="text-center mb-12">
-                    <h2 className="text-3xl font-bold">Why Choose Us?</h2>
+                    <h2 className="text-3xl font-bold text-foreground">Why Choose Us?</h2>
                 </div>
                 <div className="grid md:grid-cols-3 gap-12 text-center">
                     {features.map((feature, index) => (
                         <div key={index} className="flex flex-col items-center">
-                            <div className="bg-primary/20 dark:bg-white/20 rounded-full p-4 mb-4">
-                                <feature.icon className="h-10 w-10 text-primary dark:text-white" />
+                            <div className="bg-primary/20 dark:bg-primary/30 rounded-full p-4 mb-4">
+                                <feature.icon className="h-10 w-10 text-primary dark:text-primary-foreground" />
                             </div>
-                            <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-                            <p className="max-w-xs text-foreground/90 dark:text-white/90">{feature.description}</p>
+                            <h3 className="text-xl font-semibold mb-2 text-foreground">{feature.title}</h3>
+                            <p className="max-w-xs text-foreground/80">{feature.description}</p>
                         </div>
                     ))}
                 </div>
