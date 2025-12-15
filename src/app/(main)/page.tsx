@@ -43,7 +43,7 @@ export default async function HomePage() {
       </MotionSection>
 
       {/* Why Choose Us Section */}
-      <MotionSection className="bg-background">
+      <MotionSection>
         <WhyChooseUs />
       </MotionSection>
 
