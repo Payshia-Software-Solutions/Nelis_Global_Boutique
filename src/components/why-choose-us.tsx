@@ -24,29 +24,35 @@ const features = [
 
 export function WhyChooseUs() {
     return (
-        <section className="py-16 relative">
-            <Image
-                src="https://content-provider.payshia.com/nelis-global/new/why-choose.webp"
-                alt="Background image of tea leaves and flowers"
-                fill
-                objectFit="cover"
-                className="z-0"
-                data-ai-hint="tea leaves flowers"
-            />
-            <div className="container mx-auto px-4 relative z-20">
-                <div className="text-center mb-12">
-                    <h2 className="text-3xl font-bold text-foreground">Why Choose Us?</h2>
-                </div>
-                <div className="grid md:grid-cols-3 gap-12 text-center">
-                    {features.map((feature, index) => (
-                        <div key={index} className="flex flex-col items-center">
-                            <div className="bg-primary/20 dark:bg-primary/30 rounded-full p-4 mb-4">
-                                <feature.icon className="h-10 w-10 text-primary dark:text-primary-foreground" />
-                            </div>
-                            <h3 className="text-xl font-semibold mb-2 text-foreground">{feature.title}</h3>
-                            <p className="max-w-xs text-foreground/80">{feature.description}</p>
+        <section className="bg-background">
+            <div className="container mx-auto px-4 py-16">
+                <div className="grid md:grid-cols-2 gap-12 items-center">
+                    <div className="space-y-12">
+                        <div className="text-left">
+                            <h2 className="text-3xl font-bold text-foreground">Why Choose Us?</h2>
                         </div>
-                    ))}
+                        {features.map((feature, index) => (
+                            <div key={index} className="flex items-start gap-4">
+                                <div className="bg-primary/10 dark:bg-primary/20 rounded-full p-3 flex-shrink-0">
+                                    <feature.icon className="h-8 w-8 text-primary dark:text-primary-foreground" />
+                                </div>
+                                <div>
+                                    <h3 className="text-xl font-semibold mb-1 text-foreground">{feature.title}</h3>
+                                    <p className="text-muted-foreground">{feature.description}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                    <div className="relative w-full h-96 md:h-[500px]">
+                        <Image
+                            src="https://content-provider.payshia.com/nelis-global/new/why-choose.webp"
+                            alt="Background image of tea leaves and flowers"
+                            fill
+                            objectFit="contain"
+                            className="z-0"
+                            data-ai-hint="tea leaves flowers"
+                        />
+                    </div>
                 </div>
             </div>
         </section>
