@@ -24,34 +24,33 @@ const features = [
 
 export function WhyChooseUs() {
     return (
-        <section className="bg-background">
-            <div className="container mx-auto px-4 py-16">
-                <div className="grid md:grid-cols-2 gap-12 items-center">
+        <section className="relative w-full py-24 text-white">
+            <Image
+                src="https://content-provider.payshia.com/nelis-global/new/why-choose.webp"
+                alt="Background image of tea leaves and flowers"
+                fill
+                objectFit="cover"
+                className="z-0"
+                data-ai-hint="tea leaves flowers"
+            />
+            <div className="absolute inset-0 bg-black/50 z-10" />
+            <div className="container mx-auto px-4 relative z-20">
+                <div className="max-w-2xl">
                     <div className="space-y-12">
                         <div className="text-left">
-                            <h2 className="text-3xl font-bold text-foreground">Why Choose Us?</h2>
+                            <h2 className="text-4xl md:text-5xl font-bold">Why Choose Us?</h2>
                         </div>
                         {features.map((feature, index) => (
-                            <div key={index} className="flex items-start gap-4">
-                                <div className="bg-primary/10 dark:bg-primary/20 rounded-full p-3 flex-shrink-0">
-                                    <feature.icon className="h-8 w-8 text-primary dark:text-primary-foreground" />
+                            <div key={index} className="flex items-start gap-6">
+                                <div className="bg-white/20 rounded-full p-4 flex-shrink-0">
+                                    <feature.icon className="h-8 w-8 text-white" />
                                 </div>
                                 <div>
-                                    <h3 className="text-xl font-semibold mb-1 text-foreground">{feature.title}</h3>
-                                    <p className="text-muted-foreground">{feature.description}</p>
+                                    <h3 className="text-2xl font-semibold mb-2">{feature.title}</h3>
+                                    <p className="text-white/80 text-lg">{feature.description}</p>
                                 </div>
                             </div>
                         ))}
-                    </div>
-                    <div className="relative w-full h-96 md:h-[500px]">
-                        <Image
-                            src="https://content-provider.payshia.com/nelis-global/new/why-choose.webp"
-                            alt="Background image of tea leaves and flowers"
-                            fill
-                            objectFit="contain"
-                            className="z-0"
-                            data-ai-hint="tea leaves flowers"
-                        />
                     </div>
                 </div>
             </div>
