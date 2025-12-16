@@ -15,7 +15,7 @@ const giftPackFeatures = [
 
 export function GiftPacksSection() {
     return (
-        <section className="bg-muted">
+        <section className="bg-background">
             <div className="grid md:grid-cols-2 items-stretch">
                 <div className="relative min-h-[500px] md:min-h-0">
                      <Image
@@ -43,7 +43,7 @@ export function GiftPacksSection() {
                             </li>
                         ))}
                     </ul>
-                    <Button asChild size="lg">
+                    <Button asChild size="lg" disabled>
                         <Link href="/gift-packs">
                             Explore Gift Packs
                         </Link>
