@@ -15,42 +15,39 @@ const giftPackFeatures = [
 
 export function GiftPacksSection() {
     return (
-        <section className="py-24">
-            <div className="container mx-auto px-4">
-                <div className="grid md:grid-cols-2 gap-12 items-center">
-                    <div className="rounded-lg overflow-hidden shadow-lg">
-                         <Image
-                            src="https://content-provider.payshia.com/nelis-global/new/gift-pack.webp"
-                            alt="A collection of beautifully packaged gift packs"
-                            width={600}
-                            height={600}
-                            className="w-full h-auto object-cover aspect-square"
-                            data-ai-hint="gift packs collection"
-                        />
+        <section className="bg-muted">
+            <div className="grid md:grid-cols-2 items-stretch">
+                <div className="relative min-h-[500px] md:min-h-0">
+                     <Image
+                        src="https://content-provider.payshia.com/nelis-global/new/gift-pack.webp"
+                        alt="A collection of beautifully packaged gift packs"
+                        layout="fill"
+                        objectFit="cover"
+                        data-ai-hint="gift packs collection"
+                    />
+                </div>
+                <div className="flex flex-col justify-center p-8 md:p-16">
+                    <div className="flex items-center gap-3 mb-4">
+                        <Gift className="h-8 w-8 text-primary" />
+                        <h2 className="text-4xl font-bold">Gift Packs</h2>
                     </div>
-                    <div className="flex flex-col justify-center">
-                        <div className="flex items-center gap-3 mb-4">
-                            <Gift className="h-8 w-8 text-primary" />
-                            <h2 className="text-4xl font-bold">Gift Packs</h2>
-                        </div>
-                        <h3 className="text-2xl font-semibold mb-4">Perfect for Every Occasion</h3>
-                        <p className="text-muted-foreground mb-6">
-                            Our specially curated gift packs are perfect for New Year celebrations, Sinhala Tamil New Year, Christmas, and special occasions. Each pack contains a thoughtful selection of our finest products, beautifully packaged to share the taste of Sri Lanka with your loved ones.
-                        </p>
-                        <ul className="space-y-3 mb-8">
-                            {giftPackFeatures.map((feature, index) => (
-                                 <li key={index} className="flex items-center">
-                                    <Check className="h-5 w-5 text-primary mr-3 flex-shrink-0" />
-                                    <span>{feature}</span>
-                                </li>
-                            ))}
-                        </ul>
-                        <Button asChild size="lg">
-                            <Link href="/gift-packs">
-                                Explore Gift Packs
-                            </Link>
-                        </Button>
-                    </div>
+                    <h3 className="text-2xl font-semibold mb-4">Perfect for Every Occasion</h3>
+                    <p className="text-muted-foreground mb-6">
+                        Our specially curated gift packs are perfect for New Year celebrations, Sinhala Tamil New Year, Christmas, and special occasions. Each pack contains a thoughtful selection of our finest products, beautifully packaged to share the taste of Sri Lanka with your loved ones.
+                    </p>
+                    <ul className="space-y-3 mb-8">
+                        {giftPackFeatures.map((feature, index) => (
+                             <li key={index} className="flex items-center">
+                                <Check className="h-5 w-5 text-primary mr-3 flex-shrink-0" />
+                                <span>{feature}</span>
+                            </li>
+                        ))}
+                    </ul>
+                    <Button asChild size="lg">
+                        <Link href="/gift-packs">
+                            Explore Gift Packs
+                        </Link>
+                    </Button>
                 </div>
             </div>
         </section>
