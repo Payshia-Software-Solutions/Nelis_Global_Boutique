@@ -38,7 +38,7 @@ export default async function HomePage() {
       </MotionSection>
 
       {/* Gift Packs Section */}
-      <MotionSection className="py-16 bg-muted">
+      <MotionSection>
         <GiftPacksSection />
       </MotionSection>
 
