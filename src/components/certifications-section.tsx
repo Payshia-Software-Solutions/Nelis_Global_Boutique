@@ -31,7 +31,7 @@ export function CertificationsSection() {
             />
             <div className="container mx-auto px-4 text-center">
                 <div className="mb-12">
-                    <h2 className="text-3xl md:text-4xl font-bold text-white">Our Certifications & Achievements</h2>
+                    <h2 className="text-3xl md:text-4xl font-bold text-black">Our Certifications & Achievements</h2>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 md:gap-12 items-center justify-items-center max-w-4xl mx-auto">
                     {certificationLogos.map((logo, index) => (
