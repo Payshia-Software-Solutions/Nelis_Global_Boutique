@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 
-export function Logo({ useDarkText = false }: { useDarkText?: boolean }) {
+export function Logo({ className }: { className?: string }) {
     return (
       <div className="flex items-center gap-2">
         <Image 
@@ -9,7 +9,7 @@ export function Logo({ useDarkText = false }: { useDarkText?: boolean }) {
           alt="Nelis Global Boutique Logo"
           width={150}
           height={40}
-          className="h-10 w-auto"
+          className={cn("h-10 w-auto", className)}
         />
       </div>
     );
