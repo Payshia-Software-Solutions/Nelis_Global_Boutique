@@ -16,8 +16,8 @@ export function SustainabilityCommitmentSection() {
                 data-ai-hint="sustainable business workers"
             />
             <div className="absolute inset-0 bg-black/50 z-[-1]"></div>
-            <div className="container mx-auto px-4">
-                <div className="max-w-3xl mx-auto bg-black/30 backdrop-blur-sm p-8 md:p-12 rounded-lg">
+            <div className="container mx-auto px-4 flex justify-end">
+                <div className="max-w-xl bg-black/30 backdrop-blur-sm p-8 md:p-12 rounded-lg">
                     <div className="space-y-8">
                         <div>
                             <div className="flex items-center gap-3 mb-4">
