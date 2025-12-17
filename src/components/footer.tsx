@@ -68,7 +68,7 @@ export function Footer() {
 
         <hr className="my-8 border-gray-300 dark:border-gray-700" />
 
-        <div className="text-center text-sm text-gray-700 dark:text-gray-400 space-y-2">
+        <div className="flex flex-col md:flex-row justify-between items-center text-center text-sm text-gray-700 dark:text-gray-400 space-y-2 md:space-y-0">
           <p>&copy; {new Date().getFullYear()} Nelis Global Boutique. All rights reserved.</p>
           <p>
             Powered by{' '}
