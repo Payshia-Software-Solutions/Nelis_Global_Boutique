@@ -205,7 +205,7 @@ export function HeaderClient() {
                                     <NavigationMenuItem key={link.href}>
                                         <Link href={link.href} passHref>
                                             <NavigationMenuLink asChild>
-                                                <div className={cn(navigationMenuTriggerStyle(), pathname === link.href ? "text-primary" : "text-muted-foreground", "cursor-pointer")}>
+                                                <div className={cn(navigationMenuTriggerStyle(), "animated-underline cursor-pointer", pathname === link.href ? "active text-primary" : "text-muted-foreground")}>
                                                     {link.label}
                                                 </div>
                                             </NavigationMenuLink>
@@ -214,7 +214,7 @@ export function HeaderClient() {
                                 ))}
 
                                 <NavigationMenuItem>
-                                    <NavigationMenuTrigger className={cn((pathname.startsWith('/store') || pathname.startsWith('/products')) && "text-primary")}>Online Store</NavigationMenuTrigger>
+                                    <NavigationMenuTrigger className={cn("animated-underline", (pathname.startsWith('/store') || pathname.startsWith('/products')) && "active text-primary")}>Online Store</NavigationMenuTrigger>
                                     <NavigationMenuContent>
                                         <div className="grid w-[400px] grid-cols-2 gap-x-8 p-4">
                                             <div>
@@ -239,7 +239,7 @@ export function HeaderClient() {
                                     <NavigationMenuItem key={link.href}>
                                         <Link href={link.href} passHref>
                                             <NavigationMenuLink asChild>
-                                                <div className={cn(navigationMenuTriggerStyle(), pathname === link.href ? "text-primary" : "text-muted-foreground", "cursor-pointer")}>
+                                                <div className={cn(navigationMenuTriggerStyle(), "animated-underline cursor-pointer", pathname === link.href ? "active text-primary" : "text-muted-foreground")}>
                                                     {link.label}
                                                 </div>
                                             </NavigationMenuLink>
@@ -303,5 +303,3 @@ export function HeaderClient() {
         </header>
     );
 }
-
-    
