@@ -20,34 +20,34 @@ const certificationLogos = [
 
 export function CertificationsSection() {
     return (
-        <section className="py-12 bg-background">
-            <div className="px-4">
-                <div className="bg-muted/50 p-6 md:p-10 rounded-t-lg">
-                    <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">Our Certifications & Achievements</h2>
+        <section className="relative py-20 text-white">
+            <Image
+                src="https://content-provider.payshia.com/nelis-global/new/product-background.webp"
+                alt="Natural ingredients background"
+                layout="fill"
+                objectFit="cover"
+                className="z-[-1]"
+                data-ai-hint="natural ingredients spices"
+            />
+            <div className="absolute inset-0 bg-black/50 z-[-1]"></div>
+            <div className="container mx-auto px-4">
+                <div className="text-center mb-12">
+                    <h2 className="text-3xl md:text-4xl font-bold">Our Certifications & Achievements</h2>
                 </div>
-                <div className="bg-muted/50 pb-10">
-                    <div className="w-full border-t border-border"></div>
-                    <div className="grid grid-cols-3 gap-4 md:gap-8 items-center justify-items-center max-w-4xl mx-auto py-8">
-                        {certificationLogos.map((logo, index) => (
-                            <div key={index} className="relative w-24 h-24 md:w-36 md:h-36">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 md:gap-12 items-center justify-items-center max-w-4xl mx-auto">
+                    {certificationLogos.map((logo, index) => (
+                        <div key={index} className="flex flex-col items-center gap-4">
+                            <div className="relative bg-white rounded-full w-32 h-32 md:w-40 md:h-40 flex items-center justify-center shadow-lg">
                                 <Image
                                     src={logo.src}
                                     alt={logo.alt}
-                                    fill
-                                    className="object-contain"
+                                    width={120}
+                                    height={120}
+                                    className="object-contain w-24 h-24 md:w-32 md:h-32"
                                 />
                             </div>
-                        ))}
-                    </div>
-                </div>
-                <div className="relative w-full aspect-w-16 aspect-h-7 rounded-b-lg overflow-hidden">
-                    <Image
-                        src="https://content-provider.payshia.com/nelis-global/new/certification-img.webp"
-                        alt="Nelis Global Boutique product collection"
-                        layout="fill"
-                        objectFit="cover"
-                        data-ai-hint="tea products collection"
-                    />
+                        </div>
+                    ))}
                 </div>
             </div>
         </section>
