@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 export function ImpactHeroSection() {
     return (
-        <section className="relative h-[60vh] min-h-[500px] w-full flex items-center justify-center text-white">
+        <section className="relative h-[50vh] min-h-[400px] w-full flex items-center justify-center text-white">
             <Image
                 src="http://content-provider.payshia.com/nelis-global/new/impact-and-sustainablity.webp"
                 alt="Sustainability and community impact"
