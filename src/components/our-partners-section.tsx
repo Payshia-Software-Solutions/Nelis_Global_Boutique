@@ -10,20 +10,12 @@ import 'swiper/css/autoplay';
 
 const partners = [
   {
-    name: "Charleston",
-    logoUrl: "http://content-provider.payshia.com/nelis-global/new/d133205-32-97b81c3dd8eb169506b8-0.webp",
-  },
-  {
-    name: "Good Market",
-    logoUrl: "http://content-provider.payshia.com/nelis-global/new/Good-Market-Approved-Abridge-Academy-circle.webp",
-  },
-  {
-    name: "Home Yoga Paris",
-    logoUrl: "http://content-provider.payshia.com/nelis-global/new/images (2).webp",
-  },
-  {
     name: "Jetwing",
     logoUrl: "http://content-provider.payshia.com/nelis-global/new/1835131679054252min.webp",
+  },
+  {
+    name: "Tony and Guy",
+    logoUrl: "http://content-provider.payshia.com/nelis-global/new/TONI_and_GUY-black.webp",
   },
   {
     name: "Odel",
@@ -34,8 +26,16 @@ const partners = [
     logoUrl: "http://content-provider.payshia.com/nelis-global/new/loginlogo.webp",
   },
   {
-    name: "Tony and Guy",
-    logoUrl: "http://content-provider.payshia.com/nelis-global/new/TONI_and_GUY-black.webp",
+    name: "Home Yoga Paris",
+    logoUrl: "http://content-provider.payshia.com/nelis-global/new/images (2).webp",
+  },
+  {
+    name: "Good Market",
+    logoUrl: "http://content-provider.payshia.com/nelis-global/new/Good-Market-Approved-Abridge-Academy-circle.webp",
+  },
+  {
+    name: "Charleston",
+    logoUrl: "http://content-provider.payshia.com/nelis-global/new/d133205-32-97b81c3dd8eb169506b8-0.webp",
   },
 ];
 
@@ -79,7 +79,7 @@ export function OurPartnersSection() {
                         alt={`${partner.name} logo`}
                         width={80}
                         height={80}
-                        className="object-contain"
+                        className="object-cover w-full h-full"
                         />
                     </div>
                   </SwiperSlide>
