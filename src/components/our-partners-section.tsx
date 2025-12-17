@@ -11,35 +11,31 @@ import 'swiper/css/autoplay';
 const partners = [
   {
     name: "Charleston",
-    logoUrl: "http://content-provider.payshia.com/nelis-global/logo/charleston.webp",
+    logoUrl: "http://content-provider.payshia.com/nelis-global/new/d133205-32-97b81c3dd8eb169506b8-0.webp",
   },
   {
     name: "Good Market",
-    logoUrl: "http://content-provider.payshia.com/nelis-global/logo/good-market.webp",
+    logoUrl: "http://content-provider.payshia.com/nelis-global/new/Good-Market-Approved-Abridge-Academy-circle.webp",
   },
   {
     name: "Home Yoga Paris",
-    logoUrl: "http://content-provider.payshia.com/nelis-global/logo/home_yoga_paris.png",
+    logoUrl: "http://content-provider.payshia.com/nelis-global/new/images (2).webp",
   },
   {
     name: "Jetwing",
-    logoUrl: "http://content-provider.payshia.com/nelis-global/logo/jetwing.webp",
+    logoUrl: "http://content-provider.payshia.com/nelis-global/new/1835131679054252min.webp",
   },
   {
     name: "Odel",
-    logoUrl: "http://content-provider.payshia.com/nelis-global/logo/odel.webp",
-  },
-  {
-    name: "Refuge",
-    logoUrl: "http://content-provider.payshia.com/nelis-global/logo/refuge.webp",
+    logoUrl: "http://content-provider.payshia.com/nelis-global/new/odel--600.webp",
   },
   {
     name: "Royal Kandyan",
-    logoUrl: "http://content-provider.payshia.com/nelis-global/logo/royal_kandyan.webp",
+    logoUrl: "http://content-provider.payshia.com/nelis-global/new/loginlogo.webp",
   },
   {
     name: "Tony and Guy",
-    logoUrl: "http://content-provider.payshia.com/nelis-global/logo/tony_and_guy.webp",
+    logoUrl: "http://content-provider.payshia.com/nelis-global/new/TONI_and_GUY-black.webp",
   },
 ];
 
@@ -77,13 +73,15 @@ export function OurPartnersSection() {
               >
                 {partners.map((partner) => (
                   <SwiperSlide key={partner.name} className="flex items-center justify-center">
-                    <Image
-                      src={partner.logoUrl}
-                      alt={`${partner.name} logo`}
-                      width={150}
-                      height={60}
-                      className="h-24 w-auto object-contain"
-                    />
+                    <div className="w-24 h-24 rounded-full bg-white flex items-center justify-center overflow-hidden shadow-md">
+                        <Image
+                        src={partner.logoUrl}
+                        alt={`${partner.name} logo`}
+                        width={80}
+                        height={80}
+                        className="object-contain"
+                        />
+                    </div>
                   </SwiperSlide>
                 ))}
               </Swiper>
