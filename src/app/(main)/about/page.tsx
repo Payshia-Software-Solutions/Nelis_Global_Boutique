@@ -13,7 +13,7 @@ export const metadata = {
 
 export default function AboutPage() {
   return (
-    <div>
+    <>
       <PageHeroSection title="About Us" subtitle="Discover Our Story" />
       <OurStorySection />
       <MissionValuesSection />
@@ -28,6 +28,6 @@ export default function AboutPage() {
             data-ai-hint="collaboration handshake"
         />
       </section>
-    </div>
+    </>
   );
 }
