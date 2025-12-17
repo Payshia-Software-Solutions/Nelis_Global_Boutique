@@ -41,9 +41,9 @@ const partners = [
 
 export function OurPartnersSection() {
     return (
-        <section className="py-2 bg-background">
+        <section className="py-16 bg-background">
           <div className="container mx-auto px-4">
-              <div className="text-center mb-8">
+              <div className="text-center mb-12">
                 <h2 className="text-3xl font-bold">Our Partners</h2>
               </div>
               <Swiper
@@ -69,16 +69,16 @@ export function OurPartnersSection() {
                         spaceBetween: 60,
                     },
                 }}
-                className="w-full"
+                className="w-full py-4"
               >
                 {partners.map((partner) => (
                   <SwiperSlide key={partner.name} className="flex items-center justify-center">
-                    <div className="w-24 h-24 rounded-full bg-white flex items-center justify-center overflow-hidden shadow-md">
+                    <div className="w-32 h-32 rounded-full bg-white flex items-center justify-center overflow-hidden shadow-md">
                         <Image
                         src={partner.logoUrl}
                         alt={`${partner.name} logo`}
-                        width={80}
-                        height={80}
+                        width={120}
+                        height={120}
                         className="object-cover w-full h-full"
                         />
                     </div>
