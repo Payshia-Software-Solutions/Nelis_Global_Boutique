@@ -75,12 +75,13 @@
 
 .animated-underline {
   position: relative;
+  display: inline-block;
 }
 
 .animated-underline::after {
   content: '';
   position: absolute;
-  bottom: 0;
+  bottom: -4px;
   left: 0;
   width: 100%;
   height: 2px;
@@ -90,7 +91,8 @@
   transition: transform 0.3s ease-out;
 }
 
-.animated-underline.active::after {
+.animated-underline.active::after,
+.active-trigger .animated-underline::after {
   transform: scaleX(1);
   transform-origin: bottom left;
 }

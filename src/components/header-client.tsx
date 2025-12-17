@@ -205,8 +205,8 @@ export function HeaderClient() {
                                     <NavigationMenuItem key={link.href}>
                                         <Link href={link.href} passHref>
                                             <NavigationMenuLink asChild>
-                                                <div className={cn(navigationMenuTriggerStyle(), "animated-underline cursor-pointer", pathname === link.href ? "active" : "")}>
-                                                    {link.label}
+                                                <div className={cn(navigationMenuTriggerStyle(), "cursor-pointer")}>
+                                                    <span className={cn("animated-underline", pathname === link.href ? "active" : "")}>{link.label}</span>
                                                 </div>
                                             </NavigationMenuLink>
                                         </Link>
@@ -214,7 +214,9 @@ export function HeaderClient() {
                                 ))}
 
                                 <NavigationMenuItem>
-                                    <NavigationMenuTrigger className={cn("animated-underline", (pathname.startsWith('/store') || pathname.startsWith('/products')) && "active")}>Online Store</NavigationMenuTrigger>
+                                    <NavigationMenuTrigger className={cn((pathname.startsWith('/store') || pathname.startsWith('/products')) && "active-trigger")}>
+                                        <span className={cn("animated-underline", (pathname.startsWith('/store') || pathname.startsWith('/products')) && "active")}>Online Store</span>
+                                    </NavigationMenuTrigger>
                                     <NavigationMenuContent>
                                         <div className="grid w-[400px] grid-cols-2 gap-x-8 p-4">
                                             <div>
@@ -239,8 +241,8 @@ export function HeaderClient() {
                                     <NavigationMenuItem key={link.href}>
                                         <Link href={link.href} passHref>
                                             <NavigationMenuLink asChild>
-                                                <div className={cn(navigationMenuTriggerStyle(), "animated-underline cursor-pointer", pathname === link.href ? "active" : "")}>
-                                                    {link.label}
+                                                <div className={cn(navigationMenuTriggerStyle(), "cursor-pointer")}>
+                                                    <span className={cn("animated-underline", pathname === link.href ? "active" : "")}>{link.label}</span>
                                                 </div>
                                             </NavigationMenuLink>
                                         </Link>
