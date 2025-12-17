@@ -19,7 +19,7 @@ const certificationLogos = [
 
 export function CertificationsSection() {
     return (
-        <section className="relative py-20 text-foreground">
+        <section className="relative w-full text-foreground h-[70vh] min-h-[600px] flex flex-col justify-center">
             <Image
                 src="https://content-provider.payshia.com/nelis-global/new/product-background.webp"
                 alt="Natural ingredients background"
@@ -28,8 +28,8 @@ export function CertificationsSection() {
                 className="z-[-1]"
                 data-ai-hint="natural ingredients spices"
             />
-            <div className="container mx-auto px-4">
-                <div className="text-center mb-12">
+            <div className="container mx-auto px-4 text-center">
+                <div className="mb-12">
                     <h2 className="text-3xl md:text-4xl font-bold text-white">Our Certifications & Achievements</h2>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 md:gap-12 items-center justify-items-center max-w-4xl mx-auto">
