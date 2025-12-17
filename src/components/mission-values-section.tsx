@@ -2,6 +2,7 @@
 "use client";
 
 import { Leaf, Recycle, Users, Heart } from "lucide-react";
+import Image from "next/image";
 
 const values = [
     {
@@ -28,23 +29,32 @@ const values = [
 
 export function MissionValuesSection() {
     return (
-        <section className="bg-muted py-24">
-            <div className="container mx-auto px-4">
+        <section className="relative py-24 text-white">
+            <Image
+                src="https://content-provider.payshia.com/nelis-global/new/our%20mission%20&%20Values.webp"
+                alt="Our Mission and Values background"
+                layout="fill"
+                objectFit="cover"
+                className="z-[-1]"
+                data-ai-hint="natural ingredients"
+            />
+            <div className="absolute inset-0 bg-black/50 z-[-1]"></div>
+            <div className="container mx-auto px-4 relative z-10">
                 <div className="text-center mb-12">
                     <h2 className="text-4xl font-bold">Our Mission & Values</h2>
                 </div>
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {values.map((value, index) => (
-                        <div key={index} className="flex flex-col items-center text-center p-6 bg-card rounded-lg shadow-sm transition-shadow hover:shadow-lg">
-                            <div className="bg-primary/10 rounded-full p-4 mb-6">
+                        <div key={index} className="flex flex-col items-center text-center p-6 bg-white/10 backdrop-blur-sm rounded-lg shadow-sm transition-shadow hover:shadow-lg hover:bg-white/20">
+                            <div className="bg-primary/20 rounded-full p-4 mb-6">
                                 <value.icon className="h-10 w-10 text-primary" />
                             </div>
                             <h3 className="text-xl font-semibold mb-2">{value.title}</h3>
-                            <p className="text-muted-foreground flex-grow">{value.description}</p>
+                            <p className="text-gray-200 flex-grow">{value.description}</p>
                         </div>
                     ))}
                 </div>
-                <p className="text-center text-muted-foreground mt-12 max-w-2xl mx-auto">
+                <p className="text-center text-gray-200 mt-12 max-w-2xl mx-auto">
                     We believe in ethical business practices that benefit both people and the planet.
                 </p>
             </div>
