@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -43,10 +42,8 @@ export function GiftPacksSection() {
                             </li>
                         ))}
                     </ul>
-                    <Button asChild size="lg" disabled>
-                        <Link href="/gift-packs">
-                            Explore Gift Packs
-                        </Link>
+                    <Button size="lg" disabled>
+                        Explore Gift Packs
                     </Button>
                 </div>
             </div>
