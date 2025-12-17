@@ -4,6 +4,7 @@ import { MissionValuesSection } from '@/components/mission-values-section';
 import { CertificationsSection } from '@/components/certifications-section';
 import { JoinOurJourneySection } from '@/components/join-our-journey-section';
 import { PageHeroSection } from '@/components/page-hero-section';
+import Image from 'next/image';
 
 export const metadata = {
     title: "About Us",
@@ -18,7 +19,15 @@ export default function AboutPage() {
       <MissionValuesSection />
       <CertificationsSection />
       <JoinOurJourneySection />
+      <section className="relative w-full h-[50vh] min-h-[400px]">
+        <Image
+            src="http://content-provider.payshia.com/nelis-global/new/join.webp"
+            alt="Join our journey"
+            layout="fill"
+            objectFit="cover"
+            data-ai-hint="collaboration handshake"
+        />
+      </section>
     </div>
   );
 }
-
