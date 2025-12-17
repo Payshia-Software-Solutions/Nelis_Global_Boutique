@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from "next/image";
@@ -20,7 +19,7 @@ const certificationLogos = [
 
 export function CertificationsSection() {
     return (
-        <section className="relative py-20 text-white">
+        <section className="relative py-20 text-foreground">
             <Image
                 src="https://content-provider.payshia.com/nelis-global/new/product-background.webp"
                 alt="Natural ingredients background"
@@ -29,10 +28,9 @@ export function CertificationsSection() {
                 className="z-[-1]"
                 data-ai-hint="natural ingredients spices"
             />
-            <div className="absolute inset-0 bg-black/50 z-[-1]"></div>
             <div className="container mx-auto px-4">
                 <div className="text-center mb-12">
-                    <h2 className="text-3xl md:text-4xl font-bold">Our Certifications & Achievements</h2>
+                    <h2 className="text-3xl md:text-4xl font-bold text-white">Our Certifications & Achievements</h2>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 md:gap-12 items-center justify-items-center max-w-4xl mx-auto">
                     {certificationLogos.map((logo, index) => (
