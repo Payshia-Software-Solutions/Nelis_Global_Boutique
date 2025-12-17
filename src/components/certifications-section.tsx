@@ -21,7 +21,7 @@ const certificationLogos = [
 export function CertificationsSection() {
     return (
         <section className="py-12 bg-background">
-            <div className="container mx-auto px-4">
+            <div className="px-4">
                 <div className="bg-muted/50 p-6 md:p-10 rounded-t-lg">
                     <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">Our Certifications & Achievements</h2>
                 </div>
