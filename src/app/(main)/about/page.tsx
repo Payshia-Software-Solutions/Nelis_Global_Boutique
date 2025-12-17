@@ -19,7 +19,7 @@ export default function AboutPage() {
       <MissionValuesSection />
       <CertificationsSection />
       <JoinOurJourneySection />
-      <section className="relative w-full h-[50vh] min-h-[400px]">
+      <section className="relative w-full h-[30vh] min-h-[300px]">
         <Image
             src="http://content-provider.payshia.com/nelis-global/new/join.webp"
             alt="Join our journey"
