@@ -73,7 +73,7 @@ export function OurPartnersSection() {
               >
                 {partners.map((partner) => (
                   <SwiperSlide key={partner.name} className="flex items-center justify-center">
-                    <div className="w-32 h-32 rounded-full bg-white flex items-center justify-center overflow-hidden shadow-md">
+                    <div className="w-32 h-32 rounded-full bg-white flex items-center justify-center overflow-hidden shadow-md transition-transform duration-300 hover:scale-105 hover:shadow-lg">
                         <Image
                         src={partner.logoUrl}
                         alt={`${partner.name} logo`}
