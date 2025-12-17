@@ -5,15 +5,15 @@ import Image from "next/image";
 
 const certificationLogos = [
     {
-        src: "https://content-provider.payshia.com/nelis-global/certificates/iso.webp",
+        src: "http://content-provider.payshia.com/nelis-global/new/iso.png",
         alt: "ISO 22000 Certified",
     },
     {
-        src: "https://content-provider.payshia.com/nelis-global/certificates/haccp.webp",
+        src: "http://content-provider.payshia.com/nelis-global/new/haccp-removebg-preview.png",
         alt: "HACCP Certified",
     },
     {
-        src: "https://content-provider.payshia.com/nelis-global/certificates/gmp.webp",
+        src: "http://content-provider.payshia.com/nelis-global/new/gmp-quality-seeklogo.png",
         alt: "GMP Quality Certified",
     },
 ];
