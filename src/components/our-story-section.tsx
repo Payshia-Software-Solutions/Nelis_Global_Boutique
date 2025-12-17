@@ -29,7 +29,7 @@ export function OurStorySection() {
             className="w-full h-full"
             data-ai-hint="founder sketch"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-background/50 to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-background to-transparent"></div>
         </div>
       </div>
     </section>
