@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from "next/image";
@@ -20,7 +19,7 @@ const certificationLogos = [
 
 export function CertificationsSection() {
     return (
-        <section className="relative w-full text-foreground h-[70vh] min-h-[600px] flex flex-col justify-start pt-24">
+        <section className="relative w-full text-foreground h-[70vh] min-h-[600px] flex flex-col justify-start pt-16">
             <Image
                 src="https://content-provider.payshia.com/nelis-global/new/product-background.webp"
                 alt="Natural ingredients background"
