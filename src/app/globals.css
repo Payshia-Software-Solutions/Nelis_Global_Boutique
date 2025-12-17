@@ -90,8 +90,7 @@
   transition: transform 0.3s ease-out;
 }
 
-.animated-underline.active::after,
-.animated-underline:hover::after {
+.animated-underline.active::after {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
