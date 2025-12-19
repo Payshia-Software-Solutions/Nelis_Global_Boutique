@@ -1,9 +1,11 @@
 
 import Script from 'next/script';
 
+const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "https://server-erp.payshia.com";
+
 async function getAnalyticsId() {
   try {
-    const response = await fetch('https://server-erp.payshia.com/key-settings/get/google-analytics-id?company_id=3&location_id=4', {
+    const response = await fetch(`${apiBaseUrl}/key-settings/get/google-analytics-id?company_id=3&location_id=4`, {
       next: { revalidate: 3600 } // Revalidate every hour
     });
     if (!response.ok) {

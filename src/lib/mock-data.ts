@@ -2,7 +2,7 @@
 import type { Product, ApiResponse, ApiProductData, Collection, CollectionProduct, SingleProductApiResponse, ApiProductImage, CustomField } from './types';
 
 const imageBaseUrl = "https://content-provider.payshia.com/payshia-erp";
-const apiBaseUrl = "https://server-erp.payshia.com";
+const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "https://server-erp.payshia.com";
 const companyId = "3";
 
 const mapApiProductToProduct = (apiProductData: ApiProductData): Product => {
@@ -187,7 +187,7 @@ export const getCollectionProducts = async (): Promise<CollectionProduct[]> => {
 
 export const getProductImages = async (productId: string): Promise<string[]> => {
     try {
-        const imagesResponse = await fetch(`https://server-erp.payshia.com/product-images/${productId}`);
+        const imagesResponse = await fetch(`${apiBaseUrl}/product-images/${productId}`);
         if (!imagesResponse.ok) {
             if (imagesResponse.status !== 404) {
                  console.error(`Failed to fetch images for product ${productId}: ${imagesResponse.status}`);
