@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
+import { Skeleton } from "@/components/ui/skeleton";
 
 import {
     NavigationMenu,
@@ -48,6 +49,7 @@ export function HeaderClient() {
     const [searchQuery, setSearchQuery] = useState(searchParams.get("q") || "");
     const [allProducts, setAllProducts] = useState<Product[]>([]);
     const [collections, setCollections] = useState<Collection[]>([]);
+    const [isLoadingCollections, setIsLoadingCollections] = useState(true);
     const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
     
     const searchRef = useRef<HTMLDivElement>(null);
@@ -55,6 +57,7 @@ export function HeaderClient() {
 
     useEffect(() => {
         const fetchProductsAndCollections = async () => {
+            setIsLoadingCollections(true);
             try {
                 const [productsData, collectionsData] = await Promise.all([
                     getProducts(),
@@ -64,6 +67,8 @@ export function HeaderClient() {
                 setCollections(collectionsData);
             } catch (error) {
                 console.error("Failed to fetch products or collections in Header:", error);
+            } finally {
+                setIsLoadingCollections(false);
             }
         };
         fetchProductsAndCollections();
@@ -216,29 +221,35 @@ export function HeaderClient() {
                                     </NavigationMenuItem>
                                 ))}
 
-                                <NavigationMenuItem>
-                                    <NavigationMenuTrigger className={cn((pathname.startsWith('/store') || pathname.startsWith('/products')) && "active-trigger")}>
-                                        <span className={cn("animated-underline", (pathname.startsWith('/store') || pathname.startsWith('/products')) && "active")}>Online Store</span>
-                                    </NavigationMenuTrigger>
-                                    <NavigationMenuContent>
-                                        <div className="grid w-[400px] grid-cols-2 gap-x-8 p-4">
-                                            <div>
-                                                <h3 className="font-semibold text-sm mb-2 px-3">SHOP TEA</h3>
-                                                <ul className="space-y-1">
-                                                    <ListItem href="/store" title="Shop All Products" />
-                                                </ul>
+                                {isLoadingCollections ? (
+                                    <div className="flex items-center justify-center h-10 px-4">
+                                        <Skeleton className="h-6 w-32" />
+                                    </div>
+                                ) : (
+                                    <NavigationMenuItem>
+                                        <NavigationMenuTrigger className={cn((pathname.startsWith('/store') || pathname.startsWith('/products')) && "active-trigger")}>
+                                            <span className={cn("animated-underline", (pathname.startsWith('/store') || pathname.startsWith('/products')) && "active")}>Online Store</span>
+                                        </NavigationMenuTrigger>
+                                        <NavigationMenuContent>
+                                            <div className="grid w-[400px] grid-cols-2 gap-x-8 p-4">
+                                                <div>
+                                                    <h3 className="font-semibold text-sm mb-2 px-3">SHOP TEA</h3>
+                                                    <ul className="space-y-1">
+                                                        <ListItem href="/store" title="Shop All Products" />
+                                                    </ul>
+                                                </div>
+                                                <div>
+                                                    <h3 className="font-semibold text-sm mb-2 px-3">SHOP BY COLLECTION</h3>
+                                                    <ul className="space-y-1">
+                                                        {collections.map((collection) => (
+                                                            <ListItem key={collection.id} href={`/store?collection=${collection.id}`} title={collection.title} />
+                                                        ))}
+                                                    </ul>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <h3 className="font-semibold text-sm mb-2 px-3">SHOP BY COLLECTION</h3>
-                                                <ul className="space-y-1">
-                                                    {collections.map((collection) => (
-                                                        <ListItem key={collection.id} href={`/store?collection=${collection.id}`} title={collection.title} />
-                                                    ))}
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </NavigationMenuContent>
-                                </NavigationMenuItem>
+                                        </NavigationMenuContent>
+                                    </NavigationMenuItem>
+                                )}
 
                                 {desktopNavLinks.slice(2).map((link) => (
                                     <NavigationMenuItem key={link.href}>
