@@ -86,9 +86,13 @@ export function ProductListing({ collectionsWithProducts, allProducts, allCatego
 
     if (filters.collection.length > 0) {
       const selectedCollectionIds = new Set(filters.collection);
-      filtered = collectionsWithProducts
-        .filter(cwp => selectedCollectionIds.has(cwp.collection.id))
-        .flatMap(cwp => cwp.products);
+      const productsInSelectedCollections = new Set<string>();
+      collectionsWithProducts.forEach(cwp => {
+        if(selectedCollectionIds.has(cwp.collection.id)) {
+          cwp.products.forEach(p => productsInSelectedCollections.add(p.id));
+        }
+      });
+      filtered = filtered.filter(p => productsInSelectedCollections.has(p.id));
     }
 
     filtered = filtered.filter((product) => {
@@ -126,6 +130,18 @@ export function ProductListing({ collectionsWithProducts, allProducts, allCatego
     }
     return collectionsWithProducts;
   }, [collectionsWithProducts, filters.collection]);
+
+  const productsInCollections = useMemo(() => {
+    const productIds = new Set<string>();
+    collectionsWithProducts.forEach(cwp => {
+      cwp.products.forEach(p => productIds.add(p.id));
+    });
+    return productIds;
+  }, [collectionsWithProducts]);
+
+  const productsNotInAnyCollection = useMemo(() => {
+    return allProducts.filter(p => !productsInCollections.has(p.id));
+  }, [allProducts, productsInCollections]);
 
 
   const FilterControls = () => (
@@ -256,7 +272,8 @@ export function ProductListing({ collectionsWithProducts, allProducts, allCatego
                   </div>
                 )
               ) : (
-                 displayedGroupedProducts.map(({ collection, products }) => {
+                <>
+                 {displayedGroupedProducts.map(({ collection, products }) => {
                     let collectionProducts = products;
                     
                     switch (filters.sortBy) {
@@ -289,7 +306,18 @@ export function ProductListing({ collectionsWithProducts, allProducts, allCatego
                             )}
                         </div>
                     );
-                })
+                })}
+                {productsNotInAnyCollection.length > 0 && (
+                  <div>
+                      <h2 className="text-3xl font-bold text-center mb-8">All Products</h2>
+                      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                          {productsNotInAnyCollection.map((product) => (
+                              <ProductCard key={product.id} product={product} />
+                          ))}
+                      </div>
+                  </div>
+                )}
+                </>
               )}
             </div>
         </div>
