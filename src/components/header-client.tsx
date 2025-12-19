@@ -10,7 +10,7 @@ import { useCart } from "@/context/cart-provider";
 import { cn } from "@/lib/utils";
 import { useState, useEffect, FormEvent, useRef } from "react";
 import type { Collection, Product } from "@/lib/types";
-import { getCollections, getProducts } from "@/lib/mock-data";
+import { getProducts } from "@/lib/mock-data";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Input } from "@/components/ui/input";
@@ -37,7 +37,11 @@ const navLinks = [
     { href: "/contact", label: "Contact Us" },
 ];
 
-export function HeaderClient() {
+interface HeaderClientProps {
+    collections: Collection[];
+}
+
+export function HeaderClient({ collections }: HeaderClientProps) {
     const pathname = usePathname();
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -49,21 +53,19 @@ export function HeaderClient() {
     const [allProducts, setAllProducts] = useState<Product[]>([]);
     const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
     
-    const [collections, setCollections] = useState<Collection[]>([]);
     const searchRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
-        const fetchHeaderData = async () => {
+        const fetchProducts = async () => {
             try {
-                const [collectionsData, productsData] = await Promise.all([getCollections(), getProducts()]);
-                setCollections(collectionsData);
+                const productsData = await getProducts();
                 setAllProducts(productsData);
             } catch (error) {
-                console.error("Failed to fetch collections or products in Header:", error);
+                console.error("Failed to fetch products in Header:", error);
             }
         };
-        fetchHeaderData();
+        fetchProducts();
     }, []);
     
     useEffect(() => {
