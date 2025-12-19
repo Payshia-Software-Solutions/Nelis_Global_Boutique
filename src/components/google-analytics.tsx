@@ -1,7 +1,7 @@
 
 import Script from 'next/script';
 
-const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "https://server-erp.payshia.com";
+const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "https://server-nelis.payshia.com";
 
 async function getAnalyticsId() {
   try {
