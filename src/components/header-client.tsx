@@ -10,7 +10,7 @@ import { useCart } from "@/context/cart-provider";
 import { cn } from "@/lib/utils";
 import { useState, useEffect, FormEvent, useRef } from "react";
 import type { Collection, Product } from "@/lib/types";
-import { getProducts } from "@/lib/mock-data";
+import { getProducts, getCollections } from "@/lib/mock-data";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Input } from "@/components/ui/input";
@@ -37,11 +37,7 @@ const navLinks = [
     { href: "/contact", label: "Contact Us" },
 ];
 
-interface HeaderClientProps {
-    collections: Collection[];
-}
-
-export function HeaderClient({ collections }: HeaderClientProps) {
+export function HeaderClient() {
     const pathname = usePathname();
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -51,21 +47,26 @@ export function HeaderClient({ collections }: HeaderClientProps) {
     const [isSearchVisible, setIsSearchVisible] = useState(false);
     const [searchQuery, setSearchQuery] = useState(searchParams.get("q") || "");
     const [allProducts, setAllProducts] = useState<Product[]>([]);
+    const [collections, setCollections] = useState<Collection[]>([]);
     const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
     
     const searchRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
-        const fetchProducts = async () => {
+        const fetchProductsAndCollections = async () => {
             try {
-                const productsData = await getProducts();
+                const [productsData, collectionsData] = await Promise.all([
+                    getProducts(),
+                    getCollections(),
+                ]);
                 setAllProducts(productsData);
+                setCollections(collectionsData);
             } catch (error) {
-                console.error("Failed to fetch products in Header:", error);
+                console.error("Failed to fetch products or collections in Header:", error);
             }
         };
-        fetchProducts();
+        fetchProductsAndCollections();
     }, []);
     
     useEffect(() => {

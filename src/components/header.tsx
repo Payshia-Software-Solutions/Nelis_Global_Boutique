@@ -2,7 +2,6 @@
 import { Suspense } from "react";
 import { HeaderClient } from "./header-client";
 import { Skeleton } from "./ui/skeleton";
-import { getCollections } from "@/lib/mock-data";
 
 function HeaderSkeleton() {
     return (
@@ -33,15 +32,10 @@ function HeaderSkeleton() {
     );
 }
 
-async function HeaderData() {
-    const collections = await getCollections();
-    return <HeaderClient collections={collections} />;
-}
-
 export function Header() {
     return (
         <Suspense fallback={<HeaderSkeleton />}>
-            <HeaderData />
+            <HeaderClient />
         </Suspense>
     )
 }
