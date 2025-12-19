@@ -24,16 +24,16 @@ export function ProductImages({ product }: ProductImagesProps) {
         setActiveImage(uniqueImages[0]);
     }
 
-    const thumbnailImages = uniqueImages.slice(0, 4);
+    const thumbnailImages = uniqueImages;
     
     return (
         <div className="flex flex-col-reverse md:grid md:grid-cols-[80px_1fr] md:gap-4">
-            <div className="flex-row flex md:flex-col gap-4 mt-4 md:mt-0">
+            <div className="flex-row flex md:flex-col gap-4 mt-4 md:mt-0 overflow-auto">
                 {thumbnailImages.map((img, index) => (
                     <button 
                         key={index} 
                         className={cn(
-                            "rounded-lg overflow-hidden border-2 w-1/4 md:w-full",
+                            "rounded-lg overflow-hidden border-2 w-1/4 md:w-full flex-shrink-0",
                             img === activeImage ? "border-primary" : "border-transparent"
                         )}
                         onClick={() => setActiveImage(img)}
