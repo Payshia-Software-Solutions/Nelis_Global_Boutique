@@ -4,7 +4,7 @@
 import { useState, useMemo, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { ProductCard } from "./product-card";
-import type { Product, Collection } from "@/lib/types";
+import type { Product } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -25,25 +25,17 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "./ui
 import { Checkbox } from "./ui/checkbox";
 import { Label } from "./ui/label";
 
-interface CollectionWithProducts {
-  collection: Collection;
-  products: Product[];
-}
-
 interface ProductListingProps {
-  collectionsWithProducts: CollectionWithProducts[];
   allProducts: Product[];
   allCategories: string[];
-  allCollections: Collection[];
 }
 
-export function ProductListing({ collectionsWithProducts, allProducts, allCategories, allCollections }: ProductListingProps) {
+export function ProductListing({ allProducts, allCategories }: ProductListingProps) {
   const searchParams = useSearchParams();
   
   const [filters, setFilters] = useState({
     searchQuery: searchParams.get("q") || "",
-    category: searchParams.get("category") || "all",
-    collection: (searchParams.get("collection") ? [searchParams.get("collection")!] : []) as string[],
+    categories: (searchParams.get("category") ? [searchParams.get("category")!] : []) as string[],
     priceRange: [0, 5000],
     rating: 0,
     sortBy: "featured",
@@ -51,26 +43,26 @@ export function ProductListing({ collectionsWithProducts, allProducts, allCatego
   const [isFiltersOpen, setFiltersOpen] = useState(false);
 
   useEffect(() => {
-    const collectionFromUrl = searchParams.get("collection");
-    if (collectionFromUrl && !filters.collection.includes(collectionFromUrl)) {
-      setFilters(prev => ({ ...prev, collection: [collectionFromUrl] }));
+    const categoryFromUrl = searchParams.get("category");
+    if (categoryFromUrl && !filters.categories.includes(categoryFromUrl)) {
+      setFilters(prev => ({ ...prev, categories: [categoryFromUrl] }));
     }
     const searchFromUrl = searchParams.get("q") || "";
     if (searchFromUrl !== filters.searchQuery) {
       setFilters(prev => ({...prev, searchQuery: searchFromUrl}));
     }
-  }, [searchParams, filters.collection, filters.searchQuery]);
+  }, [searchParams, filters.categories, filters.searchQuery]);
 
   const handleFilterChange = (key: keyof typeof filters, value: any) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
   };
   
-  const handleCollectionChange = (collectionId: string) => {
+  const handleCategoryChange = (categoryId: string) => {
     setFilters(prev => {
-        const newCollections = prev.collection.includes(collectionId)
-            ? prev.collection.filter(id => id !== collectionId)
-            : [...prev.collection, collectionId];
-        return { ...prev, collection: newCollections };
+        const newCategories = prev.categories.includes(categoryId)
+            ? prev.categories.filter(id => id !== categoryId)
+            : [...prev.categories, categoryId];
+        return { ...prev, categories: newCategories };
     });
   };
 
@@ -84,22 +76,14 @@ export function ProductListing({ collectionsWithProducts, allProducts, allCatego
         );
     }
 
-    if (filters.collection.length > 0) {
-      const selectedCollectionIds = new Set(filters.collection);
-      const productsInSelectedCollections = new Set<string>();
-      collectionsWithProducts.forEach(cwp => {
-        if(selectedCollectionIds.has(cwp.collection.id)) {
-          cwp.products.forEach(p => productsInSelectedCollections.add(p.id));
-        }
-      });
-      filtered = filtered.filter(p => productsInSelectedCollections.has(p.id));
+    if (filters.categories.length > 0) {
+      filtered = filtered.filter(product => filters.categories.includes(product.category));
     }
 
     filtered = filtered.filter((product) => {
-      const categoryMatch = filters.category === "all" || product.category === filters.category;
       const priceMatch = product.price >= filters.priceRange[0] && product.price <= filters.priceRange[1];
       const ratingMatch = product.rating >= filters.rating;
-      return categoryMatch && priceMatch && ratingMatch;
+      return priceMatch && ratingMatch;
     });
 
     switch (filters.sortBy) {
@@ -118,67 +102,38 @@ export function ProductListing({ collectionsWithProducts, allProducts, allCatego
         break;
     }
     
-    // Remove duplicates
     return Array.from(new Map(filtered.map(p => [p.id, p])).values());
 
-  }, [allProducts, filters, collectionsWithProducts]);
+  }, [allProducts, filters]);
 
-  const displayedGroupedProducts = useMemo(() => {
-    if (filters.collection.length > 0) {
-      const selectedCollectionIds = new Set(filters.collection);
-      return collectionsWithProducts.filter(cwp => selectedCollectionIds.has(cwp.collection.id));
-    }
-    return collectionsWithProducts;
-  }, [collectionsWithProducts, filters.collection]);
-
-  const productsInCollections = useMemo(() => {
-    const productIds = new Set<string>();
-    collectionsWithProducts.forEach(cwp => {
-      cwp.products.forEach(p => productIds.add(p.id));
+  const productsByCategory = useMemo(() => {
+    const grouped: { [key: string]: Product[] } = {};
+    allProducts.forEach(product => {
+      if (!grouped[product.category]) {
+        grouped[product.category] = [];
+      }
+      grouped[product.category].push(product);
     });
-    return productIds;
-  }, [collectionsWithProducts]);
-
-  const productsNotInAnyCollection = useMemo(() => {
-    return allProducts.filter(p => !productsInCollections.has(p.id));
-  }, [allProducts, productsInCollections]);
+    return grouped;
+  }, [allProducts]);
 
 
   const FilterControls = () => (
     <div className="space-y-6">
         <div>
-            <h3 className="text-lg font-medium mb-2">Collection</h3>
-            <div className="space-y-2">
-            {allCollections.map((col) => (
-                <div key={col.id} className="flex items-center space-x-2">
+          <h3 className="text-lg font-medium mb-2">Category</h3>
+          <div className="space-y-2">
+            {allCategories.map((cat) => (
+                <div key={cat} className="flex items-center space-x-2">
                     <Checkbox 
-                        id={`collection-${col.id}`}
-                        checked={filters.collection.includes(col.id)}
-                        onCheckedChange={() => handleCollectionChange(col.id)}
+                        id={`category-${cat}`}
+                        checked={filters.categories.includes(cat)}
+                        onCheckedChange={() => handleCategoryChange(cat)}
                     />
-                    <Label htmlFor={`collection-${col.id}`} className="font-normal">{col.title}</Label>
+                    <Label htmlFor={`category-${cat}`} className="font-normal">{cat}</Label>
                 </div>
             ))}
             </div>
-        </div>
-        <div>
-          <h3 className="text-lg font-medium mb-2">Category</h3>
-          <Select
-            value={filters.category}
-            onValueChange={(value) => handleFilterChange("category", value)}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Select a category" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Categories</SelectItem>
-              {allCategories.map((cat) => (
-                <SelectItem key={cat} value={cat}>
-                  {cat}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
         </div>
 
         <div>
@@ -216,7 +171,7 @@ export function ProductListing({ collectionsWithProducts, allProducts, allCatego
     </div>
   );
   
-  const hasActiveFilters = filters.collection.length > 0 || filters.category !== 'all' || filters.priceRange[0] !== 0 || filters.priceRange[1] !== 5000 || filters.rating !== 0 || filters.searchQuery !== '';
+  const hasActiveFilters = filters.categories.length > 0 || filters.priceRange[0] !== 0 || filters.priceRange[1] !== 5000 || filters.rating !== 0 || filters.searchQuery !== '';
 
   return (
     <div className="flex">
@@ -273,50 +228,40 @@ export function ProductListing({ collectionsWithProducts, allProducts, allCatego
                 )
               ) : (
                 <>
-                 {displayedGroupedProducts.map(({ collection, products }) => {
-                    let collectionProducts = products;
+                 {Object.entries(productsByCategory).map(([category, products]) => {
+                    let categoryProducts = products;
                     
                     switch (filters.sortBy) {
                         case "price-asc":
-                            collectionProducts.sort((a, b) => a.price - b.price);
+                            categoryProducts.sort((a, b) => a.price - b.price);
                             break;
                         case "price-desc":
-                            collectionProducts.sort((a, b) => b.price - a.price);
+                            categoryProducts.sort((a, b) => b.price - a.price);
                             break;
                         case "rating-desc":
-                            collectionProducts.sort((a, b) => b.rating - a.rating);
+                            categoryProducts.sort((a, b) => b.rating - a.rating);
                             break;
                         default:
                             break;
                     }
 
                     return (
-                        <div key={collection.id}>
-                            <h2 className="text-3xl font-bold text-center mb-8">{collection.title}</h2>
-                            {collectionProducts.length > 0 ? (
+                        <div key={category}>
+                            <h2 className="text-3xl font-bold text-center mb-8">{category}</h2>
+                            {categoryProducts.length > 0 ? (
                                 <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                                    {collectionProducts.map((product) => (
+                                    {categoryProducts.map((product) => (
                                         <ProductCard key={product.id} product={product} />
                                     ))}
                                 </div>
                             ) : (
                                 <div className="text-center py-8">
-                                    <p className="text-muted-foreground">No products found for this collection.</p>
+                                    <p className="text-muted-foreground">No products found for this category.</p>
                                 </div>
                             )}
                         </div>
                     );
                 })}
-                {productsNotInAnyCollection.length > 0 && (
-                  <div>
-                      <h2 className="text-3xl font-bold text-center mb-8">All Products</h2>
-                      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                          {productsNotInAnyCollection.map((product) => (
-                              <ProductCard key={product.id} product={product} />
-                          ))}
-                      </div>
-                  </div>
-                )}
                 </>
               )}
             </div>
