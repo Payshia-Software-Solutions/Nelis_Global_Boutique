@@ -176,6 +176,8 @@ export default function CheckoutPage() {
             phone: values.phone,
         },
         shipping_address: {
+            first_name: values.firstName,
+            last_name: values.lastName,
             address: values.address + (values.apartment ? `, ${values.apartment}`: ''),
             city: values.city,
             postal_code: values.postalCode,
@@ -183,11 +185,15 @@ export default function CheckoutPage() {
         },
         same_address_status: same_address_status,
         billing_address: same_address_status ? {
+            first_name: values.firstName,
+            last_name: values.lastName,
             address: values.address + (values.apartment ? `, ${values.apartment}`: ''),
             city: values.city,
             postal_code: values.postalCode,
             country: values.country,
         } : {
+            first_name: values.billingFirstName || values.firstName,
+            last_name: values.billingLastName || values.lastName,
             address: (values.billingAddress || "") + (values.billingApartment ? `, ${values.billingApartment}`: ''),
             city: values.billingCity || "",
             postal_code: values.billingPostalCode || "",
