@@ -75,7 +75,7 @@ const mapSingleApiProductToProduct = (apiProductData: SingleProductApiResponse):
 
 export const getProducts = async (): Promise<Product[]> => {
   try {
-    const response = await fetch(`${apiBaseUrl}/products/with-variants/by-company?company_id=${companyId}`, { next: { revalidate: 3600 } });
+    const response = await fetch(`${apiBaseUrl}/products/with-variants/by-company?company_id=${companyId}`, { cache: 'no-store' });
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
