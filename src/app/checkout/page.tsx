@@ -135,7 +135,7 @@ export default function CheckoutPage() {
 
         const payhereData = {
             // Merchant Details (replace with your actual PayHere merchant details)
-            merchant_id: "12XXXXX", // Your PayHere Merchant ID
+            merchant_id: "1227940", // Your PayHere Merchant ID
             return_url: `${window.location.origin}/confirmation`,
             cancel_url: `${window.location.origin}/checkout`,
             notify_url: `${window.location.origin}/api/payhere-notify`,
