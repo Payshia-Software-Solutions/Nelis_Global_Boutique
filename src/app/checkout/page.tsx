@@ -35,6 +35,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import { useToast } from "@/hooks/use-toast";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -71,6 +72,7 @@ export default function CheckoutPage() {
   const { cart, cartTotal, itemCount, setOrderData, restoreCart } = useCart();
   const router = useRouter();
   const [isClient, setIsClient] = useState(false);
+  const { toast } = useToast();
 
   useEffect(() => {
     setIsClient(true);
@@ -118,61 +120,119 @@ export default function CheckoutPage() {
   const billingSameAsShipping = form.watch("billingSameAsShipping");
 
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    if (values.paymentMethod === 'cod') {
-        // For Cash on Delivery, go to the confirmation page
-        setOrderData({
-            formValues: values,
-            cart: cart,
-            cartTotal: cartTotal,
-            itemCount: itemCount,
-        });
-        router.push('/confirmation');
-    } else {
-        // For PayHere, create and submit a form to redirect to their gateway
-        const orderId = `nelis-order-${Date.now()}`;
-        const itemsDescription = cart.map(item => `${item.name} x ${item.quantity}`).join(', ');
-
-        const payhereData = {
-            // Merchant Details (replace with your actual PayHere merchant details)
-            merchant_id: "1227940", // Your PayHere Merchant ID
-            return_url: `${window.location.origin}/confirmation`,
-            cancel_url: `${window.location.origin}/checkout`,
-            notify_url: `${window.location.origin}/api/payhere-notify`,
-
-            // Order Details
-            order_id: orderId,
-            items: itemsDescription,
-            currency: "LKR",
-            amount: cartTotal.toFixed(2),
-
-            // Customer Details
-            first_name: values.firstName,
-            last_name: values.lastName,
-            email: values.email,
-            phone: values.phone,
-            address: values.address,
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const invoiceEndpoint = 'https://qa-server-erp.payshia.com/ecommerce/invoice/checkout';
+    
+    const invoicePayload = {
+        paymentMethod: values.paymentMethod,
+        company_id: 3,
+        location_id: 4,
+        items: cart.map(item => ({
+            product_id: parseInt(item.id, 10),
+            quantity: item.quantity,
+            price: item.price,
+            name: item.name,
+        })),
+        shipping_address: {
+            street: values.address + (values.apartment ? `, ${values.apartment}`: ''),
             city: values.city,
+            zip: values.postalCode,
             country: values.country,
-        };
-        
-        // Create a form element
-        const formElement = document.createElement('form');
-        formElement.method = 'POST';
-        formElement.action = 'https://sandbox.payhere.lk/pay/checkout';
+            phone: values.phone,
+            firstName: values.firstName,
+            lastName: values.lastName,
+            email: values.email
+        },
+        billing_address: values.billingSameAsShipping === 'same' ? {
+            street: values.address + (values.apartment ? `, ${values.apartment}`: ''),
+            city: values.city,
+            zip: values.postalCode,
+            country: values.country,
+            phone: values.phone,
+            firstName: values.firstName,
+            lastName: values.lastName,
+            email: values.email
+        } : {
+            street: values.billingAddress + (values.billingApartment ? `, ${values.billingApartment}`: ''),
+            city: values.billingCity,
+            zip: values.billingPostalCode,
+            country: values.billingCountry,
+            firstName: values.billingFirstName,
+            lastName: values.billingLastName
+        },
+        description: `Order from ${values.firstName} ${values.lastName}`
+    };
 
-        // Add hidden input fields for each piece of data
-        for (const key in payhereData) {
-            const input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = key;
-            input.value = (payhereData as any)[key];
-            formElement.appendChild(input);
+    try {
+        const response = await fetch(invoiceEndpoint, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(invoicePayload),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Failed to create invoice.');
         }
 
-        // Append the form to the body and submit it
-        document.body.appendChild(formElement);
-        formElement.submit();
+        const invoiceResponse = await response.json();
+
+        if (values.paymentMethod === 'cod') {
+            setOrderData({
+                formValues: values,
+                cart: cart,
+                cartTotal: cartTotal,
+                itemCount: itemCount,
+                invoiceId: invoiceResponse.invoice_id
+            });
+            router.push('/confirmation');
+        } else if (values.paymentMethod === 'payhere') {
+            const orderId = invoiceResponse.invoice_id || `nelis-order-${Date.now()}`;
+            const itemsDescription = cart.map(item => `${item.name} x ${item.quantity}`).join(', ');
+
+            const payhereData = {
+                merchant_id: "1227940",
+                return_url: `${window.location.origin}/confirmation`,
+                cancel_url: `${window.location.origin}/checkout`,
+                notify_url: `${window.location.origin}/api/payhere-notify`,
+                order_id: orderId,
+                items: itemsDescription,
+                currency: "LKR",
+                amount: cartTotal.toFixed(2),
+                first_name: values.firstName,
+                last_name: values.lastName,
+                email: values.email,
+                phone: values.phone,
+                address: values.address,
+                city: values.city,
+                country: values.country,
+            };
+            
+            const formElement = document.createElement('form');
+            formElement.method = 'POST';
+            formElement.action = 'https://sandbox.payhere.lk/pay/checkout';
+
+            for (const key in payhereData) {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = key;
+                input.value = (payhereData as any)[key];
+                formElement.appendChild(input);
+            }
+
+            document.body.appendChild(formElement);
+            formElement.submit();
+        }
+
+    } catch (error: any) {
+        console.error("Checkout failed:", error);
+        toast({
+            variant: "destructive",
+            title: "Checkout Failed",
+            description: error.message || "There was an issue processing your order. Please try again.",
+        });
     }
   }
 
@@ -267,7 +327,7 @@ export default function CheckoutPage() {
                               <FormItem><FormLabel>City</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
                           )} />
                           <FormField name="postalCode" render={({ field }) => (
-                              <FormItem><FormLabel>Postal Code</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
+                              <FormItem><FormLabel>Postal Code</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormMessage>
                           )} />
                       </div>
                       <FormField name="phone" render={({ field }) => (

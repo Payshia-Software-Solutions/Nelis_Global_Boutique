@@ -11,6 +11,7 @@ type OrderData = {
   cart: CartItem[];
   cartTotal: number;
   itemCount: number;
+  invoiceId?: string;
 } | null;
 
 interface CartContextType {
@@ -161,3 +162,5 @@ export const useCart = () => {
   }
   return context;
 };
+
+    
