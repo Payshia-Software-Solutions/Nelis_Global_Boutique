@@ -526,5 +526,4 @@ export default function CheckoutPage() {
       <Footer />
     </div>
   );
-
-    
+}
