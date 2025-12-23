@@ -223,9 +223,11 @@ export default function CheckoutPage() {
             throw new Error(errorData.message || 'Failed to create invoice.');
         }
 
-        const invoiceResponse = await response.json();
+        const responseData = await response.text();
+        const contentType = response.headers.get("content-type");
 
         if (values.paymentMethod === 'cod') {
+            const invoiceResponse = JSON.parse(responseData);
             setOrderData({
                 formValues: values,
                 cart: cart,
@@ -234,42 +236,35 @@ export default function CheckoutPage() {
                 invoiceId: invoiceResponse.invoice_id
             });
             router.push('/confirmation');
-        } else if (values.paymentMethod === 'payhere') {
-            const orderId = invoiceResponse.invoice_id || `nelis-order-${Date.now()}`;
-            const itemsDescription = cart.map(item => `${item.name} x ${item.quantity}`).join(', ');
-
-            const payhereData = {
-                merchant_id: "1227940",
-                return_url: `${window.location.origin}/confirmation`,
-                cancel_url: `${window.location.origin}/checkout`,
-                notify_url: `${window.location.origin}/api/payhere-notify`,
-                order_id: orderId,
-                items: itemsDescription,
-                currency: "LKR",
-                amount: cartTotal.toFixed(2),
-                first_name: values.firstName,
-                last_name: values.lastName,
-                email: values.email,
-                phone: values.phone,
-                address: values.address,
-                city: values.city,
-                country: values.country,
-            };
+        } else if (values.paymentMethod === 'payhere' && contentType && contentType.includes("text/html")) {
+            // Handle the HTML form redirect
+            const container = document.createElement('div');
+            container.innerHTML = responseData;
+            container.style.display = 'none';
+            document.body.appendChild(container);
             
-            const formElement = document.createElement('form');
-            formElement.method = 'POST';
-            formElement.action = 'https://sandbox.payhere.lk/pay/checkout';
-
-            for (const key in payhereData) {
-                const input = document.createElement('input');
-                input.type = 'hidden';
-                input.name = key;
-                input.value = (payhereData as any)[key];
-                formElement.appendChild(input);
+            const form = container.querySelector('form');
+            if (form) {
+                form.submit();
+            } else {
+                 throw new Error("PayHere redirect form not found in response.");
             }
 
-            document.body.appendChild(formElement);
-            formElement.submit();
+        } else {
+             // Fallback for other cases or if API changes
+            const invoiceResponse = JSON.parse(responseData);
+            if (invoiceResponse.invoice_id) {
+                setOrderData({
+                    formValues: values,
+                    cart: cart,
+                    cartTotal: cartTotal,
+                    itemCount: itemCount,
+                    invoiceId: invoiceResponse.invoice_id
+                });
+                router.push('/confirmation');
+            } else {
+                throw new Error("Unexpected response from server.");
+            }
         }
 
     } catch (error: any) {
@@ -576,5 +571,7 @@ export default function CheckoutPage() {
     </div>
   );
 }
+
+    
 
     
