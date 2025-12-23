@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useForm } from "react-hook-form";
@@ -327,7 +326,7 @@ export default function CheckoutPage() {
                               <FormItem><FormLabel>City</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
                           )} />
                           <FormField name="postalCode" render={({ field }) => (
-                              <FormItem><FormLabel>Postal Code</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormMessage>
+                              <FormItem><FormLabel>Postal Code</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
                           )} />
                       </div>
                       <FormField name="phone" render={({ field }) => (
@@ -527,5 +526,3 @@ export default function CheckoutPage() {
     </div>
   );
 }
-
-    
