@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useForm } from "react-hook-form";
@@ -120,7 +121,7 @@ export default function CheckoutPage() {
 
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const invoiceEndpoint = 'https://qa-server-erp.payshia.com/ecommerce/invoice/checkout';
+    const invoiceEndpoint = 'https://qa-server-erp.payshia.com/ecommerce-invoices/checkout';
     
     const invoicePayload = {
         paymentMethod: values.paymentMethod,
