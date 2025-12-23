@@ -28,8 +28,7 @@ export function LocationSection() {
                             </CardHeader>
                             <CardContent className="space-y-2 text-muted-foreground text-lg">
                                 <p className="font-semibold text-foreground">Nelis Global Boutique (Pvt) Ltd</p>
-                                <p>No 666/1/1/1, Colombo Road</p>
-                                <p>Palmgarden, Sri Lanka</p>
+                                <p>No. 666/1/1/1, Colombo Road, Palm Garden, Ratnapura. Sri Lanka</p>
                             </CardContent>
                         </Card>
                     </div>
