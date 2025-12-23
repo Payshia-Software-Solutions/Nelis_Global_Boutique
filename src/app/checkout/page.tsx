@@ -124,18 +124,49 @@ export default function CheckoutPage() {
     const invoiceEndpoint = 'https://qa-server-erp.payshia.com/ecommerce-invoices/checkout';
     
     const sameAddress = values.billingSameAsShipping === 'same';
+    const now = new Date();
+    const formattedDate = now.toISOString().split('T')[0];
+    const formattedTime = now.toTimeString().split(' ')[0];
     
     const invoicePayload = {
         paymentMethod: values.paymentMethod,
         company_id: 3,
         location_id: 4,
+        customer_code: "3", // Placeholder
+        invoice_date: formattedDate,
+        inv_amount: cartTotal,
+        grand_total: cartTotal,
+        discount_amount: 0,
+        discount_percentage: 0,
+        service_charge: 0,
+        tendered_amount: cartTotal,
+        close_type: "0",
+        invoice_status: "2",
+        current_time: `${formattedDate} ${formattedTime}`,
+        table_id: 1, // Placeholder
+        order_ready_status: 1, // Placeholder
+        created_by: values.email,
+        is_active: 1,
+        steward_id: "N/A",
+        cost_value: cartTotal, // Placeholder, assuming cost is same as total for now
+        remark: "Take Away order",
+        ref_hold: "direct",
+        chanel: "POS",
+        payment_status: "Paid",
+        ecommerce_payment_status: values.paymentMethod === 'cod' ? "COD" : "Card",
+        vat_amount: 0,
+        sscl_tax: 0,
+        tdl: 0,
         items: cart.map(item => ({
+            user_id: 1, // Placeholder
             product_id: parseInt(item.id, 10),
+            item_price: item.price,
+            item_discount: 0,
             quantity: item.quantity,
-            price: item.price,
-            name: item.name,
+            customer_id: 3, // Placeholder
+            table_id: 1, // Placeholder
+            cost_price: item.price, // Placeholder, assuming cost is same as price for now
         })),
-        totalAmount: cartTotal,
         contactDetails: {
             firstName: values.firstName,
             lastName: values.lastName,
@@ -143,24 +174,23 @@ export default function CheckoutPage() {
             phone: values.phone,
         },
         shippingAddress: {
-            street: values.address + (values.apartment ? `, ${values.apartment}`: ''),
+            address: values.address + (values.apartment ? `, ${values.apartment}`: ''),
             city: values.city,
-            zip: values.postalCode,
+            postalCode: values.postalCode,
             country: values.country,
-        },
-        billingAddress: sameAddress ? {
-            street: values.address + (values.apartment ? `, ${values.apartment}`: ''),
-            city: values.city,
-            zip: values.postalCode,
-            country: values.country,
-        } : {
-            street: (values.billingAddress || "") + (values.billingApartment ? `, ${values.billingApartment}`: ''),
-            city: values.billingCity || "",
-            zip: values.billingPostalCode || "",
-            country: values.billingCountry || "",
         },
         sameAddressStatus: sameAddress,
-        description: `Order from ${values.firstName} ${values.lastName}`
+        billingAddress: sameAddress ? {
+            address: values.address + (values.apartment ? `, ${values.apartment}`: ''),
+            city: values.city,
+            postalCode: values.postalCode,
+            country: values.country,
+        } : {
+            address: (values.billingAddress || "") + (values.billingApartment ? `, ${values.billingApartment}`: ''),
+            city: values.billingCity || "",
+            postalCode: values.billingPostalCode || "",
+            country: values.billingCountry || "",
+        }
     };
 
     try {
@@ -527,5 +557,3 @@ export default function CheckoutPage() {
     </div>
   );
 }
-
-    
