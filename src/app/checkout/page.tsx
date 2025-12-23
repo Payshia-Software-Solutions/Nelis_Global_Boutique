@@ -123,6 +123,8 @@ export default function CheckoutPage() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const invoiceEndpoint = 'https://qa-server-erp.payshia.com/ecommerce-invoices/checkout';
     
+    const sameAddress = values.billingSameAsShipping === 'same';
+    
     const invoicePayload = {
         paymentMethod: values.paymentMethod,
         company_id: 3,
@@ -133,33 +135,31 @@ export default function CheckoutPage() {
             price: item.price,
             name: item.name,
         })),
-        shipping_address: {
-            street: values.address + (values.apartment ? `, ${values.apartment}`: ''),
-            city: values.city,
-            zip: values.postalCode,
-            country: values.country,
-            phone: values.phone,
+        totalAmount: cartTotal,
+        contactDetails: {
             firstName: values.firstName,
             lastName: values.lastName,
-            email: values.email
+            email: values.email,
+            phone: values.phone,
         },
-        billing_address: values.billingSameAsShipping === 'same' ? {
+        shippingAddress: {
             street: values.address + (values.apartment ? `, ${values.apartment}`: ''),
             city: values.city,
             zip: values.postalCode,
             country: values.country,
-            phone: values.phone,
-            firstName: values.firstName,
-            lastName: values.lastName,
-            email: values.email
+        },
+        billingAddress: sameAddress ? {
+            street: values.address + (values.apartment ? `, ${values.apartment}`: ''),
+            city: values.city,
+            zip: values.postalCode,
+            country: values.country,
         } : {
-            street: values.billingAddress + (values.billingApartment ? `, ${values.billingApartment}`: ''),
-            city: values.billingCity,
-            zip: values.billingPostalCode,
-            country: values.billingCountry,
-            firstName: values.billingFirstName,
-            lastName: values.billingLastName
+            street: (values.billingAddress || "") + (values.billingApartment ? `, ${values.billingApartment}`: ''),
+            city: values.billingCity || "",
+            zip: values.billingPostalCode || "",
+            country: values.billingCountry || "",
         },
+        sameAddressStatus: sameAddress,
         description: `Order from ${values.firstName} ${values.lastName}`
     };
 
@@ -526,4 +526,5 @@ export default function CheckoutPage() {
       <Footer />
     </div>
   );
-}
+
+    
