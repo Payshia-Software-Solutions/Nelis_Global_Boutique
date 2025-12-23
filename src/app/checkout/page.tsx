@@ -40,8 +40,8 @@ const formSchema = z.object({
   email: z.string().email(),
   subscribe: z.boolean().default(false),
   country: z.string().min(1, "Country is required"),
-  firstName: z.string().optional(),
-  lastName: z.string().optional(),
+  firstName: z.string().min(1, "First name is required"),
+  lastName: z.string().min(1, "Last name is required"),
   address: z.string().min(1, "Address is required"),
   apartment: z.string().optional(),
   city: z.string().min(1, "City is required"),
@@ -119,13 +119,61 @@ export default function CheckoutPage() {
 
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    setOrderData({
-        formValues: values,
-        cart: cart,
-        cartTotal: cartTotal,
-        itemCount: itemCount,
-    });
-    router.push('/confirmation');
+    if (values.paymentMethod === 'cod') {
+        // For Cash on Delivery, go to the confirmation page
+        setOrderData({
+            formValues: values,
+            cart: cart,
+            cartTotal: cartTotal,
+            itemCount: itemCount,
+        });
+        router.push('/confirmation');
+    } else {
+        // For PayHere, create and submit a form to redirect to their gateway
+        const orderId = `nelis-order-${Date.now()}`;
+        const itemsDescription = cart.map(item => `${item.name} x ${item.quantity}`).join(', ');
+
+        const payhereData = {
+            // Merchant Details (replace with your actual PayHere merchant details)
+            merchant_id: "12XXXXX", // Your PayHere Merchant ID
+            return_url: `${window.location.origin}/confirmation`,
+            cancel_url: `${window.location.origin}/checkout`,
+            notify_url: `${window.location.origin}/api/payhere-notify`,
+
+            // Order Details
+            order_id: orderId,
+            items: itemsDescription,
+            currency: "LKR",
+            amount: cartTotal.toFixed(2),
+
+            // Customer Details
+            first_name: values.firstName,
+            last_name: values.lastName,
+            email: values.email,
+            phone: values.phone,
+            address: values.address,
+            city: values.city,
+            country: values.country,
+        };
+        
+        // Create a form element
+        const formElement = document.createElement('form');
+        formElement.method = 'POST';
+        formElement.action = 'https://sandbox.payhere.lk/pay/checkout';
+
+        // Add hidden input fields for each piece of data
+        for (const key in payhereData) {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = key;
+            input.value = (payhereData as any)[key];
+            formElement.appendChild(input);
+        }
+
+        // Append the form to the body and submit it
+        document.body.appendChild(formElement);
+        formElement.submit();
+    }
   }
 
   if (!isClient) {
@@ -202,7 +250,7 @@ export default function CheckoutPage() {
                       />
                       <div className="grid grid-cols-2 gap-4">
                           <FormField name="firstName" render={({ field }) => (
-                              <FormItem><FormLabel>First name (optional)</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
+                              <FormItem><FormLabel>First name</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
                           )} />
                           <FormField name="lastName" render={({ field }) => (
                               <FormItem><FormLabel>Last name</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
@@ -419,7 +467,5 @@ export default function CheckoutPage() {
     </div>
   );
 }
-
-    
 
     
