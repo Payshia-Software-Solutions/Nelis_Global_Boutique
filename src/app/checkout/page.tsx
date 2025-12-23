@@ -58,9 +58,10 @@ const formSchema = z.object({
   billingCity: z.string().optional(),
   billingPostalCode: z.string().optional(),
   billingCountry: z.string().optional(),
+  billingPhone: z.string().optional(),
 }).refine(data => {
     if (data.billingSameAsShipping === 'different') {
-        return data.billingAddress && data.billingCity && data.billingPostalCode && data.billingCountry;
+        return data.billingAddress && data.billingCity && data.billingPostalCode && data.billingCountry && data.billingPhone;
     }
     return true;
 }, {
@@ -114,6 +115,7 @@ export default function CheckoutPage() {
       billingCity: "",
       billingPostalCode: "",
       billingCountry: "Sri Lanka",
+      billingPhone: "",
     },
   });
 
@@ -178,6 +180,8 @@ export default function CheckoutPage() {
         shipping_address: {
             first_name: values.firstName,
             last_name: values.lastName,
+            email: values.email,
+            phone: values.phone,
             address: values.address + (values.apartment ? `, ${values.apartment}`: ''),
             city: values.city,
             postal_code: values.postalCode,
@@ -187,6 +191,8 @@ export default function CheckoutPage() {
         billing_address: same_address_status ? {
             first_name: values.firstName,
             last_name: values.lastName,
+            email: values.email,
+            phone: values.phone,
             address: values.address + (values.apartment ? `, ${values.apartment}`: ''),
             city: values.city,
             postal_code: values.postalCode,
@@ -194,6 +200,8 @@ export default function CheckoutPage() {
         } : {
             first_name: values.billingFirstName || values.firstName,
             last_name: values.billingLastName || values.lastName,
+            email: values.email, // Assuming billing email is same as contact email
+            phone: values.billingPhone || values.phone,
             address: (values.billingAddress || "") + (values.billingApartment ? `, ${values.billingApartment}`: ''),
             city: values.billingCity || "",
             postal_code: values.billingPostalCode || "",
@@ -439,7 +447,7 @@ export default function CheckoutPage() {
                             />
                             <div className="grid grid-cols-2 gap-4">
                                 <FormField name="billingFirstName" render={({ field }) => (
-                                    <FormItem><FormLabel>First name (optional)</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
+                                    <FormItem><FormLabel>First name</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
                                 )} />
                                 <FormField name="billingLastName" render={({ field }) => (
                                     <FormItem><FormLabel>Last name</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
@@ -459,6 +467,9 @@ export default function CheckoutPage() {
                                     <FormItem><FormLabel>Postal Code</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
                                 )} />
                             </div>
+                             <FormField name="billingPhone" render={({ field }) => (
+                                <FormItem><FormLabel>Phone</FormLabel><FormControl><Input type="tel" placeholder="Phone" {...field} /></FormControl><FormMessage /></FormItem>
+                            )} />
                         </div>
                       )}
                     </div>
@@ -565,3 +576,5 @@ export default function CheckoutPage() {
     </div>
   );
 }
+
+    
