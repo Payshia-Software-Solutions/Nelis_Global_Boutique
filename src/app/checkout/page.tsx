@@ -132,8 +132,8 @@ export default function CheckoutPage() {
     
     const invoicePayload = {
         paymentMethod: values.paymentMethod,
-        company_id: 2,
-        location_id: 2,
+        company_id: parseInt(process.env.NEXT_PUBLIC_COMPANY_ID || '2'),
+        location_id: parseInt(process.env.NEXT_PUBLIC_LOCATION_ID || '2'),
         customer_code: "3", // Placeholder
         invoice_date: formattedDate,
         inv_amount: cartTotal,
@@ -182,30 +182,51 @@ export default function CheckoutPage() {
             last_name: values.lastName,
             email: values.email,
             phone: values.phone,
-            address: values.address + (values.apartment ? `, ${values.apartment}`: ''),
+            address: values.address,
+            address_line1: values.address,
+            address_line2: values.apartment || '',
+            state: '', // Not in form
             city: values.city,
             postal_code: values.postalCode,
             country: values.country,
+            is_default: false, // Not in form
+            save_info: values.saveInfo,
+            company_id: parseInt(process.env.NEXT_PUBLIC_COMPANY_ID || '2'),
+            updated_at: now.toISOString()
         },
         same_address_status: same_address_status,
         billing_address: same_address_status ? {
-            first_name: values.firstName,
+             first_name: values.firstName,
             last_name: values.lastName,
             email: values.email,
             phone: values.phone,
-            address: values.address + (values.apartment ? `, ${values.apartment}`: ''),
+            address: values.address,
+            address_line1: values.address,
+            address_line2: values.apartment || '',
+            state: '', // Not in form
             city: values.city,
             postal_code: values.postalCode,
             country: values.country,
+            is_default: false, // Not in form
+            save_info: values.saveInfo,
+            company_id: parseInt(process.env.NEXT_PUBLIC_COMPANY_ID || '2'),
+            updated_at: now.toISOString()
         } : {
             first_name: values.billingFirstName || values.firstName,
             last_name: values.billingLastName || values.lastName,
-            email: values.email, // Assuming billing email is same as contact email
+            email: values.email,
             phone: values.billingPhone || values.phone,
-            address: (values.billingAddress || "") + (values.billingApartment ? `, ${values.billingApartment}`: ''),
-            city: values.billingCity || "",
-            postal_code: values.billingPostalCode || "",
-            country: values.billingCountry || "",
+            address: values.billingAddress || '',
+            address_line1: values.billingAddress || '',
+            address_line2: values.billingApartment || '',
+            state: '', // Not in form
+            city: values.billingCity || '',
+            postal_code: values.billingPostalCode || '',
+            country: values.billingCountry || '',
+            is_default: false, // Not in form
+            save_info: values.saveInfo,
+            company_id: parseInt(process.env.NEXT_PUBLIC_COMPANY_ID || '2'),
+            updated_at: now.toISOString()
         }
     };
 
@@ -563,5 +584,3 @@ export default function CheckoutPage() {
     </div>
   );
 }
-
-    
