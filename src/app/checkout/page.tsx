@@ -226,18 +226,8 @@ export default function CheckoutPage() {
         const responseData = await response.text();
         const contentType = response.headers.get("content-type");
 
-        if (values.paymentMethod === 'cod') {
-            const invoiceResponse = JSON.parse(responseData);
-            setOrderData({
-                formValues: values,
-                cart: cart,
-                cartTotal: cartTotal,
-                itemCount: itemCount,
-                invoiceId: invoiceResponse.invoice_id
-            });
-            router.push('/confirmation');
-        } else if (values.paymentMethod === 'payhere' && contentType && contentType.includes("text/html")) {
-            // Handle the HTML form redirect
+        if (contentType && contentType.includes("text/html")) {
+            // Handle the HTML form redirect for PayHere
             const container = document.createElement('div');
             container.innerHTML = responseData;
             container.style.display = 'none';
@@ -250,8 +240,8 @@ export default function CheckoutPage() {
                  throw new Error("PayHere redirect form not found in response.");
             }
 
-        } else {
-             // Fallback for other cases or if API changes
+        } else if (contentType && contentType.includes("application/json")) {
+            // Handle JSON response for COD or other cases
             const invoiceResponse = JSON.parse(responseData);
             if (invoiceResponse.invoice_id) {
                 setOrderData({
@@ -263,8 +253,10 @@ export default function CheckoutPage() {
                 });
                 router.push('/confirmation');
             } else {
-                throw new Error("Unexpected response from server.");
+                throw new Error("Unexpected JSON response from server.");
             }
+        } else {
+            throw new Error("Unexpected response type from server.");
         }
 
     } catch (error: any) {
@@ -571,7 +563,3 @@ export default function CheckoutPage() {
     </div>
   );
 }
-
-    
-
-    
