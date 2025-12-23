@@ -132,8 +132,8 @@ export default function CheckoutPage() {
     
     const invoicePayload = {
         paymentMethod: values.paymentMethod,
-        company_id: 3,
-        location_id: 4,
+        company_id: 2,
+        location_id: 2,
         customer_code: "3", // Placeholder
         invoice_date: formattedDate,
         inv_amount: cartTotal,
@@ -222,12 +222,12 @@ export default function CheckoutPage() {
             const errorData = await response.json();
             throw new Error(errorData.message || 'Failed to create invoice.');
         }
-
-        const responseData = await response.text();
+        
         const contentType = response.headers.get("content-type");
 
         if (contentType && contentType.includes("text/html")) {
             // Handle the HTML form redirect for PayHere
+            const responseData = await response.text();
             const container = document.createElement('div');
             container.innerHTML = responseData;
             container.style.display = 'none';
@@ -242,7 +242,7 @@ export default function CheckoutPage() {
 
         } else if (contentType && contentType.includes("application/json")) {
             // Handle JSON response for COD or other cases
-            const invoiceResponse = JSON.parse(responseData);
+            const invoiceResponse = await response.json();
             if (invoiceResponse.invoice_id) {
                 setOrderData({
                     formValues: values,
@@ -563,3 +563,5 @@ export default function CheckoutPage() {
     </div>
   );
 }
+
+    
