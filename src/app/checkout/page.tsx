@@ -123,7 +123,7 @@ export default function CheckoutPage() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const invoiceEndpoint = 'https://qa-server-erp.payshia.com/ecommerce-invoices/checkout';
     
-    const sameAddress = values.billingSameAsShipping === 'same';
+    const same_address_status = values.billingSameAsShipping === 'same';
     const now = new Date();
     const formattedDate = now.toISOString().split('T')[0];
     const formattedTime = now.toTimeString().split(' ')[0];
@@ -135,11 +135,11 @@ export default function CheckoutPage() {
         customer_code: "3", // Placeholder
         invoice_date: formattedDate,
         inv_amount: cartTotal,
-        grand_total: cartTotal,
+        grand_total: cartTotal, // Placeholder, will be recalculated on backend
         discount_amount: 0,
         discount_percentage: 0,
         service_charge: 0,
-        tendered_amount: cartTotal,
+        tendered_amount: cartTotal, // Placeholder
         close_type: "0",
         invoice_status: "2",
         current_time: `${formattedDate} ${formattedTime}`,
@@ -154,9 +154,10 @@ export default function CheckoutPage() {
         chanel: "POS",
         payment_status: "Paid",
         ecommerce_payment_status: values.paymentMethod === 'cod' ? "COD" : "Card",
-        vat_amount: 0,
-        sscl_tax: 0,
-        tdl: 0,
+        vat_amount: 0, // Placeholder
+        sscl_tax: 0, // Placeholder
+        tdl: 0, // Placeholder
+        total_amount: cartTotal,
         items: cart.map(item => ({
             user_id: 1, // Placeholder
             product_id: parseInt(item.id, 10),
@@ -166,29 +167,30 @@ export default function CheckoutPage() {
             customer_id: 3, // Placeholder
             table_id: 1, // Placeholder
             cost_price: item.price, // Placeholder, assuming cost is same as price for now
+            price: item.price * item.quantity,
         })),
-        contactDetails: {
-            firstName: values.firstName,
-            lastName: values.lastName,
+        contact_details: {
+            first_name: values.firstName,
+            last_name: values.lastName,
             email: values.email,
             phone: values.phone,
         },
-        shippingAddress: {
+        shipping_address: {
             address: values.address + (values.apartment ? `, ${values.apartment}`: ''),
             city: values.city,
-            postalCode: values.postalCode,
+            postal_code: values.postalCode,
             country: values.country,
         },
-        sameAddressStatus: sameAddress,
-        billingAddress: sameAddress ? {
+        same_address_status: same_address_status,
+        billing_address: same_address_status ? {
             address: values.address + (values.apartment ? `, ${values.apartment}`: ''),
             city: values.city,
-            postalCode: values.postalCode,
+            postal_code: values.postalCode,
             country: values.country,
         } : {
             address: (values.billingAddress || "") + (values.billingApartment ? `, ${values.billingApartment}`: ''),
             city: values.billingCity || "",
-            postalCode: values.billingPostalCode || "",
+            postal_code: values.billingPostalCode || "",
             country: values.billingCountry || "",
         }
     };
