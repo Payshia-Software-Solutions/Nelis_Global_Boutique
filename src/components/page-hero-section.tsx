@@ -6,13 +6,16 @@ import Image from 'next/image';
 interface PageHeroSectionProps {
     title: string;
     subtitle?: string;
+    imageUrl?: string;
 }
 
-export function PageHeroSection({ title, subtitle }: PageHeroSectionProps) {
+export function PageHeroSection({ title, subtitle, imageUrl }: PageHeroSectionProps) {
+    const defaultImage = "https://content-provider.payshia.com/nelis-global/hero-img3.jpg";
+    
     return (
         <section className="relative h-[60vh] min-h-[500px] w-full flex items-center justify-center text-white">
             <Image
-                src="https://content-provider.payshia.com/nelis-global/hero-img3.jpg"
+                src={imageUrl || defaultImage}
                 alt="A market stall with various natural products"
                 layout="fill"
                 objectFit="cover"

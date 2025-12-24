@@ -14,7 +14,11 @@ export const metadata = {
 export default function AboutPage() {
   return (
     <>
-      <PageHeroSection title="About Us" subtitle="Discover Our Story" />
+      <PageHeroSection 
+        title="About Us" 
+        subtitle="Discover Our Story" 
+        imageUrl="https://content-provider.payshia.com/nelis-global/aboutthero-optimized.webp"
+      />
       <OurStorySection />
       <MissionValuesSection />
       <CertificationsSection />
